@@ -33,7 +33,7 @@ const Main = ({navigation}) => {
             <InnerContainer>
                 <MainImage resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
                 <MainContainer>
-                <Popup />
+                {/* <Popup /> */}
                     <PageTitle welcome={true}>BYD</PageTitle>
                     <SubTitle welcome={true}>Before You Die</SubTitle>
                     <SubTitle welcome={true}></SubTitle>

@@ -55,9 +55,10 @@ const MyInfoStackScreen =()=>(
   </MyInfoStack.Navigator>
 )
 
-export default function App() {
+//MainApp로 이름 변경
+export default function MainApp({navigation}) {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Tabs.Navigator >
         <Tabs.Screen 
           name="Yourwords" 

@@ -12,6 +12,7 @@ import Main from './../screens/Main'
 import Login from './../screens/Login'
 import Signup from './../screens/Signup'
 import Welcome from './../screens/Welcome'
+import MainApp from './../MainApp'
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ const RootStack = () => {
                 name = "Welcome" 
                 component={Welcome}
                 />
+                <Stack.Screen name="MainApp" component={MainApp}/>
             </Stack.Navigator>
         </NavigationContainer>
     )

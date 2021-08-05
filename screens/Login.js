@@ -84,7 +84,10 @@ const Login = ({navigation}) => {
                             />
                             <MsgBox>...</MsgBox>
                             <Line/>
-                            <StyledButton onPress = {handleSubmit}>
+                            <StyledButton 
+                            // onPress = {handleSubmit}
+                            onPress = {()=> navigation.navigate('MainApp')}
+                            >
                                 <ButtonText>
                                     로그인
                                 </ButtonText>
