@@ -8,7 +8,6 @@ const HomeScreen = ({ navigation }) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
-
         })
     }, [navigation])
 

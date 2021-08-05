@@ -27,7 +27,7 @@ const Mywords = ({ navigation }) => {
                         <>
 
                             <Input
-                                placeholder="제목을 입력해주세요"
+                                placeholder="제목 : 제목을 입력해주세요"
                                 autoFocus
                                 type="text"
                                 name="mywordsSubject"
@@ -80,5 +80,9 @@ const styles = StyleSheet.create({
         backgroundColor:'lightblue',
         marginTop:20,
         borderRadius:7,
+    },
+    ininput:{
+        width:100,
+        height:20,
     }
 })
