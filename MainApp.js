@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesome,EvilIcons } from '@expo/vector-icons';
 
-//오세연 screens
+// screens by Seyeon
 import HomeScreen from './screens/HomeScreen';
 import MywordsScreen from './screens/MywordsScreen';
 import AfterSendingScreen from './screens/AfterSendingScreen';

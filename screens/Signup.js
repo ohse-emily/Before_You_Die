@@ -1,32 +1,15 @@
 import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-
 //formik
 import {Formik} from 'formik';
-
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
 
 import {
-    StyledContainer, 
-    InnerContainer,
-    PageLogo,
-    PageTitle,
-    SubTitle,
-    StyledFormArea,
-    LeftIcon,
-    StyledInputLabel,
-    StyledTextInput,
-    RightIcon,
-    StyledButton,
-    ButtonText,
-    MsgBox, 
-    Line,
-    Colors,
-    ExtraView,
-    ExtraText,
-    TextLink,
-    TextLinkContent,
+    StyledContainer, InnerContainer, PageLogo, PageTitle,
+    SubTitle, StyledFormArea,LeftIcon, StyledInputLabel,
+    StyledTextInput, RightIcon, StyledButton, ButtonText, MsgBox, 
+    Line, Colors, ExtraView, ExtraText,TextLink, TextLinkContent,
 } from './../components/styles'
 
 import {View, TouchableOpacity} from 'react-native'
@@ -36,7 +19,6 @@ const {brand, darkLight, primary} = Colors;
 
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
-
 
 const Signup = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true)
@@ -49,8 +31,6 @@ const Signup = ({navigation}) => {
                     <PageLogo resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
                     <PageTitle>BYD</PageTitle>
                     <SubTitle>회원가입</SubTitle>
-
-
                     <Formik
                         initialValues = {{fullName: '', email:'', dateOfBirth: '', password: '', confirmPassword: ''}}
                         onSubmit = {(values)=>{
