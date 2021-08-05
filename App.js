@@ -4,7 +4,10 @@ import React from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {FontAwesome,EvilIcons } from '@expo/vector-icons';
+
+//오세연 screens
 import HomeScreen from './screens/HomeScreen';
 import MywordsScreen from './screens/MywordsScreen';
 import AfterSendingScreen from './screens/AfterSendingScreen';
@@ -12,7 +15,16 @@ import VentingScreen from './screens/VentingScreen';
 import YourwordsScreen from './screens/YourwordsScreen';
 import ToSomeoneScreen from './screens/ToSomeoneScreen';
 import MyInfoScreen from './screens/MyInfoScreen';
-import {FontAwesome,EvilIcons } from '@expo/vector-icons'
+
+
+//엄신우 screens
+import Main from './screens/Main';
+import Login from './screens/Login';
+import Signup from './screens/Signup';
+import Welcome from './screens/Welcome';
+import Popup from './screens/Popup';
+
+
 
 const Stack=createStackNavigator()
 
