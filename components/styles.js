@@ -62,7 +62,7 @@ export const PageTitle = styled.Text`
 
 export const ModalContainer = styled.View`
     width:70%;
-    height:600px;
+    height:90%;
     margin: auto;
     align-items: center;
     padding: 5%;
