@@ -1,21 +1,97 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+// import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import HomeScreen from './screens/HomeScreen';
+import MywordsScreen from './screens/MywordsScreen';
+import AfterSendingScreen from './screens/AfterSendingScreen';
+import VentingScreen from './screens/VentingScreen';
+import YourwordsScreen from './screens/YourwordsScreen';
+import ToSomeoneScreen from './screens/ToSomeoneScreen';
+import MyInfoScreen from './screens/MyInfoScreen';
+import {FontAwesome,EvilIcons } from '@expo/vector-icons'
+
+const Stack=createStackNavigator()
+
+// Home 위에 제목 styles 
+const HomeScreenOptions={
+  headerStyle:{backgroundColor:'lightblue'},
+  headerTitleStyle:{color:'black', justifyContent:'center'},
+  headerTintColor:'white',
+}
+const Tabs = createBottomTabNavigator();
+
+const YourwordsStack = createStackNavigator();
+const HomeStack = createStackNavigator();
+const MyInfoStack = createStackNavigator();
+
+const YourwordsStackScreen =()=>(
+  <YourwordsStack.Navigator screenOptions={HomeScreenOptions}>
+    <YourwordsStack.Screen name="Yourwords" component={YourwordsScreen}/>
+  </YourwordsStack.Navigator>
+)
+
+// Main Home -> 여기에 이동할 screens를 넣어야 해당 compo에서 navigate() 매서드 사용 가능  by 세연
+const HomeStackScreen =()=>(
+  <HomeStack.Navigator screenOptions={HomeScreenOptions}>
+    <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Screen name="Yourwords" component={YourwordsScreen} />
+    <HomeStack.Screen name="Mywords" component={MywordsScreen}/>
+    <HomeStack.Screen name="ToSomeone" component={ToSomeoneScreen}/>
+    <HomeStack.Screen name="Venting" component={VentingScreen}/>
+    <HomeStack.Screen name="AfterSending" component={AfterSendingScreen}/>
+  </HomeStack.Navigator>
+)
+
+const MyInfoStackScreen =()=>(
+  <MyInfoStack.Navigator screenOptions={HomeScreenOptions}>
+    <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen}/>
+  </MyInfoStack.Navigator>
+)
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NavigationContainer>
+      <Tabs.Navigator >
+        <Tabs.Screen 
+          name="Yourwords" 
+          component={YourwordsStackScreen}  
+          options={{
+            headerShown:false,
+            tabBarIcon:()=>(<FontAwesome name="telegram" size={30}/>)
+          }}
+        />
+        <Tabs.Screen 
+          name="Home" 
+          component={HomeStackScreen} 
+          options={{
+            headerShown:false,
+            tabBarIcon:()=>(<EvilIcons name="heart" size={40} color="black" />)
+          }}
+        />
+        <Tabs.Screen 
+          name="MyInfo" 
+          component={MyInfoStackScreen}  
+          options={{
+            headerShown:false,
+            tabBarIcon:()=>(<FontAwesome name="grav" size={30}/>)
+          }}
+        />
+      </Tabs.Navigator>
+      
+      {/* <Stack.Navigator initialRouteName="Home" screenOptions={globalScreenOptions}>
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Mywords" component={MywordsScreen}/>
+        <Stack.Screen name="AfterSending" component={AfterSendingScreen}/>
+        <Stack.Screen name="Venting" component={VentingScreen}/>
+        <Stack.Screen name="Yourwords" component={YourwordsScreen}/>
+        <Stack.Screen name="ToSomeone" component={ToSomeoneScreen}/>
+      </Stack.Navigator> */}
+    </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
