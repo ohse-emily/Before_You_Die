@@ -92,12 +92,6 @@ const Login = ({navigation}) => {
                                     로그인
                                 </ButtonText>
                             </StyledButton>
-                            <StyledButton google={true} onPress = {handleSubmit}>
-                                <Fontisto name="google" color={primary} size={25} />
-                                <ButtonText google={true}>
-                                    구글로 로그인
-                                </ButtonText>
-                            </StyledButton>
                             <ExtraView>
                                 <ExtraText>
                                     계정이 없으신가요?
