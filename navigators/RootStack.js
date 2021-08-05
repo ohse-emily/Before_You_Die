@@ -12,13 +12,28 @@ import Main from './../screens/Main'
 import Login from './../screens/Login'
 import Signup from './../screens/Signup'
 import Welcome from './../screens/Welcome'
+import MainApp from './../MainApp'
 
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
     return(
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown:false,}} >
+            <Stack.Navigator
+                screenOptions={
+                    // {headerStyle:{
+                    //     backgroundColor: 'transparent'
+                    // },
+                    // headerTintColor: tertiary,
+                    // headerTransparent: true,
+                    // headerTitle: '',
+                    // headerLeftContainerStyle: {
+                    //     paddingLeft: 20,
+                    // }}
+                    {headerShown:false}
+                }
+                initialRouteName="Main"
+            >
                 <Stack.Screen name = "Main" component={Main}/>
                 <Stack.Screen name = "Login" component={Login}/>
                 <Stack.Screen name = "Signup" component={Signup}/>
@@ -27,6 +42,7 @@ const RootStack = () => {
                 name = "Welcome" 
                 component={Welcome}
                 />
+                <Stack.Screen name="MainApp" component={MainApp}/>
             </Stack.Navigator>
         </NavigationContainer>
     )
