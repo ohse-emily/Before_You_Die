@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   Dimensions,
+  // CheckBox
 } from "react-native";
 
 import { CheckBox } from 'react-native-elements';
@@ -42,12 +43,8 @@ const Popup = () => {
             </Text>
             <View style={styles.buttonContainer}>
                 <CheckBox
-                  // checked = {()=>{setItemChecked(!itemChecked); console.log(itemChecked)}}
-                  onPress = {()=>{
-                    setItemChecked(!itemChecked); 
-                    console.log(itemChecked);
-
-                  }}
+                    checked={itemChecked}
+                    onPress = {()=>setItemChecked(!itemChecked)}
                 />
                 <Text>일주일동안 보지 않기</Text>
                 <Text>  |  </Text>
