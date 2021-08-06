@@ -36,7 +36,7 @@ const Signup = ({navigation}) => {
                     {({handleChange, handleBlur, handleSubmit, values})=>(
                         <View style={styles.styledFormArea}>
                             <MyTextInput
-                                label="이름"
+                                label="닉네임"
                                 icon="person"
                                 placeholder="김갑생"
                                 placeholderTextColor='#9CA3AF'
