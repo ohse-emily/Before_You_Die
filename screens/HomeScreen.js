@@ -2,9 +2,18 @@ import React, { useState, useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
 
+// popup 
+import MainPopup from './Popup';
+
 
 const HomeScreen = ({ navigation }) => {
 
+    const [popupCheck, setPopcupCheck] = useState(true)
+
+    const handlePopup = () => {
+        setPopcupCheck(!popupCheck)
+        console.log('zzz')
+    }
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
@@ -13,12 +22,18 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.HomeLayout}>
+            {popupCheck ? (
+            <MainPopup
+                value={popupCheck}
+                handlePopup={handlePopup}
+            />)
+            :(<Text/>)}
             <View style={styles.HomeTopLayout}>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
                     onPress={() => navigation.navigate('Mywords')}
                 >
-                    <Text>나의 마지막 말 </Text>
+                    <Text >나의 마지막 말 </Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}

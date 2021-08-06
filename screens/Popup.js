@@ -3,7 +3,7 @@ import {
   Text,
   View,
   Modal,
-  TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
   Dimensions,
   // CheckBox
@@ -11,7 +11,7 @@ import {
 
 import { CheckBox } from 'react-native-elements';
 
-const Popup = () => {
+const MainPopup = (props) => {
   const [itemChecked,setItemChecked] = useState(false)
 
   return (
@@ -43,23 +43,25 @@ const Popup = () => {
             </Text>
             <View style={styles.buttonContainer}>
                 <CheckBox
+                    containerStyle={{backgroundColor: 'transparent', borderColor:'transparent', marginRight: -5}}
                     checked={itemChecked}
                     onPress = {()=>setItemChecked(!itemChecked)}
+                    title="일주일동안 보지 않기"
                 />
-                <Text>일주일동안 보지 않기</Text>
-                <Text>  |  </Text>
-            <TouchableHighlight 
-                //   onPress={props.setModalVisible(false)}
+                <Text>|</Text>
+            <TouchableOpacity 
+              style={{padding:20}}
+              onPress = {()=>props.handlePopup()}
             >
-                <Text>닫기</Text>
-            </TouchableHighlight>
+                <Text style={{fontWeight:'bold'}}>닫기</Text>
+            </TouchableOpacity>
             </View>
         </View>
       </View>
     </Modal>
   );
 };
-export default Popup;
+export default MainPopup;
 
 const styles = StyleSheet.create({
   modalBackground: {

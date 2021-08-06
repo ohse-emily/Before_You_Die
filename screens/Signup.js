@@ -1,28 +1,33 @@
 import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
+import {StyleSheet, View, Icon, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
 
 //formik
 import {Formik} from 'formik';
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
-
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
+// for image upload
+import ImagePicker from 'react-native-image-crop-picker';
 
 const Signup = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true)
-
+    const handlePhoto = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+          }).then(image => {
+            console.log(image);
+          });
+    }
     return(
         <KeyboardAvoidingWrapper>
+
             <View style={styles.styledContainer}>
-                <StatusBar style="dark"/>
+            <StatusBar style="dark"/>
                 <View style={styles.innerContainer}>
-                    <Image 
-                        style={styles.pageLogo} 
-                        resizeMode = "cover" 
-                        source={require('./../assets/sam.jpeg')}
-                    />
                     <Text style={styles.pageTitle}>BYD</Text>
                     <Text style={styles.subtitle}>회원가입</Text>
                     <Formik
@@ -31,79 +36,87 @@ const Signup = ({navigation}) => {
                             console.log(values);
                             navigation.navigate('Welcome')
                         }}
-                        
                     >
-                    {({handleChange, handleBlur, handleSubmit, values})=>(
-                        <View style={styles.styledFormArea}>
-                            <MyTextInput
-                                label="이름"
-                                icon="person"
-                                placeholder="김갑생"
-                                placeholderTextColor='#9CA3AF'
-                                onChangeText = {handleChange('fullName')}
-                                onBlur={handleBlur('fullName')}
-                                value={values.fullName}
-                            />
-                            <MyTextInput
-                                label="이메일 주소"
-                                icon="mail"
-                                placeholder="이메일을 입력해 주세요."
-                                placeholderTextColor='#9CA3AF'
-                                onChangeText = {handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                keyboardType="email-address"
-                            />
-                            <MyTextInput
-                                label="비밀번호"
-                                icon="lock"
-                                placeholder="* * * * * * * * "
-                                placeholderTextColor='#9CA3AF'
-                                onChangeText = {handleChange('ConfirmPassword')}
-                                onBlur={handleBlur('ConfirmPassword')}
-                                value={values.ConfirmPassword}
-                                secureTextEntry={hidePassword}
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword = {setHidePassword}
-                            />
-                            <MyTextInput
-                                label="비밀번호 확인"
-                                icon="lock"
-                                placeholder="* * * * * * * * "
-                                placeholderTextColor='#9CA3AF'
-                                onChangeText = {handleChange('password')}
-                                onBlur={handleBlur('password')}
-                                value={values.password}
-                                secureTextEntry={hidePassword}
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword = {setHidePassword}
-                            />
-                            <Text style={styles.msgBox}>...</Text>
-                            <View style={styles.line}/>
-                            <TouchableOpacity style={styles.styledButton}
-                            onPress = {handleSubmit}>
-                                <Text style={styles.buttonText}>
-                                    회원가입
-                                </Text>
-                            </TouchableOpacity>
-                            <View style={styles.extraView}>
-                                <Text style={styles.extraText}>
-                                    아이디가 있다고요? .... 
-                                </Text>
-                                <TouchableOpacity style={styles.textLink} 
-                                onPress = {()=> navigation.navigate('Login')}>
-                                    <Text style={styles.textLinkContent}>
-                                        로그인
+                        {({handleChange, handleBlur, handleSubmit, values})=>(
+                            <View style={styles.styledFormArea}>
+                                <View style={styles.avatarArea}>
+                                    <TouchableOpacity 
+                                    style={styles.avatar}
+                                    onPress = {handlePhoto}
+                                    >
+                                        <Ionicons name="person-add" size={99} color="gray" />
+                                    </TouchableOpacity>
+                                </View>
+                                <MyTextInput
+                                    label="이름"
+                                    icon="person"
+                                    placeholder="김갑생"
+                                    placeholderTextColor='#9CA3AF'
+                                    onChangeText = {handleChange('fullName')}
+                                    onBlur={handleBlur('fullName')}
+                                    value={values.fullName}
+                                />
+                                <MyTextInput
+                                    label="이메일 주소"
+                                    icon="mail"
+                                    placeholder="이메일을 입력해 주세요."
+                                    placeholderTextColor='#9CA3AF'
+                                    onChangeText = {handleChange('email')}
+                                    onBlur={handleBlur('email')}
+                                    value={values.email}
+                                    keyboardType="email-address"
+                                />
+                                <MyTextInput
+                                    label="비밀번호"
+                                    icon="lock"
+                                    placeholder="* * * * * * * * "
+                                    placeholderTextColor='#9CA3AF'
+                                    onChangeText = {handleChange('ConfirmPassword')}
+                                    onBlur={handleBlur('ConfirmPassword')}
+                                    value={values.ConfirmPassword}
+                                    secureTextEntry={hidePassword}
+                                    isPassword={true}
+                                    hidePassword={hidePassword}
+                                    setHidePassword = {setHidePassword}
+                                />
+                                <MyTextInput
+                                    label="비밀번호 확인"
+                                    icon="lock"
+                                    placeholder="* * * * * * * * "
+                                    placeholderTextColor='#9CA3AF'
+                                    onChangeText = {handleChange('password')}
+                                    onBlur={handleBlur('password')}
+                                    value={values.password}
+                                    secureTextEntry={hidePassword}
+                                    isPassword={true}
+                                    hidePassword={hidePassword}
+                                    setHidePassword = {setHidePassword}
+                                />
+                                <Text style={styles.msgBox}>...</Text>
+                                <View style={styles.line}/>
+                                <TouchableOpacity style={styles.styledButton}
+                                onPress = {handleSubmit}>
+                                    <Text style={styles.buttonText}>
+                                        회원가입
                                     </Text>
                                 </TouchableOpacity>
+                                <View style={styles.extraView}>
+                                    <Text style={styles.extraText}>
+                                        아이디가 있다고요? .... 
+                                    </Text>
+                                    <TouchableOpacity style={styles.textLink} 
+                                    onPress = {()=> navigation.navigate('Login')}>
+                                        <Text style={styles.textLinkContent}>
+                                            로그인
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
-                    )}
+                        )}
                     </Formik>
                 </View>
             </View>
+
         </KeyboardAvoidingWrapper>
     );
 }
@@ -145,9 +158,14 @@ const styles = StyleSheet.create({
         width:'100%',
         alignItems: 'center',
     },
-    pageLogo:{
-        width:250,
-        height:200,
+    avatarArea:{
+        width:'100%',
+        alignItems: 'center',
+    },
+    avatar:{
+        width:100,
+        height:100,
+        margin: 'auto',
     },
     pageTitle:{
         fontSize: 30,

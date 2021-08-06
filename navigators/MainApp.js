@@ -16,7 +16,6 @@ import YourwordsScreen from './../screens/YourwordsScreen';
 import ToSomeoneScreen from './../screens/ToSomeoneScreen';
 import MyInfoScreen from './../screens/MyInfoScreen';
 
-
 const Stack=createStackNavigator()
 
 // Home 위에 제목 styles 

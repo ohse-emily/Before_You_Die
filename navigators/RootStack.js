@@ -29,7 +29,7 @@ const RootStack = () => {
                     // }}
                     {headerShown:false}
                 }
-                initialRouteName="Main"
+                initialRouteName="Signup"
             >
                 <Stack.Screen name = "Main" component={Main}/>
                 <Stack.Screen name = "Login" component={Login}/>
