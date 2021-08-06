@@ -35,7 +35,9 @@ const Main = ({navigation}) => {
             <View style={styles.InnerContainer}>
                 <Image style={styles.MainImage} resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
                 <View style={styles.MainContainer}>
-                {/* <Popup /> */}
+                <Popup 
+                    onPress={()=>setModalVisible(!popupOn)}
+                />
                     <Text style={styles.PageTitle} welcome={true}>BYD</Text>
                     <Text style={styles.SubTitle}>Before You Die</Text>
                     <Text style={styles.SubTitle}></Text>

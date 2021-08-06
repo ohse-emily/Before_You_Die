@@ -37,7 +37,7 @@ export default function DisplayAnImage() {
         <Image
           style={styles.tinyLogo}
           source={
-            require('./assets/icon.png')
+            require('../assets/icon.png')
           }
         />
         <Text>hye1209cj@naver.com</Text>
