@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
+import {StyleSheet, View, Text, TouchableOpacity, Image,} from 'react-native';
 
 //formik
 import {Formik} from 'formik';
@@ -7,18 +8,19 @@ import {Formik} from 'formik';
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
 
-import {
-    InnerContainer,
-    PageTitle,
-    SubTitle,
-    StyledFormArea,
-    StyledButton,
-    ButtonText,
-    Line,
-    MainContainer, 
-    MainImage,
-    Avatar
-} from './../components/styles';
+// import {
+//     InnerContainer, // 
+//     PageTitle,
+//     SubTitle,
+//     StyledFormArea,
+//     StyledButton,
+//     ButtonText,
+//     Line,
+//     MainContainer, 
+//     MainImage,
+    
+// } from './../components/styles';
+
 import Popup from './Popup';
 
 const Main = ({navigation}) => {
@@ -30,30 +32,89 @@ const Main = ({navigation}) => {
     return(
         <>
             <StatusBar style="dark"/>
-            <InnerContainer>
-                <MainImage resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
-                <MainContainer>
+            <View style={styles.InnerContainer}>
+                <Image style={styles.MainImage} resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
+                <View style={styles.MainContainer}>
                 {/* <Popup /> */}
-                    <PageTitle welcome={true}>BYD</PageTitle>
-                    <SubTitle welcome={true}>Before You Die</SubTitle>
-                    <SubTitle welcome={true}></SubTitle>
-                    <StyledFormArea>
-                        <Line/>
-                        <StyledButton onPress = {()=>{navigation.navigate('Login')}}>
-                            <ButtonText>
+                    <Text style={styles.PageTitle} welcome={true}>BYD</Text>
+                    <Text style={styles.SubTitle}>Before You Die</Text>
+                    <Text style={styles.SubTitle}></Text>
+                    <View style={styles.StyledFormArea}>
+                        <View style={styles.Line}/>
+                        <TouchableOpacity
+                        style={styles.StyledButton} 
+                        onPress = {()=>{navigation.navigate('Login')}}
+                        >
+                            <Text style={styles.ButtonText}>
                                 로그인
-                            </ButtonText>
-                        </StyledButton>
-                        <StyledButton onPress = {()=>{navigation.navigate('Signup')}}>
-                            <ButtonText>
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.StyledButton} onPress = {()=>{navigation.navigate('Signup')}}>
+                            <Text style={styles.ButtonText}>
                                 회원가입
-                            </ButtonText>
-                        </StyledButton>
-                    </StyledFormArea>
-                </MainContainer>
-            </InnerContainer>
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
         </>
     );
 }
 
 export default Main;
+
+const styles = StyleSheet.create({
+    InnerContainer:{
+        flex:1,
+        width:'100%',
+        alignItems: 'center',
+    },
+    PageTitle:{
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: '#6D28D9', //brand,
+        padding:10,
+    },
+    SubTitle:{
+        fontSize: 18,
+        marginBottom: 20,
+        letterSpacing: 1,
+        fontWeight: 'bold',
+        color: '#1F2937'// tertiary,
+    },
+    StyledFormArea:{
+        width: '90%',
+    },
+    StyledButton:{
+        padding: 15,
+        backgroundColor: '#6D28D9', //brand,
+        justifyContent: 'center',
+        alignItems:'center',
+        borderRadius: 5,
+        marginTop: 5,
+        height: 60,
+    },
+    ButtonText:{
+        color: '#ffffff', //primary,
+        fontSize: 16,
+    },
+    Line:{
+        height:1,
+        width:'100%',
+        backgroundColor: '#9CA3AF', //darkLight,
+        marginTop: 10,
+    },
+    MainContainer:{
+        flex:1,
+        width:'100%',
+        alignItems: 'center',
+        padding:25,
+        paddingTop:25,
+        justifyContent: 'center',
+    },
+    MainImage:{
+        height:'50%',
+        minWidth:'100%',
+    }
+})

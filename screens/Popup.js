@@ -10,11 +10,6 @@ import {
 
 import { CheckBox } from 'react-native-elements';
 
-import   {
-    ModalContainer,
-    ButtonContainer,
-} from './../components/styles'
-
 const Popup = () => {
   const [itemChecked,setItemChecked] = useState(false)
 
@@ -24,7 +19,7 @@ const Popup = () => {
     >
 
       <View style={styles.modalBackground}>
-        <ModalContainer>
+        <View style={styles.modalContainer}>
             <Text>
             Lorem ipsum dolor sit amet, 
             consectetur adipiscing elit. 
@@ -45,7 +40,7 @@ const Popup = () => {
             pretium a convallis id, venenatis aliquet 
             lorem.
             </Text>
-            <ButtonContainer>
+            <View style={styles.buttonContainer}>
                 <CheckBox
                   // checked = {()=>{setItemChecked(!itemChecked); console.log(itemChecked)}}
                   onPress = {()=>{
@@ -61,8 +56,8 @@ const Popup = () => {
             >
                 <Text>닫기</Text>
             </TouchableHighlight>
-            </ButtonContainer>
-        </ModalContainer>
+            </View>
+        </View>
       </View>
     </Modal>
   );
@@ -72,10 +67,28 @@ export default Popup;
 const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.3)",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height
   },
-
+  modalContainer:{
+    width:'70%',
+    height:'70%',
+    margin: 'auto',
+    alignItems: 'center',
+    padding: '5%',
+    backgroundColor: 'white',
+  },
+  buttonContainer:{
+    width:'100%',
+    height:'10%',
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    flexDirection: 'row',
+  }
 });
+

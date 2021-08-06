@@ -1,21 +1,11 @@
 import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
+import {StyleSheet, View, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
+
 //formik
 import {Formik} from 'formik';
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
-
-import {
-    StyledContainer, InnerContainer, PageLogo, PageTitle,
-    SubTitle, StyledFormArea,LeftIcon, StyledInputLabel,
-    StyledTextInput, RightIcon, StyledButton, ButtonText, MsgBox, 
-    Line, Colors, ExtraView, ExtraText,TextLink, TextLinkContent,
-} from './../components/styles'
-
-import {View, TouchableOpacity} from 'react-native'
-
-//colors
-const {brand, darkLight, primary} = Colors;
 
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
@@ -25,12 +15,16 @@ const Signup = ({navigation}) => {
 
     return(
         <KeyboardAvoidingWrapper>
-            <StyledContainer>
+            <View style={styles.styledContainer}>
                 <StatusBar style="dark"/>
-                <InnerContainer>
-                    <PageLogo resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
-                    <PageTitle>BYD</PageTitle>
-                    <SubTitle>회원가입</SubTitle>
+                <View style={styles.innerContainer}>
+                    <Image 
+                        style={styles.pageLogo} 
+                        resizeMode = "cover" 
+                        source={require('./../assets/sam.jpeg')}
+                    />
+                    <Text style={styles.pageTitle}>BYD</Text>
+                    <Text style={styles.subtitle}>회원가입</Text>
                     <Formik
                         initialValues = {{fullName: '', email:'', dateOfBirth: '', password: '', confirmPassword: ''}}
                         onSubmit = {(values)=>{
@@ -40,12 +34,12 @@ const Signup = ({navigation}) => {
                         
                     >
                     {({handleChange, handleBlur, handleSubmit, values})=>(
-                        <StyledFormArea>
+                        <View style={styles.styledFormArea}>
                             <MyTextInput
                                 label="이름"
                                 icon="person"
                                 placeholder="김갑생"
-                                placeholderTextColor={darkLight}
+                                placeholderTextColor='#9CA3AF'
                                 onChangeText = {handleChange('fullName')}
                                 onBlur={handleBlur('fullName')}
                                 value={values.fullName}
@@ -54,7 +48,7 @@ const Signup = ({navigation}) => {
                                 label="이메일 주소"
                                 icon="mail"
                                 placeholder="이메일을 입력해 주세요."
-                                placeholderTextColor={darkLight}
+                                placeholderTextColor='#9CA3AF'
                                 onChangeText = {handleChange('email')}
                                 onBlur={handleBlur('email')}
                                 value={values.email}
@@ -64,7 +58,7 @@ const Signup = ({navigation}) => {
                                 label="비밀번호"
                                 icon="lock"
                                 placeholder="* * * * * * * * "
-                                placeholderTextColor={darkLight}
+                                placeholderTextColor='#9CA3AF'
                                 onChangeText = {handleChange('ConfirmPassword')}
                                 onBlur={handleBlur('ConfirmPassword')}
                                 value={values.ConfirmPassword}
@@ -77,7 +71,7 @@ const Signup = ({navigation}) => {
                                 label="비밀번호 확인"
                                 icon="lock"
                                 placeholder="* * * * * * * * "
-                                placeholderTextColor={darkLight}
+                                placeholderTextColor='#9CA3AF'
                                 onChangeText = {handleChange('password')}
                                 onBlur={handleBlur('password')}
                                 value={values.password}
@@ -86,27 +80,30 @@ const Signup = ({navigation}) => {
                                 hidePassword={hidePassword}
                                 setHidePassword = {setHidePassword}
                             />
-                            <MsgBox>...</MsgBox>
-                            <Line/>
-                            <StyledButton onPress = {handleSubmit}>
-                                <ButtonText>
+                            <Text style={styles.msgBox}>...</Text>
+                            <View style={styles.line}/>
+                            <TouchableOpacity style={styles.styledButton}
+                            onPress = {handleSubmit}>
+                                <Text style={styles.buttonText}>
                                     회원가입
-                                </ButtonText>
-                            </StyledButton>
-                            
-                            <ExtraView>
-                                <ExtraText>
+                                </Text>
+                            </TouchableOpacity>
+                            <View style={styles.extraView}>
+                                <Text style={styles.extraText}>
                                     아이디가 있다고요? .... 
-                                </ExtraText>
-                                <TextLink onPress = {()=> navigation.navigate('Login')}>
-                                    <TextLinkContent>로그인</TextLinkContent>
-                                </TextLink>
-                            </ExtraView>
-                        </StyledFormArea>
+                                </Text>
+                                <TouchableOpacity style={styles.textLink} 
+                                onPress = {()=> navigation.navigate('Login')}>
+                                    <Text style={styles.textLinkContent}>
+                                        로그인
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     )}
                     </Formik>
-                </InnerContainer>
-            </StyledContainer>
+                </View>
+            </View>
         </KeyboardAvoidingWrapper>
     );
 }
@@ -114,15 +111,19 @@ const Signup = ({navigation}) => {
 const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
     return(
         <View>
-            <LeftIcon>
-                <Octicons name={icon} size={30} color={brand} />
-            </LeftIcon>
-            <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props} />
+            <View style={styles.leftIcon}>
+                <Octicons name={icon} size={30} color='#6D28D9' />
+            </View>
+            <Text style={styles.styledInputLabel}>{label}</Text>
+            <TextInput 
+            style={styles.styledTextInput}
+            {...props} />
             {isPassword && (
-                <RightIcon onPress = {()=>setHidePassword(!hidePassword)}>
-                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye' } size={30} color={darkLight}/>
-                </RightIcon>
+                <TouchableOpacity 
+                style={styles.rightIcon}
+                onPress = {()=>setHidePassword(!hidePassword)}>
+                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye' } size={30} color='#9CA3AF'/>
+                </TouchableOpacity>
             )}
         </View>
 
@@ -130,3 +131,111 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
 }
 
 export default Signup;
+
+const styles = StyleSheet.create({
+    styledContainer:{
+        flex:1,
+        padding:25,
+        paddingTop: 77,// if Android`${StatusBarHeight + 40}`,
+        // ${StatusBarHeight && `paddingTop:${StatusBarHeight}px`};
+        backgroundColor: '#ffffff', //primary
+    },
+    innerContainer:{
+        flex:1,
+        width:'100%',
+        alignItems: 'center',
+    },
+    pageLogo:{
+        width:250,
+        height:200,
+    },
+    pageTitle:{
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: '#6D28D9', //brand,
+        padding:10,
+    },
+    subTitle:{
+        fontSize: 18,
+        marginBottom: 20,
+        letterSpacing: 1,
+        fontWeight: 'bold',
+        color: '#1F2937'// tertiary,
+    },
+    styledFormArea:{
+        width: '90%',
+    },
+    leftIcon:{
+        left: 15,
+        top: 38,
+        position: 'absolute',
+        zIndex: 1,
+    },
+    styledInputLabel:{
+        color: '#1F2937', //tertiary
+        fontSize: 13,
+        textAlign: 'left',
+    },
+    styledTextInput:{
+        backgroundColor: '#E5E7EB',//secondary;
+        padding: 15,
+        paddingLeft: 55,
+        paddingRight: 55,
+        borderRadius: 5,
+        fontSize: 16,
+        height: 60,
+        marginTop: 3,
+        marginBottom: 10,
+        color: '#1F2937', //tertiary
+    },
+    rightIcon:{
+        right: 15,
+        top: 38,
+        position: 'absolute',
+        zIndex: 1,
+    },
+    styledButton:{
+        padding: 15,
+        backgroundColor: '#6D28D9', //brand,
+        justifyContent: 'center',
+        alignItems:'center',
+        borderRadius: 5,
+        marginTop: 5,
+        height: 60,
+    },
+    buttonText:{
+        color: '#ffffff', //primary,
+        fontSize: 16,
+    },
+    msgBox:{
+        textAlign: 'center',
+        fontSize:13,
+    },
+    line:{
+        height:1,
+        width:'100%',
+        backgroundColor: '#9CA3AF', //darkLight,
+        marginTop: 10,
+    },
+    extraView:{
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+    },
+    extraText:{
+        justifyContent: 'center',
+        alignContent: 'center',
+        color: '#1F2937', //tertiary
+        fontSize: 15,
+    },
+    textLink:{
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+    textLinkContent:{
+        color: '#6D28D9', //brand,
+        fontSize: 15,
+    },
+})

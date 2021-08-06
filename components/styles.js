@@ -162,21 +162,12 @@ export const StyledButton = styled.TouchableOpacity`
     margin-top: 5px;
     height: 60px;
 
-    ${(props)=> props.google==true && `
-        background-color: ${green};
-        flex-direction: row;
-        justify-content: center;
-    `}
 `
 
 export const ButtonText = styled.Text`
     color: ${primary};
     font-size: 16px;    
 
-    ${(props)=> props.google==true && `
-        padding: 5px;
-        padding-left: 15px;
-    `}
 `
 
 export const MsgBox = styled.Text`
