@@ -23,7 +23,6 @@ function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate('Notifications')}
         />
       </View>
-
     </View>
   );
 }
@@ -90,23 +89,24 @@ function NotificationsScreen({ navigation }) {
   );
 }
 
-
 const Stack = createStackNavigator();
 
-function MyStack() {
+export default function App() {
   return (
+    <NavigationContainer independent={true}>
     <Stack.Navigator>
       <Stack.Screen name="Send" component={HomeScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
-  );
-}
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <MyStack />
     </NavigationContainer>
   );
 }
+
+
+
+
+
+
+
+
