@@ -25,7 +25,6 @@ const Mywords = ({ navigation }) => {
                 >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <>
-
                             <Input
                                 placeholder="제목 : 제목을 입력해주세요"
                                 autoFocus
