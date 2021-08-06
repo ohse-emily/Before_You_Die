@@ -25,7 +25,6 @@ const Venting = ({ navigation }) => {
                                 style={styles.ventingInput}
                                 multiline={true}
                             />
-
                         </>
                     </TouchableWithoutFeedback>
                     <TouchableOpacity

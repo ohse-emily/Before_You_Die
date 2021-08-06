@@ -8,13 +8,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesome,EvilIcons } from '@expo/vector-icons';
 
 // screens by Seyeon
-import HomeScreen from './screens/HomeScreen';
-import MywordsScreen from './screens/MywordsScreen';
-import AfterSendingScreen from './screens/AfterSendingScreen';
-import VentingScreen from './screens/VentingScreen';
-import YourwordsScreen from './screens/YourwordsScreen';
-import ToSomeoneScreen from './screens/ToSomeoneScreen';
-import MyInfoScreen from './screens/MyInfoScreen';
+import HomeScreen from './../screens/HomeScreen';
+import MywordsScreen from './../screens/MywordsScreen';
+import AfterSendingScreen from './../screens/AfterSendingScreen';
+import VentingScreen from './../screens/VentingScreen';
+import YourwordsScreen from './../screens/YourwordsScreen';
+import ToSomeoneScreen from './../screens/ToSomeoneScreen';
+import MyInfoScreen from './../screens/MyInfoScreen';
 
 
 const Stack=createStackNavigator()
@@ -39,7 +39,9 @@ const YourwordsStackScreen =()=>(
 
 // Main Home -> 여기에 이동할 screens를 넣어야 해당 compo에서 navigate() 매서드 사용 가능  by 세연
 const HomeStackScreen =()=>(
-  <HomeStack.Navigator screenOptions={HomeScreenOptions}>
+  <HomeStack.Navigator 
+    screenOptions={HomeScreenOptions}
+  >
     <HomeStack.Screen name="Home" component={HomeScreen} />
     <HomeStack.Screen name="Yourwords" component={YourwordsScreen} />
     <HomeStack.Screen name="Mywords" component={MywordsScreen}/>
@@ -59,9 +61,20 @@ const MyInfoStackScreen =()=>(
 export default function MainApp({navigation}) {
   return (
     <NavigationContainer independent={true}>
-      <Tabs.Navigator >
+      <Tabs.Navigator 
+        initialRouteName="HomeTab"
+        screenOptions={{
+        tabBarHideOnKeyboard:true,
+        tabBarStyle:[
+          {
+            display:'flex'
+          },
+          null
+        ]
+        }}
+      >
         <Tabs.Screen 
-          name="Yourwords" 
+          name="YourwordsTab" 
           component={YourwordsStackScreen}  
           options={{
             headerShown:false,
@@ -69,7 +82,7 @@ export default function MainApp({navigation}) {
           }}
         />
         <Tabs.Screen 
-          name="Home" 
+          name="HomeTab" 
           component={HomeStackScreen} 
           options={{
             headerShown:false,
@@ -77,7 +90,7 @@ export default function MainApp({navigation}) {
           }}
         />
         <Tabs.Screen 
-          name="MyInfo" 
+          name="MyInfoTab" 
           component={MyInfoStackScreen}  
           options={{
             headerShown:false,
