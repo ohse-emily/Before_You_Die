@@ -1,17 +1,6 @@
 import React, {useState} from "react";
-<<<<<<< HEAD:screens/Popup.js
-import {
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  // CheckBox
-=======
 import { Text, View, Modal, TouchableHighlight, StyleSheet,
   Dimensions,  
->>>>>>> be6e3f1d3d9000e0c0f051aa804dea08b858b722:front/screens/Popup.js
 } from "react-native";
 import {CheckBox} from 'react-native-elements'
 
@@ -38,17 +27,10 @@ const MainPopup = (props) => {
                     onPress = {()=>setItemChecked(!itemChecked)}
                     title="일주일동안 보지 않기"
                 />
-<<<<<<< HEAD:screens/Popup.js
-                <Text>|</Text>
-            <TouchableOpacity 
-              style={{padding:20}}
-              onPress = {()=>props.handlePopup()}
-=======
                 <Text style={styles.label}>일주일동안 보지 않기</Text>
                 <Text>  |  </Text>
-            <TouchableHighlight 
+            <TouchableOpacity 
                 //   onPress={props.setModalVisible(false)}
->>>>>>> be6e3f1d3d9000e0c0f051aa804dea08b858b722:front/screens/Popup.js
             >
                 <Text style={{fontWeight:'bold'}}>닫기</Text>
             </TouchableOpacity>

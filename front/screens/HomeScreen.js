@@ -1,7 +1,6 @@
 import React, { useState, useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
-<<<<<<< HEAD:screens/HomeScreen.js
 
 // popup 
 import MainPopup from './Popup';
@@ -13,16 +12,7 @@ const HomeScreen = ({ navigation }) => {
 
     const handlePopup = () => {
         setPopcupCheck(!popupCheck)
-        console.log('zzz')
     }
-=======
-import Popup from './Popup'
-
-const HomeScreen = ({ navigation }) => {
-
-    // const 
-
->>>>>>> be6e3f1d3d9000e0c0f051aa804dea08b858b722:front/screens/HomeScreen.js
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
