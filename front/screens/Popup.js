@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { Text, View, Modal, TouchableHighlight, StyleSheet,
   Dimensions,  
 } from "react-native";
-import {CheckBox} from 'react-navite-elements'
+import {CheckBox} from 'react-native-elements'
 
 const Popup = () => {
   const [itemChecked,setItemChecked] = useState(false)
@@ -22,8 +22,8 @@ const Popup = () => {
             </Text>
             <View style={styles.buttonContainer}>
                 <CheckBox
-                  onPress = {setItemChecked}
-                  value={itemChecked}
+                    checked={itemChecked}
+                    onPress = {()=>setItemChecked(!itemChecked)}
                 />
                 <Text style={styles.label}>일주일동안 보지 않기</Text>
                 <Text>  |  </Text>

@@ -13,6 +13,7 @@ const Main = ({navigation}) => {
 
     setModalVisible = value => {
         setPopupOn(value)
+        
     }
     return(
         <>
@@ -20,9 +21,10 @@ const Main = ({navigation}) => {
             <View style={styles.InnerContainer}>
                 <Image style={styles.MainImage} resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
                 <View style={styles.MainContainer}>
-                <Popup 
-                    onPress={()=>setModalVisible(!popupOn)}
-                />
+                {/* <Popup 
+                    // isVisible=popupOn
+                    // onPress={setModalVisible(false)}
+                /> */}
                     <Text style={styles.PageTitle} welcome={true}>BYD</Text>
                     <Text style={styles.SubTitle}>Before You Die</Text>
                     <Text style={styles.SubTitle}></Text>
