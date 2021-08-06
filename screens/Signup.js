@@ -126,11 +126,11 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
                 </TouchableOpacity>
             )}
         </View>
-
     )
 }
 
 export default Signup;
+
 
 const styles = StyleSheet.create({
     styledContainer:{

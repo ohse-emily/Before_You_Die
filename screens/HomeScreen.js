@@ -1,9 +1,11 @@
 import React, { useState, useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
-
+import Popup from './Popup'
 
 const HomeScreen = ({ navigation }) => {
+
+    // const 
 
     useLayoutEffect(() => {
         navigation.setOptions({

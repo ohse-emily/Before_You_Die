@@ -39,6 +39,7 @@ const Venting = ({ navigation }) => {
     )
 }
 
+
 export default Venting
 
 const styles = StyleSheet.create({
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
         height: 300,
         padding: 10,
         borderRadius: 5,
+        textAlignVertical: 'top',
     },
     ventingAvoidingView: {
         alignItems: 'center',

@@ -1,55 +1,31 @@
 import React, {useState} from "react";
-import {
-  Text,
-  View,
-  Modal,
-  TouchableHighlight,
-  StyleSheet,
-  Dimensions,
+import { Text, View, Modal, TouchableHighlight, StyleSheet,
+  Dimensions,  
 } from "react-native";
-
-import { CheckBox } from 'react-native-elements';
+import {CheckBox} from 'react-navite-elements'
 
 const Popup = () => {
   const [itemChecked,setItemChecked] = useState(false)
+
+  const handleCheck =()=>{
+    setItemChecked(!itemChecked)
+  }
 
   return (
     <Modal animationType="slide" transparent={true} 
     // visible={props.visible}
     >
-
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
             <Text>
-            Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. 
-            Aliquam condimentum lectus id malesuada 
-            aliquam. Sed posuere, felis vitae porta 
-            dapibus, quam dolor commodo sapien, 
-            vel dapibus tellus dui non mauris. 
-            Nullam eu sodales quam, 
-            fringilla maximus nisl. Fusce ut tempus dui. 
-            Sed hendrerit erat ac quam tristique, 
-            sit amet iaculis neque lobortis. 
-            Pellentesque tincidunt neque quis pulvinar 
-            bibendum. Suspendisse potenti. Phasellus 
-            volutpat leo eu quam iaculis finibus. 
-            Vestibulum eleifend ex sit amet luctus 
-            dapibus. Quisque vehicula nisi nec aliquam 
-            vestibulum. Suspendisse nulla mi, 
-            pretium a convallis id, venenatis aliquet 
-            lorem.
+              팝업이다.
             </Text>
             <View style={styles.buttonContainer}>
                 <CheckBox
-                  // checked = {()=>{setItemChecked(!itemChecked); console.log(itemChecked)}}
-                  onPress = {()=>{
-                    setItemChecked(!itemChecked); 
-                    console.log(itemChecked);
-
-                  }}
+                  onPress = {setItemChecked}
+                  value={itemChecked}
                 />
-                <Text>일주일동안 보지 않기</Text>
+                <Text style={styles.label}>일주일동안 보지 않기</Text>
                 <Text>  |  </Text>
             <TouchableHighlight 
                 //   onPress={props.setModalVisible(false)}

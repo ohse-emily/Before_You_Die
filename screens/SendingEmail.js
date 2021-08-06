@@ -7,7 +7,7 @@ import {
 import { Button, Input } from 'react-native-elements'
 
 
-const Mywords = ({ navigation }) => {
+const SendingEmail = ({ navigation }) => {
 
     const [mywordsSubject, setMywordsSubject] = useState('')
     const [mywordsContent, setMywordsContent] = useState('')
@@ -26,7 +26,7 @@ const Mywords = ({ navigation }) => {
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <>
                             <Input
-                                placeholder="제목 : 제목을 입력해주세요"
+                                placeholder="받는 분의 email 주소를 적어주세요"
                                 autoFocus
                                 type="text"
                                 name="mywordsSubject"
@@ -34,7 +34,7 @@ const Mywords = ({ navigation }) => {
                                 onChange={text => setMywordsSubject(text)}
                             />
                             <TextInput
-                                placeholder="마지막 이야기를 들려주세요"
+                                placeholder="하고 싶은 말을 전해주세요"
                                 type="text"
                                 name="mywordsContent"
                                 value={mywordsContent}
@@ -45,7 +45,7 @@ const Mywords = ({ navigation }) => {
                             <View style={styles.mywordsMargin} >
                                 <TouchableOpacity
                                     style={styles.mywordsButton}
-                                    onPress={()=>navigation.navigate('AfterSending')}
+                                    onPress={() => navigation.navigate('AfterSending')}
                                 >
                                     <Text>누군가에게 전하기</Text>
                                 </TouchableOpacity>
@@ -58,7 +58,7 @@ const Mywords = ({ navigation }) => {
     )
 }
 
-export default Mywords
+export default SendingEmail
 
 const styles = StyleSheet.create({
     mywordsInput: {
@@ -66,23 +66,23 @@ const styles = StyleSheet.create({
         height: 300,
         borderWidth: 1,
         padding: 10,
-        borderRadius:8,
-        textAlignVertical: 'top',
+        borderRadius: 8,
+        textAlignVertical: 'top'
     },
     mywordsContainer: {
         alignItems: 'center',
     },
     mywordsButton: {
-        width:160,
-        height:40,
-        alignItems:'center',
-        padding:10,
-        backgroundColor:'lightblue',
-        marginTop:20,
-        borderRadius:7,
+        width: 160,
+        height: 40,
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: 'lightblue',
+        marginTop: 20,
+        borderRadius: 7,
     },
-    ininput:{
-        width:100,
-        height:20,
+    ininput: {
+        width: 100,
+        height: 20,
     }
 })

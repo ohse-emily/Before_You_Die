@@ -1,25 +1,10 @@
 import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View, Text, TouchableOpacity, Image,} from 'react-native';
-
 //formik
 import {Formik} from 'formik';
-
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
-
-// import {
-//     InnerContainer, // 
-//     PageTitle,
-//     SubTitle,
-//     StyledFormArea,
-//     StyledButton,
-//     ButtonText,
-//     Line,
-//     MainContainer, 
-//     MainImage,
-    
-// } from './../components/styles';
 
 import Popup from './Popup';
 
