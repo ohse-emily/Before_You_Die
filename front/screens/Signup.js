@@ -1,50 +1,117 @@
-import React, {useState} from 'react';
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View, Icon, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
-
-//formik
-import {Formik} from 'formik';
-//icons
-import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View,Image, Text, TextInput, TouchableOpacity, } from 'react-native';
+import { Formik } from 'formik'; //formik
+import { Octicons, Ionicons } from '@expo/vector-icons' //icons
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 // for image upload
-import ImagePicker from 'react-native-image-crop-picker';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 
-const Signup = ({navigation}) => {
+const Signup = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
-    const handlePhoto = () => {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-          }).then(image => {
-            console.log(image);
-          });
-    }
-    return(
-        <KeyboardAvoidingWrapper>
+    //image upload 
+    const [image, setImage] = useState(null)
+    const [uploading, setUploading] = useState(false)
 
+    const pickImage = async () => {
+        const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        // user가 카메라접근을 허락하면 == granted 
+        if (cameraRollPerm === 'granted') {
+            let pickerResult = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                base64:true,
+                aspect: [4, 4],
+            });
+            if(!pickerResult.cancelled){
+                setImage(pickerResult.uri);
+            }
+            uploadImageAsync(pickerResult.uri)
+        }
+    }
+
+    // const handleImagePicked = async (pickerResult) => {
+    //     let uploadResponse, uploadResult;
+    //     console.log('asdfasdfasdf',pickerResult.uri)
+    //     try {
+    //         setUploading(true);
+    //         if(!pickerResult.cancelled){
+    //             uploadResponse = await uploadImageAsync(pickerResult.uri);
+    //             console.log('ddddddddddd', uploadResponse)
+    //             uploadResult = await uploadResponse.json();
+
+    //             setImage(uploadResult.location)
+    //         }
+
+    //     } catch (e) {
+    //         console.log({ uploadResponse });
+    //         console.log({ uploadResult });
+    //         console.log({ e })
+    //         alert('Upload failed for some reasons')
+    //     } finally {
+    //         setUploading(false)
+    //     }
+    // }
+
+    // back end 
+    async function uploadImageAsync(uri){
+        let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
+        
+        let uriParts = uri.split('.');
+        let fileType = uriParts[uriParts.length-1];
+        let formData = new FormData();
+        formData.append('photo',{
+            uri,
+            name:`photo.${fileType}`,
+            type:`image/${fileType}`,
+        });
+
+        let options = {
+            method: 'POST',
+            body:formData,
+            headers:{
+                Accept:'application/json',
+                'Content-Type':'multipart/form-data',
+            }
+        }
+
+        return fetch(apiUrl, options);
+    }
+
+    // const handlePhoto = () => {
+    //     ImagePicker.openPicker({
+    //         width: 300,
+    //         height: 400,
+    //         cropping: true
+    //       }).then(image => {
+    //         console.log(image);
+    //       });
+    // }
+
+    return (
+        <KeyboardAvoidingWrapper>
             <View style={styles.styledContainer}>
-            <StatusBar style="dark"/>
+                <StatusBar style="dark" />
                 <View style={styles.innerContainer}>
                     <Text style={styles.pageTitle}>BYD</Text>
                     <Text style={styles.subtitle}>회원가입</Text>
                     <Formik
-                        initialValues = {{fullName: '', email:'', dateOfBirth: '', password: '', confirmPassword: ''}}
-                        onSubmit = {(values)=>{
+                        initialValues={{ fullName: '', email: '', dateOfBirth: '', password: '', confirmPassword: '' }}
+                        onSubmit={(values) => {
                             console.log(values);
                             navigation.navigate('Welcome')
                         }}
                     >
-                        {({handleChange, handleBlur, handleSubmit, values})=>(
+                        {({ handleChange, handleBlur, handleSubmit, values }) => (
                             <View style={styles.styledFormArea}>
                                 <View style={styles.avatarArea}>
-                                    <TouchableOpacity 
-                                    style={styles.avatar}
-                                    onPress = {handlePhoto}
+                                    <TouchableOpacity
+                                        style={styles.avatar}
+                                        onPress={pickImage}
                                     >
-                                        <Ionicons name="person-add" size={99} color="gray" />
+                                        {/* {image ? <Image source ={{uri:image}} style={styles.profile_img}/> : <Ionicons name="person-add" size={99} color="gray" />}*/}
+                                        {image ? <Image rounded source={{uri:image}} style={styles.profile_img} /> : <Image source={require('../assets/user_.png')} style={styles.profile_img} />}
                                     </TouchableOpacity>
                                 </View>
                                 <MyTextInput
@@ -52,7 +119,7 @@ const Signup = ({navigation}) => {
                                     icon="person"
                                     placeholder="김갑생"
                                     placeholderTextColor='#9CA3AF'
-                                    onChangeText = {handleChange('fullName')}
+                                    onChangeText={handleChange('fullName')}
                                     onBlur={handleBlur('fullName')}
                                     value={values.fullName}
                                 />
@@ -61,7 +128,7 @@ const Signup = ({navigation}) => {
                                     icon="mail"
                                     placeholder="이메일을 입력해 주세요."
                                     placeholderTextColor='#9CA3AF'
-                                    onChangeText = {handleChange('email')}
+                                    onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
                                     value={values.email}
                                     keyboardType="email-address"
@@ -71,41 +138,41 @@ const Signup = ({navigation}) => {
                                     icon="lock"
                                     placeholder="* * * * * * * * "
                                     placeholderTextColor='#9CA3AF'
-                                    onChangeText = {handleChange('ConfirmPassword')}
+                                    onChangeText={handleChange('ConfirmPassword')}
                                     onBlur={handleBlur('ConfirmPassword')}
                                     value={values.ConfirmPassword}
                                     secureTextEntry={hidePassword}
                                     isPassword={true}
                                     hidePassword={hidePassword}
-                                    setHidePassword = {setHidePassword}
+                                    setHidePassword={setHidePassword}
                                 />
                                 <MyTextInput
                                     label="비밀번호 확인"
                                     icon="lock"
                                     placeholder="* * * * * * * * "
                                     placeholderTextColor='#9CA3AF'
-                                    onChangeText = {handleChange('password')}
+                                    onChangeText={handleChange('password')}
                                     onBlur={handleBlur('password')}
                                     value={values.password}
                                     secureTextEntry={hidePassword}
                                     isPassword={true}
                                     hidePassword={hidePassword}
-                                    setHidePassword = {setHidePassword}
+                                    setHidePassword={setHidePassword}
                                 />
                                 <Text style={styles.msgBox}>...</Text>
-                                <View style={styles.line}/>
+                                <View style={styles.line} />
                                 <TouchableOpacity style={styles.styledButton}
-                                onPress = {handleSubmit}>
+                                    onPress={handleSubmit}>
                                     <Text style={styles.buttonText}>
                                         회원가입
                                     </Text>
                                 </TouchableOpacity>
                                 <View style={styles.extraView}>
                                     <Text style={styles.extraText}>
-                                        아이디가 있다고요? .... 
+                                        아이디가 있다고요? ....
                                     </Text>
-                                    <TouchableOpacity style={styles.textLink} 
-                                    onPress = {()=> navigation.navigate('Login')}>
+                                    <TouchableOpacity style={styles.textLink}
+                                        onPress={() => navigation.navigate('Login')}>
                                         <Text style={styles.textLinkContent}>
                                             로그인
                                         </Text>
@@ -121,21 +188,21 @@ const Signup = ({navigation}) => {
     );
 }
 
-const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
-    return(
+const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props }) => {
+    return (
         <View>
             <View style={styles.leftIcon}>
                 <Octicons name={icon} size={30} color='#6D28D9' />
             </View>
             <Text style={styles.styledInputLabel}>{label}</Text>
-            <TextInput 
-            style={styles.styledTextInput}
-            {...props} />
+            <TextInput
+                style={styles.styledTextInput}
+                {...props} />
             {isPassword && (
-                <TouchableOpacity 
-                style={styles.rightIcon}
-                onPress = {()=>setHidePassword(!hidePassword)}>
-                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye' } size={30} color='#9CA3AF'/>
+                <TouchableOpacity
+                    style={styles.rightIcon}
+                    onPress={() => setHidePassword(!hidePassword)}>
+                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color='#9CA3AF' />
                 </TouchableOpacity>
             )}
         </View>
@@ -146,56 +213,56 @@ export default Signup;
 
 
 const styles = StyleSheet.create({
-    styledContainer:{
-        flex:1,
-        padding:25,
+    styledContainer: {
+        flex: 1,
+        padding: 25,
         paddingTop: 77,// if Android`${StatusBarHeight + 40}`,
         // ${StatusBarHeight && `paddingTop:${StatusBarHeight}px`};
         backgroundColor: '#ffffff', //primary
     },
-    innerContainer:{
-        flex:1,
-        width:'100%',
+    innerContainer: {
+        flex: 1,
+        width: '100%',
         alignItems: 'center',
     },
-    avatarArea:{
-        width:'100%',
+    avatarArea: {
+        width: '100%',
         alignItems: 'center',
     },
-    avatar:{
-        width:100,
-        height:100,
+    avatar: {
+        width: 100,
+        height: 100,
         margin: 'auto',
     },
-    pageTitle:{
+    pageTitle: {
         fontSize: 30,
         textAlign: 'center',
         fontWeight: 'bold',
         color: '#6D28D9', //brand,
-        padding:10,
+        padding: 10,
     },
-    subTitle:{
+    subTitle: {
         fontSize: 18,
         marginBottom: 20,
         letterSpacing: 1,
         fontWeight: 'bold',
         color: '#1F2937'// tertiary,
     },
-    styledFormArea:{
+    styledFormArea: {
         width: '90%',
     },
-    leftIcon:{
+    leftIcon: {
         left: 15,
         top: 38,
         position: 'absolute',
         zIndex: 1,
     },
-    styledInputLabel:{
+    styledInputLabel: {
         color: '#1F2937', //tertiary
         fontSize: 13,
         textAlign: 'left',
     },
-    styledTextInput:{
+    styledTextInput: {
         backgroundColor: '#E5E7EB',//secondary;
         padding: 15,
         paddingLeft: 55,
@@ -207,53 +274,57 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         color: '#1F2937', //tertiary
     },
-    rightIcon:{
+    rightIcon: {
         right: 15,
         top: 38,
         position: 'absolute',
         zIndex: 1,
     },
-    styledButton:{
+    styledButton: {
         padding: 15,
         backgroundColor: '#6D28D9', //brand,
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         borderRadius: 5,
         marginTop: 5,
         height: 60,
     },
-    buttonText:{
+    buttonText: {
         color: '#ffffff', //primary,
         fontSize: 16,
     },
-    msgBox:{
+    msgBox: {
         textAlign: 'center',
-        fontSize:13,
+        fontSize: 13,
     },
-    line:{
-        height:1,
-        width:'100%',
+    line: {
+        height: 1,
+        width: '100%',
         backgroundColor: '#9CA3AF', //darkLight,
         marginTop: 10,
     },
-    extraView:{
+    extraView: {
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
     },
-    extraText:{
+    extraText: {
         justifyContent: 'center',
         alignContent: 'center',
         color: '#1F2937', //tertiary
         fontSize: 15,
     },
-    textLink:{
+    textLink: {
         justifyContent: 'center',
         alignContent: 'center',
     },
-    textLinkContent:{
+    textLinkContent: {
         color: '#6D28D9', //brand,
         fontSize: 15,
     },
+    profile_img:{
+        width:100,
+        height:100,
+    }
 })
