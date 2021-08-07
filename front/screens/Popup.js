@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import { Text, View, Modal, TouchableHighlight, StyleSheet,
+import { Text, View, Modal, TouchableOpacity, StyleSheet,
   Dimensions,  
 } from "react-native";
 import {CheckBox} from 'react-native-elements'
 
-const MainPopup = (props) => {
+const MainPopup = ({handlePopup, value}) => {
   const [itemChecked,setItemChecked] = useState(false)
 
   const handleCheck =()=>{
@@ -24,15 +24,14 @@ const MainPopup = (props) => {
                 <CheckBox
                     containerStyle={{backgroundColor: 'transparent', borderColor:'transparent', marginRight: -5}}
                     checked={itemChecked}
-                    onPress = {()=>setItemChecked(!itemChecked)}
+                    onPress = {handleCheck}
                     title="일주일동안 보지 않기"
                 />
-                <Text style={styles.label}>일주일동안 보지 않기</Text>
                 <Text>  |  </Text>
             <TouchableOpacity 
                 //   onPress={props.setModalVisible(false)}
             >
-                <Text style={{fontWeight:'bold'}}>닫기</Text>
+                <Text onPress= {handlePopup} style={{fontWeight:'bold'}}>닫기</Text>
             </TouchableOpacity>
             </View>
         </View>

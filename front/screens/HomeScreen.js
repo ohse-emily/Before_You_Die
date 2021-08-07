@@ -12,6 +12,7 @@ const HomeScreen = ({ navigation }) => {
 
     const handlePopup = () => {
         setPopcupCheck(!popupCheck)
+        console.log('asdf')
     }
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -21,12 +22,14 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.HomeLayout}>
-            {popupCheck ? (
-            <MainPopup
+            {popupCheck ? 
+            (<MainPopup
                 value={popupCheck}
                 handlePopup={handlePopup}
-            />)
-            :(<Text/>)}
+            />
+            ):(
+            <Text/>
+            )}
             <View style={styles.HomeTopLayout}>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
