@@ -4,8 +4,20 @@ import { Text, View, Modal, TouchableOpacity, StyleSheet,
 } from "react-native";
 import {CheckBox} from 'react-native-elements'
 
-const MainPopup = ({handlePopup, value}) => {
+const MainPopup = ({handlePopup, value, which}) => {
   const [itemChecked,setItemChecked] = useState(false)
+  let popupContent;
+  let agree;
+  if(which==="homescreen"){
+    agree = "일주일동안 보지 않기"
+    popupContent = "BYD에 오신 것을 환영합니다. / 여기에 개인정보수집 동의 ? 이런거 넣기?"
+  }else if(which==="ToSomeoneScreen"){
+    agree = "동의합니다."
+    popupContent = " 내가 세상에 없다면? 누군가에게 남기고 싶은 말을 전해보세요. 저희 BYD 어플에 로그인을 2년동안 안하시면 해당 email 또는 핸드폰 번호로 대신 말씀을 전해드리겠습니다.  "
+  }else if(which=="ventingScreen"){
+    agree= "네! 잘 알겠습니다."
+    popupContent = "고해성사에 적는 어떤 말도 기록되거나 저장되지 않습니다. 데이터 베이스에 저장되지 않으며 개발자도 볼 수 없습니다. 철저한 익명과 비밀을 보장해드리므로써 그동안 어딘가에 말하고 싶었던 본인만의 이야기를 하늘로 훌훌 날려보내 보세요! "
+  }
 
   const handleCheck =()=>{
     setItemChecked(!itemChecked)
@@ -18,14 +30,14 @@ const MainPopup = ({handlePopup, value}) => {
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
             <Text>
-              팝업이다.
+              {popupContent}
             </Text>
             <View style={styles.buttonContainer}>
                 <CheckBox
                     containerStyle={{backgroundColor: 'transparent', borderColor:'transparent', marginRight: -5}}
                     checked={itemChecked}
                     onPress = {handleCheck}
-                    title="일주일동안 보지 않기"
+                    title={agree}
                 />
                 <Text>  |  </Text>
             <TouchableOpacity 

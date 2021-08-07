@@ -14,6 +14,7 @@ const HomeScreen = ({ navigation }) => {
         setPopcupCheck(!popupCheck)
         console.log('asdf')
     }
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
@@ -26,6 +27,7 @@ const HomeScreen = ({ navigation }) => {
             (<MainPopup
                 value={popupCheck}
                 handlePopup={handlePopup}
+                which={"homescreen"}
             />
             ):(
             <Text/>

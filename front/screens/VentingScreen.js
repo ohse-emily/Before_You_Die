@@ -4,14 +4,28 @@ import {
     KeyboardAvoidingView, TextInput,
     TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native'
-import { Button, Input } from 'react-native-elements'
+import MainPopup from './Popup'
 
 const Venting = ({ navigation }) => {
 
     const [ventingContent, setVentingContent] = useState('')
 
+    const [popupVenting, setPopupVenting] = useState(true)
+    const popupVent = () => {
+        setPopupVenting(!popupVenting)
+    }
+
     return (
         <SafeAreaView style={styles.ventingContainer}>
+            {popupVenting ?
+                (<MainPopup
+                    value={popupVenting}
+                    handlePopup={popupVent}
+                    which={"ventingScreen"}
+                />
+                ) : (
+                    <Text />
+            )}
             <ScrollView >
                 <KeyboardAvoidingView style={styles.ventingAvoidingView}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
