@@ -33,9 +33,20 @@ const Login = ({navigation}) => {
 
                     <Formik
                         initialValues = {{email:'', password: ''}}
-                        onSubmit = {(values)=>{
-                            console.log(values);
-                            navigation.navigate("Welcome")
+                        onSubmit = {async (values)=>{
+                            // console.log(values);
+                            //fetch
+                            let url = 'http://localhost:3000/'
+                            await fetch(url, {
+                                method: 'POST', // or 'PUT'
+                                body: JSON.stringify(values), // data can be `string` or {object}!
+                                headers:{
+                                  'Content-Type': 'application/json'
+                                }
+                              })
+
+                            //
+                            navigation.navigate("HomeScreen")
                         }}
                     >
                     {({handleChange, handleBlur, handleSubmit, values})=>(
@@ -66,8 +77,8 @@ const Login = ({navigation}) => {
                             <Text style={styles.msgBox}>...</Text>
                             <View style={styles.line}/>
                             <TouchableOpacity style={styles.styledButton}
-                            // onPress = {handleSubmit}
-                            onPress = {()=> navigation.navigate('MainApp')}
+                            onPress = {handleSubmit}
+                            // onPress = {()=> {navigation.navigate('MainApp')}}
                             >
                                 <Text style={styles.buttonText}>
                                     로그인
