@@ -30,6 +30,11 @@ module.exports = class Users extends Sequelize.Model{
                 allowNull:false,
                 defaultValue:0,   // 0 은 아직 인증 전 , 1은 인증 후  (by 세연) 
             },
+            user_info_agree:{
+                type:Sequelize.BOOLEAN,
+                allowNull:false,
+                defaultValue:1, // 처음 가입 시 고객정보 수신 동의 필요 -> 디폴트값 1  (by세연) 
+            },
             join_date:{
                 type:Sequelize.DATE,
                 allowNull:false,

@@ -1,7 +1,6 @@
 import React, { useState, useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
-
 // popup 
 import MainPopup from './Popup';
 
