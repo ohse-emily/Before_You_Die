@@ -5,4 +5,4 @@ const user = require('./user');
 router.use('/user', user)
 
 
-module.export = router 
+module.exports = router 
