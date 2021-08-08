@@ -6,10 +6,6 @@ import {Formik} from 'formik';
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
 
-<<<<<<< HEAD:screens/Main.js
-=======
-import Popup from './Popup';
->>>>>>> be6e3f1d3d9000e0c0f051aa804dea08b858b722:front/screens/Main.js
 
 const Main = ({navigation}) => {
     const [popupOn, setPopupOn] = useState(true)
@@ -23,13 +19,6 @@ const Main = ({navigation}) => {
             <View style={styles.InnerContainer}>
                 <Image style={styles.MainImage} resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
                 <View style={styles.MainContainer}>
-<<<<<<< HEAD:screens/Main.js
-=======
-                {/* <Popup 
-                    // isVisible=popupOn
-                    // onPress={setModalVisible(false)}
-                /> */}
->>>>>>> be6e3f1d3d9000e0c0f051aa804dea08b858b722:front/screens/Main.js
                     <Text style={styles.PageTitle} welcome={true}>BYD</Text>
                     <Text style={styles.SubTitle}>Before You Die</Text>
                     <Text style={styles.SubTitle}></Text>

@@ -1,7 +1,6 @@
 import React, { useState, useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
-<<<<<<< HEAD:screens/HomeScreen.js
 
 // popup 
 import MainPopup from './Popup';
@@ -10,19 +9,17 @@ import MainPopup from './Popup';
 const HomeScreen = ({ navigation }) => {
 
     const [popupCheck, setPopcupCheck] = useState(true)
+    const [noSeeOneWeek, setNoSeeOneWeek] = useState(false)
 
     const handlePopup = () => {
         setPopcupCheck(!popupCheck)
-        console.log('zzz')
+        console.log(noSeeOneWeek)
+        //나중에 콘솔로그 대신 쿠키로 보내는걸로
     }
-=======
-import Popup from './Popup'
 
-const HomeScreen = ({ navigation }) => {
-
-    // const 
-
->>>>>>> be6e3f1d3d9000e0c0f051aa804dea08b858b722:front/screens/HomeScreen.js
+    const handleOneWeek = () => {
+        setNoSeeOneWeek(true)
+    }
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
@@ -35,6 +32,7 @@ const HomeScreen = ({ navigation }) => {
             <MainPopup
                 value={popupCheck}
                 handlePopup={handlePopup}
+                handleOneWeek={handleOneWeek}
             />)
             :(<Text/>)}
             <View style={styles.HomeTopLayout}>
