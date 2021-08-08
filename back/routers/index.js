@@ -4,5 +4,4 @@ const router = express.Router()
 
 // router.use('/blabla', 파일명)
 
-
-module.export = router 
+module.export = router

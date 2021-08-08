@@ -28,13 +28,16 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.HomeLayout}>
-            {popupCheck ? (
-            <MainPopup
+            {popupCheck ? 
+            (<MainPopup
                 value={popupCheck}
                 handlePopup={handlePopup}
+                which={"homescreen"}
                 handleOneWeek={handleOneWeek}
-            />)
-            :(<Text/>)}
+            />
+            ):(
+            <Text/>
+            )}
             <View style={styles.HomeTopLayout}>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
