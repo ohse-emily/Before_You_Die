@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
-// const 파일명 = require('./파일가져와');
+const user = require('./user');
 
-// router.use('/blabla', 파일명)
+router.use('/user', user)
 
 module.export = router
