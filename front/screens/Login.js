@@ -32,21 +32,29 @@ const Login = ({navigation}) => {
                     <Text style={styles.subtitle}>로그인</Text>
 
                     <Formik
-                        initialValues = {{email:'', password: ''}}
+                        initialValues = {{user_email:'', user_password: ''}}
                         onSubmit = {async (values)=>{
                             // console.log(values);
                             //fetch
-                            let url = 'http://localhost:3000/'
-                            await fetch(url, {
+                            let url = 'http://localhost:3000/user/login/'
+                            let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!
                                 headers:{
                                   'Content-Type': 'application/json'
                                 }
                               })
-
-                            //
-                            navigation.navigate("HomeScreen")
+                            let getData = await response.json()
+                            console.log(getData)
+                            if(getData.proceed==true){
+                                navigation.navigate("MainApp")
+                            }
+                            else if(getData.proceed == false && getData.type == 'noverified'){
+                                alert('이메일 인증을 완료해주세요.')
+                            } else if(getData.proceed == false && getData.type == 'nouser'){
+                                alert('아이디와 비밀번호를 확인해주세요')
+                            }
+                            
                         }}
                     >
                     {({handleChange, handleBlur, handleSubmit, values})=>(
@@ -56,9 +64,9 @@ const Login = ({navigation}) => {
                                 icon="mail"
                                 placeholder="이메일을 입력해 주세요."
                                 placeholderTextColor='#9CA3AF' //darkLight
-                                onChangeText = {handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
+                                onChangeText = {handleChange('user_email')}
+                                onBlur={handleBlur('user_email')}
+                                value={values.user_email}
                                 keyboardType="email-address"
                             />
                             <MyTextInput
@@ -66,9 +74,9 @@ const Login = ({navigation}) => {
                                 icon="lock"
                                 placeholder="* * * * * * * * "
                                 placeholderTextColor= '#9CA3AF' //darkLight
-                                onChangeText = {handleChange('password')}
-                                onBlur={handleBlur('password')}
-                                value={values.password}
+                                onChangeText = {handleChange('user_password')}
+                                onBlur={handleBlur('user_password')}
+                                value={values.user_password}
                                 secureTextEntry={hidePassword}
                                 isPassword={true}
                                 hidePassword={hidePassword}
@@ -76,9 +84,9 @@ const Login = ({navigation}) => {
                             />
                             <Text style={styles.msgBox}>...</Text>
                             <View style={styles.line}/>
-                            <TouchableOpacity style={styles.styledButton}
-                            onPress = {handleSubmit}
-                            // onPress = {()=> {navigation.navigate('MainApp')}}
+                            <TouchableOpacity 
+                                style={styles.styledButton}
+                                onPress = {handleSubmit}
                             >
                                 <Text style={styles.buttonText}>
                                     로그인
