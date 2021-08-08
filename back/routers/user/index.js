@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./user.controller');
 
-router.post('/join', controller.join)
+router.get('/join', controller.join)
 router.post('/login', controller.login)
 
 
