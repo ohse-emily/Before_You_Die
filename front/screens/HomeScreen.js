@@ -8,12 +8,17 @@ import MainPopup from './Popup';
 const HomeScreen = ({ navigation }) => {
 
     const [popupCheck, setPopcupCheck] = useState(true)
+    const [noSeeOneWeek, setNoSeeOneWeek] = useState(false)
 
     const handlePopup = () => {
         setPopcupCheck(!popupCheck)
-        console.log('asdf')
+        console.log(noSeeOneWeek)
+        //나중에 콘솔로그 대신 쿠키로 보내는걸로
     }
 
+    const handleOneWeek = () => {
+        setNoSeeOneWeek(true)
+    }
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
@@ -27,6 +32,7 @@ const HomeScreen = ({ navigation }) => {
                 value={popupCheck}
                 handlePopup={handlePopup}
                 which={"homescreen"}
+                handleOneWeek={handleOneWeek}
             />
             ):(
             <Text/>

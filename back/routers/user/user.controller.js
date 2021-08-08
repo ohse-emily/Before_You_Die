@@ -39,8 +39,28 @@ let join_ = (req, res) => {
     res.send('check your email ')
 }
 
-let login = (req, res) => {
-    res.send('login')
+let login = async (req, res)=>{
+    let {user_email, user_password} = req.body
+    console.log(user_password)
+    let pwJWT = createPW(user_password)
+
+    let getUser = await Users.findOne({
+        where:{
+            user_email, 
+            user_password: user_password} // 나중에 pwJWT로 바꾸기
+    })
+    let result = {proceed: false, type: 'nouser'}
+    if(getUser !== null && getUser.email_verify == 1){
+        // 진행
+        result.proceed=true;
+        result.type='verifieduser'
+
+    } else if(getUser !== null && getUser.email_verify == 0) {
+        // 인증안됨
+        result.type = 'noverified'
+    } 
+    // nouser
+    res.json(result)
 }
 
 // 고객이 email url 클릭 시 email_verify 0 -> 1로 변경 
