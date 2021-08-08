@@ -13,9 +13,7 @@ app.use(bodyParser.urlencoded({extended:false,}));
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req,res)=>{
-    res.send('asdf')
-})
+app.use('/', router)
 
 app.listen(3000,()=>{
     console.log('server start : 3000')
