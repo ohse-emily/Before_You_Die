@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
 
+// save login data
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //formik
 import {Formik} from 'formik';
 
@@ -17,6 +20,14 @@ import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 
 const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true)
+
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('@storage_Key', value)
+          console.log(value, 'storeData')
+        } catch (e) {
+        }
+    }
 
     return(
         <KeyboardAvoidingWrapper>
@@ -48,6 +59,7 @@ const Login = ({navigation}) => {
                             try{
                                 if(getData.proceed==true){
                                     navigation.navigate("MainApp")
+                                    storeData(getData.token)
                                 }
                                 else if(getData.proceed == false && getData.type == 'noverified'){
                                     alert('이메일 인증을 완료해주세요.')

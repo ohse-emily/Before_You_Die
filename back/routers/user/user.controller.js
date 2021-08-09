@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Users, Lastwords, Messages } = require('../../models');
-const { createPW, email_verify_key } = require('../../JWT');
+const { createPW, email_verify_key, createToken } = require('../../JWT');
 const nodemailer = require('nodemailer');
 
 let join= async (req,res)=>{
@@ -55,6 +55,7 @@ let login = async (req, res)=>{
     let {user_email, user_password} = req.body
     console.log(user_password)
     let pwJWT = createPW(user_password)
+    let token = createToken(user_email)
 
     let getUser = await Users.findOne({
         where:{
@@ -66,7 +67,7 @@ let login = async (req, res)=>{
         // 진행
         result.proceed=true;
         result.type='verifieduser'
-
+        result.token=token
     } else if(getUser !== null && getUser.email_verify == 0) {
         // 인증안됨
         result.type = 'noverified'
