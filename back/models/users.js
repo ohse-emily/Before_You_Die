@@ -30,6 +30,11 @@ module.exports = class Users extends Sequelize.Model{
                 allowNull:false,
                 defaultValue:0,   // 0 은 아직 인증 전 , 1은 인증 후  (by 세연) 
             },
+            email_verify_key:{
+                type:Sequelize.STRING(50),
+                allowNull:false,
+                defaultValue:'',   // null 로 디폴트 -> 회원가입시 넣기 (by 세연)
+            },
             user_info_agree:{
                 type:Sequelize.BOOLEAN,
                 allowNull:false,
