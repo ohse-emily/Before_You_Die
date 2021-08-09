@@ -6,21 +6,19 @@ const nodemailer = require('nodemailer');
 let join= async (req,res)=>{
     let {fullName, email, password, user_image} = req.body
     console.log(fullName, email, password, user_image)
+    let email_key = email_verify_key();
 
+    // front 에서 받아온 정보 db Users 에 저장 by 성민
     pwJWT = createPW(password)
-    let result = Users.create({
+    Users.create({
         user_nickname: fullName,
         user_email : email,
         user_password : pwJWT,
-        user_image: user_image
+        user_image: user_image,
+        email_verify_key:email_key,
     })
 
-    res.json({join:'success'})
-}
-
-let join_ = (req, res) => {
-    let user_email = 'saeee210@gmail.com';
-    let email_key = email_verify_key();
+    // email 인증 메일 보내기 by 세연 
 
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
@@ -35,9 +33,9 @@ let join_ = (req, res) => {
     let url = `http://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
     let options = {
         from: '<BYD> byd.dothis@gmail.com',
-        to: user_email,
-        subject: '이메일 인증을 진행해주세요! :) ',
-        html: `username 님 안녕하십니까 이메일인증을 위해 url을 클릭해주세요 ${url}`
+        to: email,
+        subject: ' BYD 회원가입을 완성해 주세요 :) !  ',
+        html: `username 님 안녕하세요,  이메일인증을 위해 url을 클릭해주세요 -> ${url}`
     }
 
     transporter.sendMail(options, function (err, res) {
@@ -48,8 +46,22 @@ let join_ = (req, res) => {
         }
         transporter.close();
     })
-    res.send('check your email ')
+    res.json({join:'success'})
 }
+
+// 고객이 email url 클릭 시 email_verify 0 -> 1로 변경  by세연 
+let confirmEmail = async (req, res) => {
+    console.log('asdfasdf',req.query.key)
+    let email_verify_change = await Users.update({ email_verify: 1 }, { where: {email_verify_key:req.query.key} })
+    console.log(email_verify_change)
+    if (email_verify_change == undefined) {
+        res.send('<script type="text/javascript">alert("Not verified"); window.location="/"; </script>');
+        return 0;
+    } else {
+        res.send('<script type="text/javascript"> alert("Successfully verified");  </script>');
+    } //window.location="/user/login";
+}
+
 
 let login = async (req, res)=>{
     let {user_email, user_password} = req.body
@@ -60,7 +72,7 @@ let login = async (req, res)=>{
     let getUser = await Users.findOne({
         where:{
             user_email, 
-            user_password: user_password} // 나중에 pwJWT로 바꾸기
+            user_password: pwJWT} // 나중에 pwJWT로 바꾸기
     })
     let result = {proceed: false, type: 'nouser'}
     if(getUser !== null && getUser.email_verify == 1){
@@ -76,19 +88,9 @@ let login = async (req, res)=>{
     res.json(result)
 }
 
-// 고객이 email url 클릭 시 email_verify 0 -> 1로 변경 
-let confirmEmail = async (req, res) => {
-    let email_verify_change = await Users.update({ email_verify: 1 }, { where: {} })
-    console.log(email_verify_change)
-    if (email_verify_change == undefined) {
-        res.send('<script type="text/javascript">alert("Not verified"); window.location="/"; </script>');
-        return 0;
-    } else {
-        res.send('<script type="text/javascript"> alert("Successfully verified"); window.location="/user/login"; </script>');
-    }
-}
+
 
 
 module.exports = {
-    join, join_, login, confirmEmail,
+    join, login, confirmEmail,
 }
