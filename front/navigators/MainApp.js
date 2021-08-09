@@ -7,6 +7,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesome,EvilIcons } from '@expo/vector-icons';
 
+import RootStack from './RootStack'
+
 // screens by Seyeon
 import HomeScreen from './../screens/HomeScreen';
 import MywordsScreen from './../screens/MywordsScreen';

@@ -1,44 +1,90 @@
 
-import React from 'react';
-import { View, Image, StyleSheet, Text, Alert, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import { View, Image, StyleSheet, Text, Alert, ScrollView, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function DisplayAnImage() {
-  const createTwoButtonAlert = () =>
-    Alert.alert("경고", "정말로 탈퇴하시겠습니까?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
+const MyInfoScreen = ({navigation}) => {
+
+
+    const createTwoButtonAlert = () =>
+        Alert.alert("경고", "정말로 탈퇴하시겠습니까?",
+        [
+            {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
     );
 
-  const createTwoButtonAlert2 = () =>
-    Alert.alert("로그아웃", "로그아웃 하시겠습니까?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => {console.log("Cancel Pressed");},
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => {
-          console.log("OK Pressed"); 
-          AsyncStorage.clear(); 
-          navigation.navigate('Main')}
-        }
-      ]
+    const createTwoButtonAlert2 = () =>
+        Alert.alert("로그아웃", "로그아웃 하시겠습니까?",
+        [
+            {
+            text: "Cancel",
+            onPress: () => {console.log("Cancel Pressed");},
+            style: "cancel"
+            },
+            { text: "OK", onPress: () => {
+            console.log("OK Pressed"); 
+            // AsyncStorage.clear(); 
+            
+            navigation.navigate('RootStack')}
+            }
+        ]
     );
+    const sendToken = async () => {
+        const userToken = async () => {
+            try {
+                const value = await AsyncStorage.getItem('@storage_Key')
+                // value previously stored
+                return value;
+
+            } catch(e) {
+            // error reading value
+            }
+        }
+        userToken()
+            .then(data=>{
+                    if( data !== null){
+
+                        getInfo(data)
+
+                    } else {
+
+                        alert('잘못된 접근입니다.')
+                    }
+            })
+            .catch((e)=>{
+                console.log(e)
+        })
+
+        const getInfo = async (token) => {
+            let url = 'http://localhost:3000/user/userinfo/'
+            let value = {tokenValue:token}
+            let response = await fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(value), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+            let getData = await response.json()
+            console.log(getData)
+        }
+    }
+    
 
   return (
+
     <View style={styles.mypage_wrap}>
       <ScrollView>
         <View style={styles.profile_image_container}>
           <View>
             <Text>마이페이지</Text>
           </View>
+          <Button title="zxc" onPress={sendToken}/>
           <Image
             style={styles.tinyLogo}
             source={
@@ -71,6 +117,8 @@ export default function DisplayAnImage() {
     </View>
   );
 }
+
+export default MyInfoScreen 
 
 const styles = StyleSheet.create({
   profile_image_container: {

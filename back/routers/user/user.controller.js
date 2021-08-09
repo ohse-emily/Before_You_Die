@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Users, Lastwords, Messages } = require('../../models');
-const { createPW, email_verify_key, createToken } = require('../../JWT');
+const { createPW, email_verify_key, createToken, getUserid } = require('../../JWT');
 const nodemailer = require('nodemailer');
 
 let join= async (req,res)=>{
@@ -68,6 +68,16 @@ let login = async (req, res)=>{
         result.proceed=true;
         result.type='verifieduser'
         result.token=token
+        let loggedInAt = new Date().toLocaleDateString()
+        let updateLoginTime = await Users.update({
+            login_date: loggedInAt
+        },{
+            where:{ user_email: user_email
+
+            }
+        })
+        console.log(updateLoginTime)
+        
     } else if(getUser !== null && getUser.email_verify == 0) {
         // 인증안됨
         result.type = 'noverified'
@@ -88,7 +98,20 @@ let confirmEmail = async (req, res) => {
     }
 }
 
+let getUserInfo = async (req,res) => {
+    let {tokenValue} = req.body
+    let user_email = getUserid(tokenValue)
+    let getUser = await Users.findOne({
+        where:{
+            user_email, 
+        }
+    })
+
+    // 다른 데이터도 가져오기
+    // 나중에 배열에 담기
+    res.json(getUser.dataValues)
+}
 
 module.exports = {
-    join, join_, login, confirmEmail,
+    join, join_, login, confirmEmail, getUserInfo
 }
