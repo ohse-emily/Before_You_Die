@@ -7,8 +7,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesome,EvilIcons } from '@expo/vector-icons';
 
-import RootStack from './RootStack'
-
 // screens by Seyeon
 import HomeScreen from './../screens/HomeScreen';
 import MywordsScreen from './../screens/MywordsScreen';
@@ -17,6 +15,9 @@ import VentingScreen from './../screens/VentingScreen';
 import YourwordsScreen from './../screens/YourwordsScreen';
 import ToSomeoneScreen from './../screens/ToSomeoneScreen';
 import MyInfoScreen from './../screens/MyInfoScreen';
+
+// screens by Shinwoo
+import MyMessages from './../screens/MyMessages'
 
 const Stack=createStackNavigator()
 
@@ -55,6 +56,7 @@ const HomeStackScreen =()=>(
 const MyInfoStackScreen =()=>(
   <MyInfoStack.Navigator screenOptions={HomeScreenOptions}>
     <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen}/>
+    <MyInfoStack.Screen name="MyMessages" component={MyMessages}/>
   </MyInfoStack.Navigator>
 )
 

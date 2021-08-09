@@ -1,11 +1,19 @@
 
-import React, {useState} from 'react';
-import { View, Image, StyleSheet, Text, Alert, ScrollView, Button } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, Image, StyleSheet, Text, Alert, ScrollView, Button, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyInfoScreen = ({navigation}) => {
-
-
+  // 메시지를 담아놓는 state - 신우
+  const [messagesList, setMessagesList] = useState([])
+  // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
+  const [gotData, setGotData] = useState(false)
+  const test = '1234'
+  
+  useEffect(()=>{
+    // sendToken만으로는 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
+    sendToken()
+  },[gotData])
     const createTwoButtonAlert = () =>
         Alert.alert("경고", "정말로 탈퇴하시겠습니까?",
         [
@@ -28,32 +36,37 @@ const MyInfoScreen = ({navigation}) => {
             },
             { text: "OK", onPress: () => {
             console.log("OK Pressed"); 
-            // AsyncStorage.clear(); 
             
+            // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
+            // AsyncStorage.clear(); 
+            //네비 이름 제대로 하기 - 신우
             navigation.navigate('RootStack')}
             }
         ]
     );
+
+    // 토큰을 이용하여 회원정보 가져오기 - 신우
     const sendToken = async () => {
         const userToken = async () => {
             try {
                 const value = await AsyncStorage.getItem('@storage_Key')
-                // value previously stored
+                // 스토리지에 저장된 토큰값을 가져옴 - 신우
                 return value;
-
             } catch(e) {
             // error reading value
+                console.log(e)
             }
         }
         userToken()
             .then(data=>{
                     if( data !== null){
-
                         getInfo(data)
-
                     } else {
-
+                        // 만약에 대비하여 만들어놓은 장치로, - 신우
+                        // 토큰이 존재하지 않는데 회원정보 페이지를 보면 안되기 때문에 - 신우
+                        // 설정해놓음. 맨 처음 페이지로 가도록 해놔야 하는데 네비 수정 후 주석 해제하기. - 신우
                         alert('잘못된 접근입니다.')
+                        // navigation.navigate('RootStack')} - 신우
                     }
             })
             .catch((e)=>{
@@ -71,7 +84,9 @@ const MyInfoScreen = ({navigation}) => {
                     }
                 })
             let getData = await response.json()
-            console.log(getData)
+
+            setMessagesList(getData[1])
+            setGotData(true)
         }
     }
     
@@ -84,7 +99,7 @@ const MyInfoScreen = ({navigation}) => {
           <View>
             <Text>마이페이지</Text>
           </View>
-          <Button title="zxc" onPress={sendToken}/>
+          <Button title="zxc"/>
           <Image
             style={styles.tinyLogo}
             source={
@@ -99,9 +114,12 @@ const MyInfoScreen = ({navigation}) => {
         <View style={styles.mypage_menu}>
           <Text>나의 예약 문자</Text>
         </View>
-        <View style={styles.mypage_menu}>
+        <TouchableOpacity 
+        style={styles.mypage_menu}
+        onPress = {()=>{navigation.navigate('MyMessages',{list:messagesList}); console.log('move move')}}
+        >
           <Text>나의 예약 메세지</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.mypage_menu}>
           <Text>내 결제</Text>
         </View>
