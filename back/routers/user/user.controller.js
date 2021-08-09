@@ -3,7 +3,19 @@ const { Users, Lastwords, Messages } = require('../../models');
 const { createPW, email_verify_key, createToken } = require('../../JWT');
 const nodemailer = require('nodemailer');
 
-let join=(req,res)=>{
+let join= async (req,res)=>{
+    let {fullName, email, password, user_image} = req.body
+    console.log(fullName, email, password, user_image)
+
+    pwJWT = createPW(password)
+    let result = Users.create({
+        user_nickname: fullName,
+        user_email : email,
+        user_password : pwJWT,
+        user_image: user_image
+    })
+
+    res.json({join:'success'})
 }
 
 let join_ = (req, res) => {

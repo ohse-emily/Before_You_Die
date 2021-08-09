@@ -30,7 +30,7 @@ const Signup = ({ navigation }) => {
             if(!pickerResult.cancelled){
                 setImage(pickerResult.uri);
             }
-            uploadImageAsync(pickerResult.uri)
+            setImage(pickerResult.uri)
         }
     }
 
@@ -58,29 +58,30 @@ const Signup = ({ navigation }) => {
     // }
 
     // back end 
-    async function uploadImageAsync(uri){
-        let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
+    
+    // async function uploadImageAsync(uri){
+    //     let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
         
-        let uriParts = uri.split('.');
-        let fileType = uriParts[uriParts.length-1];
-        let formData = new FormData();
-        formData.append('photo',{
-            uri,
-            name:`photo.${fileType}`,
-            type:`image/${fileType}`,
-        });
+    //     let uriParts = uri.split('.');
+    //     let fileType = uriParts[uriParts.length-1];
+    //     let formData = new FormData();
+    //     formData.append('photo',{
+    //         uri,
+    //         name:`photo.${fileType}`,
+    //         type:`image/${fileType}`,
+    //     });
 
-        let options = {
-            method: 'POST',
-            body:formData,
-            headers:{
-                Accept:'application/json',
-                'Content-Type':'multipart/form-data',
-            }
-        }
+    //     let options = {
+    //         method: 'POST',
+    //         body:formData,
+    //         headers:{
+    //             Accept:'application/json',
+    //             'Content-Type':'multipart/form-data',
+    //         }
+    //     }
 
-        return fetch(apiUrl, options);
-    }
+    //     return fetch(apiUrl, options);
+    // }
 
     // const handlePhoto = () => {
     //     ImagePicker.openPicker({
@@ -100,12 +101,37 @@ const Signup = ({ navigation }) => {
                     <Text style={styles.pageTitle}>BYD</Text>
                     <Text style={styles.subtitle}>회원가입</Text>
                     <Formik
-                        initialValues={{ fullName: '', email: '', dateOfBirth: '', password: '', confirmPassword: '' }}
-                        onSubmit={(values) => {
-                            console.log(values);
+                        initialValues={{ fullName: '', email: '', dateOfBirth: '', password: '', ConfirmPassword: '' }}
+                        onSubmit={async (values) => { 
+                            values.user_image = image
+                            let {ConfirmPassword, password, fullName,email, dateOfBirth} = values
+                            
+                            if(ConfirmPassword!= password){
+                                Alert.alert('비밀번호가 일치하지 않습니다')
+                                return
+                            }
+                            if(fullName=='' || email==''|| password==''){
+                                Alert.alert('빈칸을 채워주세요')
+                                return
+                            }
+
+                            let url = 'http://localhost:3000/user/join'
+
+                            
+                            let options = {
+                                method: 'POST',
+                                headers:{'Content-Type' : 'application/json'},
+                                body:JSON.stringify(values),
+                                }
+                                // 비동기 처리
+
+                            let response = await fetch(url,options)
+                            let result = response.json()
+
                             navigation.navigate('Welcome')
-                        }}
-                    >
+
+                            }}
+                        >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (
                             <View style={styles.styledFormArea}>
                                 <View style={styles.avatarArea}>
