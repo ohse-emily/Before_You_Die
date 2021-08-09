@@ -33,12 +33,14 @@ const Auth = ({navigation}) => {
     .then(data=>{
         if( data !== null){
             console.log('있음')
-            setTimeout(()=>{
+           // setTimeout(()=>{
                 navigation.navigate('MainApp')
-            }, 3000)
+         //   }, 3000)
         } else {
             console.log('없음')
-            setTimeout(()=>{navigation.navigate('Login')}, 3000)    
+            //setTimeout(()=>{
+                navigation.navigate('Login')
+          //  }, 3000)    
         }
     })
     .catch((e)=>{
@@ -46,11 +48,8 @@ const Auth = ({navigation}) => {
     })
     
     return(
-        <View style={{margin: '20%'}}>
-            <Text>
-                Auth화면입니다.
-                추후 SplashScreen으로 교체
-            </Text>
+        <View>
+
         </View>
     )
 }
