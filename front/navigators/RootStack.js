@@ -30,7 +30,7 @@ const RootStack = () => {
                     // }}
                     {headerShown:false}
                 }
-                initialRouteName="Login"
+                initialRouteName="Auth"
             >
                 <Stack.Screen name= "Auth" component={Auth} />
                 <Stack.Screen name = "Main" component={Main}/>

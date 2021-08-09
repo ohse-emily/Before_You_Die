@@ -60,6 +60,7 @@ const Login = ({navigation}) => {
                             try{
                                 if(getData.proceed==true){
                                     navigation.navigate("MainApp")
+                                    storeData(getData.token)
                                 }
                                 else if(getData.proceed == false && getData.type == 'noverified'){
                                     alert('이메일 인증을 완료해주세요.')

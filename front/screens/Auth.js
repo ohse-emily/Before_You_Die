@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Image, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const storeData = async (value) => {
     try {
       await AsyncStorage.setItem('@storage_Key', value)
@@ -17,18 +18,20 @@ const getData = async () => {
       const value = await AsyncStorage.getItem('@storage_Key')
       if(value !== null) {
         // value previously stored
-        console.log(value,'loading..value')
+        return value
       }
-      else if(value == null){
-          console.log('데이터 빎')
-      }
-      else(console.log('기타 경우'))
     } catch(e) {
       // error reading value
     }
   }
 
-const Auth = () => {
+const Auth = ({navigation}) => {
+    let returnToken = getData()
+    if (returnToken !== null){
+        navigation.navigate('MainApp')
+    } else{
+        navigation.navigate('Login')
+    }
     return(
         <View style={{margin: '20%'}}>
             <Text>
