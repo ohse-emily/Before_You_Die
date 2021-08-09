@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View, Image, StyleSheet, Text, Alert, ScrollView } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function DisplayAnImage() {
   const createTwoButtonAlert = () =>
@@ -21,10 +21,14 @@ export default function DisplayAnImage() {
       [
         {
           text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => {console.log("Cancel Pressed");},
           style: "cancel"
         },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { text: "OK", onPress: () => {
+          console.log("OK Pressed"); 
+          AsyncStorage.clear(); 
+          navigation.navigate('Main')}
+        }
       ]
     );
 

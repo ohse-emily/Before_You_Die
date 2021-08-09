@@ -12,45 +12,45 @@ const storeData = async (value) => {
     }
 }
 
-const getData = async () => {
-    try {
-        console.log('getdata entrance')
-      const value = await AsyncStorage.getItem('@storage_Key')
-      if(value !== null) {
-        // value previously stored
-        return value
-      }
-    } catch(e) {
-      // error reading value
-    }
-  }
+
 
 const Auth = ({navigation}) => {
-    let returnToken = getData()
-    if (returnToken !== null){
-        navigation.navigate('MainApp')
-    } else{
-        navigation.navigate('Login')
+
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('@storage_Key')
+            console.log(value,'aboveIf')
+            // value previously stored
+            return value;
+
+        } catch(e) {
+            console.log(value,'inCatch')
+          // error reading value
+        }
     }
+
+    getData()
+    .then(data=>{
+        if( data !== null){
+            console.log('있음')
+            setTimeout(()=>{
+                navigation.navigate('MainApp')
+            }, 3000)
+        } else {
+            console.log('없음')
+            setTimeout(()=>{navigation.navigate('Login')}, 3000)    
+        }
+    })
+    .catch((e)=>{
+        console.log(e)
+    })
+    
     return(
         <View style={{margin: '20%'}}>
             <Text>
-                asdasd
-                adasdasdas
-                da
-                sd
-                asd
-                asdasdsd
-                as
+                Auth화면입니다.
+                추후 SplashScreen으로 교체
             </Text>
-            <Button
-                title="SaveData"
-                onPress={()=>{storeData('asaaad'); console.log('세이브')}}
-            />
-            <Button
-                title="LoadData"
-                onPress={()=>{getData(); console.log('로드')}}
-            />
         </View>
     )
 }
