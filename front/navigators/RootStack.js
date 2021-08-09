@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //screens
+import Auth from './../screens/Auth'
 import Main from './../screens/Main'
 import Login from './../screens/Login'
 import Signup from './../screens/Signup'
@@ -31,6 +32,7 @@ const RootStack = () => {
                 }
                 initialRouteName="Login"
             >
+                <Stack.Screen name= "Auth" component={Auth} />
                 <Stack.Screen name = "Main" component={Main}/>
                 <Stack.Screen name = "Login" component={Login}/>
                 <Stack.Screen name = "Signup" component={Signup}/>

@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
 
+// save login data
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //formik
 import {Formik} from 'formik';
 
@@ -17,6 +20,15 @@ import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 
 const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true)
+
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('@storage_Key', value)
+          console.log(value, 'storeData')
+        } catch (e) {
+          // saving error
+        }
+    }
 
     return(
         <KeyboardAvoidingWrapper>

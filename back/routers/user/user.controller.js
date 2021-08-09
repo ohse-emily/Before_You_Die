@@ -54,7 +54,7 @@ let login = async (req, res)=>{
         // 진행
         result.proceed=true;
         result.type='verifieduser'
-
+        result.userid=user_email
     } else if(getUser !== null && getUser.email_verify == 0) {
         // 인증안됨
         result.type = 'noverified'
