@@ -1,7 +1,7 @@
 require('dotenv').config();
 const crypto = require('crypto');
 
-// user password 암호화해서 저장하기 
+// user password 암호화해서 저장하기 by 세연
 function createPW(userpw){
     const cryptoPW = crypto.createHmac('sha256', Buffer.from(process.env.salt))
                     .update(userpw)
@@ -10,7 +10,7 @@ function createPW(userpw){
     return cryptoPW; 
 }
 
-// user email 인증 키 암호화
+// user email 인증 키 암호화 by 세연 
 function email_verify_key(){
     let key1 = crypto.randomBytes(256).toString('hex').substr(100,5);
     let key2 = crypto.randomBytes(256).toString('base64').substr(50,5);

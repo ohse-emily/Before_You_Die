@@ -45,7 +45,7 @@ const MyInfoScreen = ({navigation}) => {
             console.log("OK Pressed"); 
             
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
-            // AsyncStorage.clear(); 
+            AsyncStorage.clear(); 
             //네비 이름 제대로 하기 - 신우
             navigation.navigate('RootStack')}
             }
@@ -73,7 +73,7 @@ const MyInfoScreen = ({navigation}) => {
                         // 만약에 대비하여 만들어놓은 장치로, - 신우
                         // 토큰이 존재하지 않는데 회원정보 페이지를 보면 안되기 때문에 - 신우
                         // 설정해놓음. 맨 처음 페이지로 가도록 해놔야 하는데 네비 수정 후 주석 해제하기. - 신우
-                        alert('잘못된 접근입니다.')
+                        alert('토큰이 만료되었습니다. 다시 로그인을 해주세요 :) ')
                         // navigation.navigate('RootStack')} - 신우
                     }
             })
