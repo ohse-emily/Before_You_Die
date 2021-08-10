@@ -1,5 +1,5 @@
 
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Image, StyleSheet, Text, Alert, ScrollView, Button, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

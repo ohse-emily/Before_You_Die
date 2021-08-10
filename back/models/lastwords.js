@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 module.exports = class Lastwords extends Sequelize.Model{
     static init(sequelize){
         return super.init({
-            user_email:{
-                type:Sequelize.STRING(50),
+            user_id:{
+                type:Sequelize.STRING(10000),
                 allowNull:false,
             },
             lastword_subject:{
@@ -17,7 +17,7 @@ module.exports = class Lastwords extends Sequelize.Model{
             },
             lastword_sender:{
                 type:Sequelize.STRING(50),
-                allowNull:true,
+                allowNull:false,
             },
             lastword_date:{
                 type:Sequelize.DATE,

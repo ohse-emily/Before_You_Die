@@ -143,7 +143,7 @@ const Signup = ({ navigation }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <MyTextInput
-                                    label="별명"
+                                    label="별명" // 별명인지 이름인지
                                     icon="person"
                                     placeholder="김갑생"
                                     placeholderTextColor='#9CA3AF'
@@ -187,8 +187,8 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                 />
-
-                                {/* <Text>
+                                <ScrollView style = {styles.ScrollView}>
+                                    <Text>
                                             개인정보보호법에 따라 BYD 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, {"\n"}
                                             개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.{"\n"}
                                             1. 수집하는 개인정보{"\n"}
@@ -221,10 +221,13 @@ const Signup = ({ navigation }) => {
                                             4. 개인정보 수집 및 이용 동의를 거부할 권리{"\n"}
                                             이용자는 개인정보의 수집 및 이용 동의를 거부할 권리가 있습니다. 회원가입 시 수집하는 최소한의 개인정보, 즉, {"\n"}
                                             필수 항목에 대한 수집 및 이용 동의를 거부하실 경우, 회원가입이 어려울 수 있습니다.'{"\n"}
-                                    </Text> */}
-
-
-
+                                    </Text>
+                                </ScrollView>
+                                
+                                <Text style={styles.msgBox}>...</Text>
+                                <View style={styles.line} />
+                                <RadioButton value="first" /><Text style = {styles.radioBox}>동의합니다.</Text>
+                                <RadioButton value="second"/><Text style = {styles.radioBox}>동의하지 않습니다.</Text>
                                 <TouchableOpacity style={styles.styledButton}
                                     onPress={handleSubmit}>
                                     <Text style={styles.buttonText}>

@@ -1,24 +1,45 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 // popup 
 import MainPopup from './Popup';
 
 
-const HomeScreen = ({ navigation }) => {
+
+
+const HomeScreen = ({ navigation }, props) => {
+
 
     const [popupCheck, setPopcupCheck] = useState(true)
-    const [noSeeOneWeek, setNoSeeOneWeek] = useState(false)
 
-    const handlePopup = () => {
+
+    const handlePopup = async (itemChecked) => {
+
         setPopcupCheck(!popupCheck)
-        console.log(noSeeOneWeek)
-        //나중에 콘솔로그 대신 쿠키로 보내는걸로
+        if(itemChecked){
+            let currentTime = new Date()
+            let week = 604800000
+            let result = currentTime.getTime() + week           // 일주일동안 보지 않기 체크했을떄
+            let result2 = new Date(result)                      // 현재 시간 계산해주는 부분 by 성민
+            AsyncStorage.setItem('@time_key', String(result2))
+        }
     }
+    useEffect(()=>{
+        AsyncStorage.getItem('@time_key',(err,result)=>{
+            let currentTime = new Date()
+            result2 = new Date(result)
+                                                                  // 앱 시작할때 팝업 띄울지 말지 
+            if(currentTime.getTime()>=result2.getTime()){         // 결정하는 부분 by 성민
+                console.log('팝업 중지중이야')
+                setPopcupCheck(popupCheck)
+            }else{
+                console.log('팝업 시작해요')
+                setPopcupCheck(!popupCheck)
+            }
+        })
+    },[])
 
-    const handleOneWeek = () => {
-        setNoSeeOneWeek(true)
-    }
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
@@ -32,7 +53,6 @@ const HomeScreen = ({ navigation }) => {
                 value={popupCheck}
                 handlePopup={handlePopup}
                 which={"homescreen"}
-                handleOneWeek={handleOneWeek}
             />
             ):(
             <Text/>

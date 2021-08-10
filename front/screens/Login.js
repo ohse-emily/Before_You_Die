@@ -1,36 +1,35 @@
-import React, {useState, useContext, useReducer} from 'react';
+import React, {useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
+
 // save login data
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+//formik
 import {Formik} from 'formik';
+
+//icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
+
 //statusbar
 import Constants from 'expo-constants';
 const StatusBarHeight = Constants.statusBarHeight;
+
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 
-// import Context from '../context/context'
-// import reducer from '../context/reducer'
-
-
 const Login = ({navigation}) => {
-    // context 저장소 로그인 시 user 정보 저장  by 세연 
-    // const globalStore = useContext(Context)
-    // const [state, dispatch]  = useReducer(reducer,globalStore)
-
     const [hidePassword, setHidePassword] = useState(true)
 
     const storeData = async (value, user_email) => {
         try {
           await AsyncStorage.setItem('@storage_Key', value)
-          await AsyncStorage.setItem('@user_email',user_email)
-          console.log('storeData->',value, 'user_email=>',  user_email)
+          await AsyncStorage.setItem('@email_key', user_email)
+
         } catch (e) {
-            console.log(e)
         }
     }
+
     return(
         <KeyboardAvoidingWrapper>
             <View style={styles.styledContainer}>
