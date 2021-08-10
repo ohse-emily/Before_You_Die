@@ -2,15 +2,33 @@ import React, { useState } from 'react'
 import {
     StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity,
     KeyboardAvoidingView, TextInput, TouchableWithoutFeedback, Keyboard,
-
 } from 'react-native'
 import { Button, Input } from 'react-native-elements'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Mywords = ({ navigation }) => {
-
     const [mywordsSubject, setMywordsSubject] = useState('')
     const [mywordsContent, setMywordsContent] = useState('')
+    const [mywordsSender, setMywordsSender] = useState('')
+
+    // mywords 를 백앤드로 보내기 -> db 추가! by 세연 
+    // AsyncStorage에서 user_email 가져오기 
+    const mywordsSubmit = async (sub, con, sen) => {
+        try {
+            let user_email = await AsyncStorage.getItem('@user_email')
+            console.log(sub, con, sen)
+            let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
+            let url = `http://192.168.0.16:3000/msg/mywords`
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(mywordsData),
+                    headers: {'Content-Type': 'application/json'}
+                })
+            } catch (e) { console.log(e, 'mywordsSubmit Fetch Post ERROR=', e)}            
+            navigation.navigate('AfterSending')
+        } catch (e) {console.log('mywordsSubmit Function ERROR =', e)}
+    }
 
     const sendMywords = () => {
         Keyboard.dismiss()
@@ -31,21 +49,36 @@ const Mywords = ({ navigation }) => {
                                 type="text"
                                 name="mywordsSubject"
                                 value={mywordsSubject}
-                                onChange={text => setMywordsSubject(text)}
+                                onChangeText={text => setMywordsSubject(text)}
                             />
                             <TextInput
-                                placeholder="마지막 이야기를 들려주세요"
+                                placeholder="누군가가 들어 주었으면 하는 말, 세상에 하고 싶은말, 어떤 이야기도 좋아요! "
                                 type="text"
                                 name="mywordsContent"
                                 value={mywordsContent}
-                                onChange={text => setMywordsContent(text)}
+                                onChangeText={text => setMywordsContent(text)}
                                 style={styles.mywordsInput}
                                 multiline={true}
                             />
+                            <View style={styles.mysowrdsSenderView}>
+                                <Text>
+                                    보내는 사람:
+                                </Text>
+                                <TextInput
+                                    placeholder="보내는 사람"
+                                    value={mywordsSender}
+                                    onChangeText={(text) => setMywordsSender(text)}
+                                    style={styles.mywordsSender}
+                                />
+                            </View>
                             <View style={styles.mywordsMargin} >
                                 <TouchableOpacity
                                     style={styles.mywordsButton}
-                                    onPress={()=>navigation.navigate('AfterSending')}
+                                    onPress={
+                                        () => mywordsSubmit(mywordsSubject, mywordsContent, mywordsSender)
+                                        // ()=>navigation.navigate('AfterSending')
+                                    }
+                                // onPress={() => navigation.navigate('AfterSending')}
                                 >
                                     <Text>누군가에게 전하기</Text>
                                 </TouchableOpacity>
@@ -66,23 +99,29 @@ const styles = StyleSheet.create({
         height: 300,
         borderWidth: 1,
         padding: 10,
-        borderRadius:8,
+        borderRadius: 8,
         textAlignVertical: 'top',
     },
     mywordsContainer: {
         alignItems: 'center',
     },
     mywordsButton: {
-        width:160,
-        height:40,
-        alignItems:'center',
-        padding:10,
-        backgroundColor:'lightblue',
-        marginTop:20,
-        borderRadius:7,
+        width: 160,
+        height: 40,
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: 'lightblue',
+        marginTop: 20,
+        borderRadius: 7,
     },
-    ininput:{
-        width:100,
-        height:20,
-    }
+    ininput: {
+        width: 100,
+        height: 20,
+    },
+    mysowrdsSenderView: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+    },
 })

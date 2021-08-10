@@ -1,37 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useReducer} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
-
 // save login data
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-//formik
 import {Formik} from 'formik';
-
-//icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
-
 //statusbar
 import Constants from 'expo-constants';
 const StatusBarHeight = Constants.statusBarHeight;
-
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 
-// 192.168.0.16
+// import Context from '../context/context'
+// import reducer from '../context/reducer'
+
 
 const Login = ({navigation}) => {
+    // context 저장소 로그인 시 user 정보 저장  by 세연 
+    // const globalStore = useContext(Context)
+    // const [state, dispatch]  = useReducer(reducer,globalStore)
+
     const [hidePassword, setHidePassword] = useState(true)
 
-    const storeData = async (value) => {
+    const storeData = async (value, user_email) => {
         try {
           await AsyncStorage.setItem('@storage_Key', value)
-          console.log(value, 'storeData')
+          await AsyncStorage.setItem('@user_email',user_email)
+          console.log('storeData->',value, 'user_email=>',  user_email)
         } catch (e) {
             console.log(e)
         }
     }
-
     return(
         <KeyboardAvoidingWrapper>
             <View style={styles.styledContainer}>
@@ -62,7 +61,7 @@ const Login = ({navigation}) => {
                             try{
                                 if(getData.proceed==true){
                                     navigation.navigate("MainApp")
-                                    storeData(getData.token)
+                                    storeData(getData.token, values.user_email)
                                 }
                                 else if(getData.proceed == false && getData.type == 'noverified'){
                                     alert('이메일 인증을 완료해주세요.')
@@ -72,7 +71,6 @@ const Login = ({navigation}) => {
                             } catch(e){
                                 console.log(e)
                             }
-                            
                         }}
                     >
                     {({handleChange, handleBlur, handleSubmit, values})=>(
