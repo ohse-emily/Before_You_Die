@@ -18,6 +18,8 @@ const StatusBarHeight = Constants.statusBarHeight;
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 
+// 192.168.0.16
+
 const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true)
 
@@ -26,6 +28,7 @@ const Login = ({navigation}) => {
           await AsyncStorage.setItem('@storage_Key', value)
           console.log(value, 'storeData')
         } catch (e) {
+            console.log(e)
         }
     }
 
@@ -45,15 +48,15 @@ const Login = ({navigation}) => {
                     <Formik
                         initialValues = {{user_email:'', user_password: ''}}
                         onSubmit = {async (values)=>{
-
-                            let url = 'http://localhost:3000/user/login/'
+                                
+                            let url = 'http://192.168.0.16:3000/user/login/'
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!
                                 headers:{
                                   'Content-Type': 'application/json'
                                 }
-                              })
+                            }); 
                             let getData = await response.json()
                             console.log(getData)
                             try{

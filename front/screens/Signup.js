@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View,Image, Text, TextInput, TouchableOpacity,ScrollView,} from 'react-native';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, ScrollView, } from 'react-native';
 import { Formik } from 'formik'; //formik
 import { RadioButton } from 'react-native-paper';
 import { Octicons, Ionicons } from '@expo/vector-icons' //icons
@@ -16,19 +16,16 @@ const Signup = ({ navigation }) => {
     const [image, setImage] = useState(null)
     const [uploading, setUploading] = useState(false)
 
-
-    
-
     const pickImage = async () => {
         const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         // user가 카메라접근을 허락하면 == granted 
         if (cameraRollPerm === 'granted') {
             let pickerResult = await ImagePicker.launchImageLibraryAsync({
                 allowsEditing: true,
-                base64:true,
+                base64: true,
                 aspect: [4, 4],
             });
-            if(!pickerResult.cancelled){
+            if (!pickerResult.cancelled) {
                 setImage(pickerResult.uri);
             }
             setImage(pickerResult.uri)
@@ -59,10 +56,10 @@ const Signup = ({ navigation }) => {
     // }
 
     // back end 
-    
+
     // async function uploadImageAsync(uri){
     //     let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
-        
+
     //     let uriParts = uri.split('.');
     //     let fileType = uriParts[uriParts.length-1];
     //     let formData = new FormData();
@@ -102,37 +99,38 @@ const Signup = ({ navigation }) => {
                     <Text style={styles.pageTitle}>BYD</Text>
                     <Text style={styles.subtitle}>회원가입</Text>
                     <Formik
-                        initialValues={{ fullName: '', email: '', dateOfBirth: '', password: '', ConfirmPassword: '' }}
-                        onSubmit={async (values) => { 
+                        initialValues={{ fullName: '', email: '', password: '', ConfirmPassword: '' }}
+                        onSubmit={async (values) => {
                             values.user_image = image
-                            let {ConfirmPassword, password, fullName,email, dateOfBirth} = values
-                            
-                            if(ConfirmPassword != password){
+                            let { ConfirmPassword, password, fullName, email, dateOfBirth } = values
+
+                            if (ConfirmPassword != password) {
                                 Alert.alert('비밀번호가 일치하지 않습니다')
                                 return
                             }
-                            if(fullName=='' || email==''|| password==''){
-                                Alert.alert('빈칸을 채워주세요')
+                            if (fullName == '' || email == '' || password == '') {
+                                Alert.alert('필수 항목을 입력해주세요')
                                 return
                             }
 
-                            let url = 'http://localhost:3000/user/join'
-
-                            
+                            // 백앤드 가입 정보 보내기 by 성민 
+                            let url = 'http://192.168.0.16:3000/user/join'
                             let options = {
                                 method: 'POST',
-                                headers:{'Content-Type' : 'application/json'},
-                                body:JSON.stringify(values),
-                                }
-                                // 비동기 처리
-
-                            let response = await fetch(url,options)
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(values),
+                            }
+                            // 비동기 처리
+                            let response = await fetch(url, options)
                             let result = response.json()
 
-                            navigation.navigate('Welcome')
 
-                            }}
-                        >
+
+                            alert('입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)')
+                            navigation.navigate('Welcome',)
+
+                        }}
+                    >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (
                             <View style={styles.styledFormArea}>
                                 <View style={styles.avatarArea}>
@@ -141,11 +139,11 @@ const Signup = ({ navigation }) => {
                                         onPress={pickImage}
                                     >
                                         {/* {image ? <Image source ={{uri:image}} style={styles.profile_img}/> : <Ionicons name="person-add" size={99} color="gray" />}*/}
-                                        {image ? <Image rounded source={{uri:image}} style={styles.profile_img} /> : <Image source={require('../assets/user_.png')} style={styles.profile_img} />}
+                                        {image ? <Image rounded source={{ uri: image }} style={styles.profile_img} /> : <Image source={require('../assets/user_.png')} style={styles.profile_img} />}
                                     </TouchableOpacity>
                                 </View>
                                 <MyTextInput
-                                    label="이름"
+                                    label="별명"
                                     icon="person"
                                     placeholder="김갑생"
                                     placeholderTextColor='#9CA3AF'
@@ -189,8 +187,8 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                 />
-                                <ScrollView style = {styles.ScrollView}>
-                                    <Text>
+
+                                {/* <Text>
                                             개인정보보호법에 따라 BYD 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, {"\n"}
                                             개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.{"\n"}
                                             1. 수집하는 개인정보{"\n"}
@@ -223,13 +221,10 @@ const Signup = ({ navigation }) => {
                                             4. 개인정보 수집 및 이용 동의를 거부할 권리{"\n"}
                                             이용자는 개인정보의 수집 및 이용 동의를 거부할 권리가 있습니다. 회원가입 시 수집하는 최소한의 개인정보, 즉, {"\n"}
                                             필수 항목에 대한 수집 및 이용 동의를 거부하실 경우, 회원가입이 어려울 수 있습니다.'{"\n"}
-                                    </Text>
-                                </ScrollView>
-                                
-                                <Text style={styles.msgBox}>...</Text>
-                                <View style={styles.line} />
-                                <RadioButton value="first" /><Text style = {styles.radioBox}>동의합니다.</Text>
-                                <RadioButton value="second"/><Text style = {styles.radioBox}>동의하지 않습니다.</Text>
+                                    </Text> */}
+
+
+
                                 <TouchableOpacity style={styles.styledButton}
                                     onPress={handleSubmit}>
                                     <Text style={styles.buttonText}>
@@ -238,7 +233,7 @@ const Signup = ({ navigation }) => {
                                 </TouchableOpacity>
                                 <View style={styles.extraView}>
                                     <Text style={styles.extraText}>
-                                        아이디가 있다고요? ....
+                                        아이디가 존재한다면 :) ? &nbsp;
                                     </Text>
                                     <TouchableOpacity style={styles.textLink}
                                         onPress={() => navigation.navigate('Login')}>
@@ -345,7 +340,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         color: '#1F2937', //tertiary
     },
-    ScrollView:{
+    ScrollView: {
         marginHorizontal: 20,
         height: 80,
     },
@@ -398,11 +393,11 @@ const styles = StyleSheet.create({
         color: '#6D28D9', //brand,
         fontSize: 15,
     },
-    profile_img:{
-        width:100,
-        height:100,
+    profile_img: {
+        width: 100,
+        height: 100,
     },
-    radioBox : {
+    radioBox: {
 
     }
 })
