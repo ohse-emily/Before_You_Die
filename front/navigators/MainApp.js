@@ -18,6 +18,7 @@ import MyInfoScreen from './../screens/MyInfoScreen';
 
 // screens by Shinwoo
 import MyMessages from './../screens/MyMessages'
+import MyWordsHistory from './../screens/MyWordsHistory'
 
 const Stack=createStackNavigator()
 
@@ -56,6 +57,7 @@ const HomeStackScreen =()=>(
 const MyInfoStackScreen =()=>(
   <MyInfoStack.Navigator screenOptions={HomeScreenOptions}>
     <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen}/>
+    <HomeStack.Screen name="MyWordsHistory" component={MyWordsHistory}/>
     <MyInfoStack.Screen name="MyMessages" component={MyMessages}/>
   </MyInfoStack.Navigator>
 )

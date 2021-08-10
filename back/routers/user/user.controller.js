@@ -114,13 +114,21 @@ let getUserInfo = async (req,res) => {
     // 해당 유저의 메시지 가져오기 - 신우
     let getMessages = await Messages.findAll({
         where:{
-            msg_user_id: user_email,
+            msg_user_email: user_email,
+        }
+    })
+
+    let getWords = await Lastwords.findAll({
+        where:{
+            user_email
         }
     })
 
     // 정보 배열에 유저 정보 및 메시지 정보 삽입 - 신우
     infoArr.push(getUser)
     infoArr.push(getMessages)
+    infoArr.push(getWords)
+
 
     // 프론트 단으로 전송 - 신우
     // 배열의 0번: 유저인포(객체), 1번: 메시지인포(배열) - 신우
@@ -128,7 +136,7 @@ let getUserInfo = async (req,res) => {
 }
 
 let deletePost = async (req, res) => {
-    let {id, msg_user_id} = req.body
+    let {id, msg_user_email} = req.body
     let result = await Messages.destroy({
         where:{
             id:id
@@ -137,13 +145,31 @@ let deletePost = async (req, res) => {
     console.log(id,'번이 삭제되었음')
     let afterDelete = await Messages.findAll({
         where:{
-            msg_user_id,
+            msg_user_email,
         }
     })
     res.json(afterDelete)
-
 }
 
+let deleteWord = async (req, res) => {
+    console.log(req.body)
+    let {id, word_user_email} = req.body
+    let result = await Lastwords.destroy({
+        where:{
+            id:id
+        }
+    })
+    console.log(id,'번이 삭제되었음')
+    let afterDelete = await Lastwords.findAll({
+        where:{
+            user_email: word_user_email,
+        }
+    })
+    res.json(afterDelete)
+}
+
+
+
 module.exports = {
-    join, login, confirmEmail, getUserInfo, deletePost
+    join, login, confirmEmail, getUserInfo, deletePost, deleteWord
 }

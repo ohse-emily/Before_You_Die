@@ -8,7 +8,8 @@ import {Formik} from 'formik';
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
 
-const Welcome = ({navigation}) => {
+const Welcome = ({route, navigation}) => {
+    const {name} = route.params
     return(
         <>
             <StatusBar style="dark"/>
@@ -18,7 +19,7 @@ const Welcome = ({navigation}) => {
                 source={require('./../assets/sam.jpeg')}/>
                 <View style={styles.welcomeContainer}>
                     <Text style={styles.pageTitle}>이랏샤이마세</Text>
-                    <Text style={styles.subtitle}>엄신우님, 회원가입을 축하합니다.</Text>
+                    <Text style={styles.subtitle}>{name}님, 회원가입을 축하합니다.</Text>
                     <View style={styles.styledFormArea}>
                     <Image style={styles.avatar} 
                     resizeMode = "cover" 

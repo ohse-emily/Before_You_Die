@@ -6,17 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyInfoScreen = ({navigation}) => {
     // 메시지를 담아놓는 state - 신우
     const [messagesList, setMessagesList] = useState([])
+    const [wordsList, setWordsList] = useState([])
     // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
     const [gotData, setGotData] = useState(false)
-    const [reRender, setReRender] = useState(false)
 
-    // const ref = useRef();
-    // ref.current = messagesList
-    // console.log('레퍼런스',ref)
 
     useEffect(()=>{
-        // sendToken만으로는 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
-
+        // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
         sendToken()
     },[gotData])
 
@@ -47,7 +43,8 @@ const MyInfoScreen = ({navigation}) => {
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
             AsyncStorage.clear(); 
             //네비 이름 제대로 하기 - 신우
-            navigation.navigate('RootStack')}
+            // Home으로 잘 가지는 것을 보면 navigators가 서로 분리되어 있어서 그런 것이 확실함
+            navigation.navigate('Home')}
             }
         ]
     );
@@ -92,18 +89,18 @@ const MyInfoScreen = ({navigation}) => {
                     }
                 })
             let getData = await response.json()
-
             setMessagesList(getData[1])
+            setWordsList(getData[2])
             setGotData(true)
         }
     }
     
 
     // 교수님 도움받은 구간
-    const deleteHandler = async (id, msg_user_id) =>{
+    const deleteMsgHandler = async (id, msg_user_email) =>{
         // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
         let url = 'http://localhost:3000/user/deletepost/'
-        let data = {id, msg_user_id}
+        let data = {id, msg_user_email}
         let response = await fetch(url, {
             method: 'POST', 
             body: JSON.stringify(data), 
@@ -111,11 +108,25 @@ const MyInfoScreen = ({navigation}) => {
                 'Content-Type': 'application/json'
             }
         })
-
         const getData = await response.json()
         return getData 
     }
 
+    const deleteWordHandler = async (id, word_user_email) =>{
+        // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
+        let url = 'http://localhost:3000/user/deleteword/'
+        let data = {id, word_user_email}
+        let response = await fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(data), 
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        const getData = await response.json()
+        return getData 
+    }
+    
   return (
 
     <View style={styles.mypage_wrap}>
@@ -133,17 +144,22 @@ const MyInfoScreen = ({navigation}) => {
           />
           <Text>hye1209cj@naver.com</Text>
         </View>
-        <View style={styles.mypage_menu}>
+        <TouchableOpacity
+        style={styles.mypage_menu}
+        onPress = {()=>{navigation.navigate('MyWordsHistory',{
+            list:wordsList, deleteWordHandler: deleteWordHandler
+        })}}
+        >
           <Text>나의 마지막말</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.mypage_menu}>
-          <Text>나의 예약 문자</Text>
+          <Text>나의 예약 문자 (삭제예정)</Text>
         </View>
         <TouchableOpacity 
         style={styles.mypage_menu}
         // 함수를 넘기는 것이 아니라 값 자체를 넘겨받음 - 신우
         onPress = {()=>{navigation.navigate('MyMessages',{
-            list:messagesList, deleteHandler: deleteHandler
+            list:messagesList, deleteMsgHandler: deleteMsgHandler
         })}}
         >
           <Text>나의 예약 메세지</Text>

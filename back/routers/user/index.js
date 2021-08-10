@@ -8,6 +8,6 @@ router.post('/login', controller.login)
 router.get('/confirmEmail', controller.confirmEmail)
 router.post('/userinfo', controller.getUserInfo)
 router.post('/deletepost', controller.deletePost)
-
+router.post('/deleteword', controller.deleteWord)
 
 module.exports = router;

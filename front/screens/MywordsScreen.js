@@ -18,7 +18,7 @@ const Mywords = ({ navigation }) => {
             let user_email = await AsyncStorage.getItem('@user_email')
             console.log(sub, con, sen)
             let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-            let url = `http://192.168.0.16:3000/msg/mywords`
+            let url = `http://localhost:3000/msg/mywords`
             try {
                 await fetch(url, {
                     method: 'POST',

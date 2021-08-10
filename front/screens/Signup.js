@@ -114,7 +114,7 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-                            let url = 'http://192.168.0.16:3000/user/join'
+                            let url = 'http://localhost:3000/user/join'
                             let options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -127,8 +127,8 @@ const Signup = ({ navigation }) => {
 
 
                             alert('입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)')
-                            navigation.navigate('Welcome',)
-
+                            navigation.navigate('Welcome',{name: values.email})
+                            //우선 이메일을 이름 대신해서 넘기도록 설정함 - 신우
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (
