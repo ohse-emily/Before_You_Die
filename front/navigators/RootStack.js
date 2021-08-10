@@ -18,9 +18,18 @@ const RootStack = () => {
     return(
         <NavigationContainer>
             <Stack.Navigator
-                screenOptions={{
-                    headerShown:false
-                }}
+                screenOptions={
+                    // {headerStyle:{
+                    //     backgroundColor: 'transparent'
+                    // },
+                    // headerTintColor: tertiary,
+                    // headerTransparent: true,
+                    // headerTitle: '',
+                    // headerLeftContainerStyle: {
+                    //     paddingLeft: 20,
+                    // }}
+                    {headerShown:false}
+                }
                 initialRouteName="Auth"
             >
                 <Stack.Screen name= "Auth" component={Auth} />

@@ -102,16 +102,29 @@ let login = async (req, res)=>{
 
 let getUserInfo = async (req,res) => {
     let {tokenValue} = req.body
+    // 프론트 단으로 던질 정보를 넣을 배열 
+    let infoArr = []
     let user_email = getUserid(tokenValue)
+    // 유저 정보 가져오기
     let getUser = await Users.findOne({
         where:{
             user_email, 
         }
     })
-
-    // 다른 데이터도 가져오기
-    // 나중에 배열에 담기
-    res.json(getUser.dataValues)
+    // 해당 유저의 메시지 가져오기
+    let getMessages = await Messages.findAll({
+        where:{
+            msg_user_id: user_email,
+        }
+    })
+    console.log(getMessages)
+    // 정보 배열에 유저 정보 및 메시지 정보 삽입
+    infoArr.push(getUser)
+    infoArr.push(getMessages)
+    console.log(infoArr)
+    // 프론트 단으로 전송
+    // 배열의 0번: 유저인포(객체), 1번: 메시지인포(배열)
+    res.json(infoArr)
 }
 
 module.exports = {
