@@ -1,19 +1,26 @@
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { View, Image, StyleSheet, Text, Alert, ScrollView, Button, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyInfoScreen = ({navigation}) => {
-  // 메시지를 담아놓는 state - 신우
-  const [messagesList, setMessagesList] = useState([])
-  // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
-  const [gotData, setGotData] = useState(false)
-  const test = '1234'
-  
-  useEffect(()=>{
-    // sendToken만으로는 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
-    sendToken()
-  },[gotData])
+    // 메시지를 담아놓는 state - 신우
+    const [messagesList, setMessagesList] = useState([])
+    // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
+    const [gotData, setGotData] = useState(false)
+    const [reRender, setReRender] = useState(false)
+
+    // const ref = useRef();
+    // ref.current = messagesList
+    // console.log('레퍼런스',ref)
+
+    useEffect(()=>{
+        // sendToken만으로는 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
+
+        sendToken()
+    },[gotData])
+
+
     const createTwoButtonAlert = () =>
         Alert.alert("경고", "정말로 탈퇴하시겠습니까?",
         [
@@ -47,6 +54,7 @@ const MyInfoScreen = ({navigation}) => {
 
     // 토큰을 이용하여 회원정보 가져오기 - 신우
     const sendToken = async () => {
+        console.log('샌드토큰 실행)')
         const userToken = async () => {
             try {
                 const value = await AsyncStorage.getItem('@storage_Key')
@@ -91,6 +99,23 @@ const MyInfoScreen = ({navigation}) => {
     }
     
 
+    // 교수님 도움받은 구간
+    const deleteHandler = async (id, msg_user_id) =>{
+        // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
+        let url = 'http://localhost:3000/user/deletepost/'
+        let data = {id, msg_user_id}
+        let response = await fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(data), 
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const getData = await response.json()
+        return getData 
+    }
+
   return (
 
     <View style={styles.mypage_wrap}>
@@ -116,7 +141,10 @@ const MyInfoScreen = ({navigation}) => {
         </View>
         <TouchableOpacity 
         style={styles.mypage_menu}
-        onPress = {()=>{navigation.navigate('MyMessages',{list:messagesList}); console.log('move move')}}
+        // 함수를 넘기는 것이 아니라 값 자체를 넘겨받음 - 신우
+        onPress = {()=>{navigation.navigate('MyMessages',{
+            list:messagesList, deleteHandler: deleteHandler
+        })}}
         >
           <Text>나의 예약 메세지</Text>
         </TouchableOpacity>

@@ -6,28 +6,38 @@ import {
 
 const MyMessages = ({ route, navigation, messagesList }, props ) => {
 
-    const [ventingContent, setVentingContent] = useState('')
-    // const {list} = 
-    const {list} = route.params
-    console.log(list)
+    // 파라미터로 MyInfoScreen에서 리스트를 넘겨받는다. - 신우
+    const {list, deleteHandler} = route.params
 
+    const deleteCard = (id,msg_user_id) => {
+
+        const newList = deleteHandler(id,msg_user_id);
+        // then을 써서 newList를 받아올 때까지 기다림 - 신우
+        newList.then( data => {
+            // 새로 받은 리스트와 딜리트핸들러 전달 - 신우
+            navigation.navigate('MyMessages',{list:data,deleteHandler}) 
+        })
+    }
+
+    // 리스트 수에 맞게 컴포넌트 렌더링 - 신우
     const returnMessages = list.map((v,k)=>{
+        let {id, msg_user_id} = v
         return (
             <View style={styles.ventingInput} key = {k}>
-            <Button title='삭제'/>
-            <Text> 
-                순번  {k+1}
-            </Text>
-            <Text> 
-                받는 사람 이메일  {v.msg_email}
-            </Text>
-            <Text>
-                내용 {v.msg_content}
-            </Text>
-            <Text>
-                기타 레이아웃 등 추가사항 생각해보기... 삭제기능 구현?
-            </Text>
-
+                <Button title='삭제' onPress={()=>deleteCard(id, msg_user_id)}/>
+                <Text> 
+                    순번  {k+1}
+                    아이디 {v.id}
+                </Text>
+                <Text> 
+                    받는 사람 이메일  {v.msg_email}
+                </Text>
+                <Text>
+                    내용 {v.msg_content}
+                </Text>
+                <Text>
+                    기타 레이아웃 등 추가사항 생각해보기... 삭제기능 구현?
+                </Text>
             </View>
         )
     })

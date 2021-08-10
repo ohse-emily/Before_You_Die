@@ -7,6 +7,7 @@ router.post('/join', controller.join)
 router.post('/login', controller.login)
 router.get('/confirmEmail', controller.confirmEmail)
 router.post('/userinfo', controller.getUserInfo)
+router.post('/deletepost', controller.deletePost)
 
 
 module.exports = router;
