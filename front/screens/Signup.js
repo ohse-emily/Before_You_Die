@@ -16,6 +16,7 @@ const Signup = ({ navigation }) => {
     const [image, setImage] = useState(null)
     const [uploading, setUploading] = useState(false)
 
+    // 사진 프로필 지정 by 세연 
     const pickImage = async () => {
         const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         // user가 카메라접근을 허락하면 == granted 

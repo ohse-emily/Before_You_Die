@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesome,EvilIcons } from '@expo/vector-icons';
 
-// screens by Seyeon
+// screens by 세연
 import HomeScreen from './../screens/HomeScreen';
 import MywordsScreen from './../screens/MywordsScreen';
 import AfterSendingScreen from './../screens/AfterSendingScreen';
@@ -17,13 +17,14 @@ import ToSomeoneScreen from './../screens/ToSomeoneScreen';
 import MyInfoScreen from './../screens/MyInfoScreen';
 import SendingMSG from './../screens/SendingMSG'
 import SendingEmail from './../screens/SendingEmail'
+import YourwordsShowScreen from '../screens/YourwordsShowScreen';
 
-// screens by Shinwoo
+// screens by 신우
 import MyMessages from './../screens/MyMessages'
 import MyWordsHistory from './../screens/MyWordsHistory'
 import RootStack from './RootStack'
 
-const Stack=createStackNavigator()
+// const Stack=createStackNavigator()
 
 // Home 위에 제목 styles 
 const HomeScreenOptions={
@@ -32,7 +33,6 @@ const HomeScreenOptions={
   headerTintColor:'white',
 }
 const Tabs = createBottomTabNavigator();
-
 const YourwordsStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const MyInfoStack = createStackNavigator();
@@ -40,6 +40,7 @@ const MyInfoStack = createStackNavigator();
 const YourwordsStackScreen =()=>(
   <YourwordsStack.Navigator screenOptions={HomeScreenOptions}>
     <YourwordsStack.Screen name="Yourwords" component={YourwordsScreen}/>
+    <YourwordsStack.Screen name="YourwordsShow" component={YourwordsShowScreen}/>
   </YourwordsStack.Navigator>
 )
 
@@ -56,6 +57,7 @@ const HomeStackScreen =()=>(
     <HomeStack.Screen name="SendingMSG" component={SendingMSG}/>
     <HomeStack.Screen name="Venting" component={VentingScreen}/>
     <HomeStack.Screen name="AfterSending" component={AfterSendingScreen}/>
+    <YourwordsStack.Screen name="YourwordsShow" component={YourwordsShowScreen}/>
   </HomeStack.Navigator>
 )
 
