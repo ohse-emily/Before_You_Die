@@ -19,6 +19,10 @@ import YourwordsShowScreen from '../screens/YourwordsShowScreen';
 import MyMessages from './../screens/MyMessages'
 import RootStack from './RootStack'
 
+// ? 
+import MyWordsHistory from './../screens/MyWordsHistory'
+const Stack=createStackNavigator()
+
 // Home 위에 제목 styles 
 const HomeScreenOptions = {
   headerStyle: { backgroundColor: 'lavender' },
@@ -38,6 +42,7 @@ const YourwordsStackScreen = () => (
     <YourwordsStack.Screen name="YourwordsShow" component={YourwordsShowScreen} options={{ headerShown: false }} />
   </YourwordsStack.Navigator>
 )
+
 
 // Main Home -> 여기에 이동할 screens를 넣어야 해당 compo에서 navigate() 매서드 사용 가능  by 세연
 const HomeStackScreen = () => (
@@ -59,6 +64,9 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen} />
     <MyInfoStack.Screen name="MyMessages" component={MyMessages} />
     <MyInfoStack.Screen name="RootStack" component={RootStack} options={{ headerShown: false }}/>
+    {/* <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen}/>
+    <HomeStack.Screen name="MyWordsHistory" component={MyWordsHistory}/>
+    <MyInfoStack.Screen name="MyMessages" component={MyMessages}/> */}
   </MyInfoStack.Navigator>
 )
 

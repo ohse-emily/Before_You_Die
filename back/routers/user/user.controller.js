@@ -2,8 +2,9 @@ require('dotenv').config();
 const { Users, Lastwords, Messages } = require('../../models');
 const { createPW, email_verify_key, createToken, getUserid } = require('../../JWT');
 const nodemailer = require('nodemailer');
+const qs = require('qs')
 
-let join= async (req,res)=>{
+let join = async (req,res) => {
     let {fullName, email, password, user_image} = req.body
     console.log(fullName, email, password, user_image)
     let email_key = email_verify_key();
@@ -63,7 +64,7 @@ let confirmEmail = async (req, res) => {
 }
 
 
-let login = async (req, res)=>{
+let login = async (req, res) => {
     let {user_email, user_password} = req.body
     console.log(user_password)
     let pwJWT = createPW(user_password)
@@ -102,31 +103,90 @@ let login = async (req, res)=>{
 
 let getUserInfo = async (req,res) => {
     let {tokenValue} = req.body
-    // 프론트 단으로 던질 정보를 넣을 배열 
+    // 프론트 단으로 던질 정보를 넣을 배열 - 신우
     let infoArr = []
     let user_email = getUserid(tokenValue)
-    // 유저 정보 가져오기
+    // 유저 정보 가져오기 - 신우
     let getUser = await Users.findOne({
         where:{
             user_email, 
         }
     })
-    // 해당 유저의 메시지 가져오기
+    // 해당 유저의 메시지 가져오기 - 신우
     let getMessages = await Messages.findAll({
         where:{
-            msg_user_id: user_email,
+            msg_user_email: user_email,
         }
     })
-    console.log(getMessages)
-    // 정보 배열에 유저 정보 및 메시지 정보 삽입
+
+    let getWords = await Lastwords.findAll({
+        where:{
+            user_email
+        }
+    })
+
+    // 정보 배열에 유저 정보 및 메시지 정보 삽입 - 신우
     infoArr.push(getUser)
     infoArr.push(getMessages)
-    console.log(infoArr)
-    // 프론트 단으로 전송
-    // 배열의 0번: 유저인포(객체), 1번: 메시지인포(배열)
+    infoArr.push(getWords)
+
+
+    // 프론트 단으로 전송 - 신우
+    // 배열의 0번: 유저인포(객체), 1번: 메시지인포(배열) - 신우
     res.json(infoArr)
 }
 
+let deletePost = async (req, res) => {
+    let {id, msg_user_email} = req.body
+    let result = await Messages.destroy({
+        where:{
+            id:id
+        }
+    })
+    console.log(id,'번이 삭제되었음')
+    let afterDelete = await Messages.findAll({
+        where:{
+            msg_user_email,
+        }
+    })
+    res.json(afterDelete)
+}
+
+let deleteWord = async (req, res) => {
+    console.log(req.body)
+    let {id, word_user_email} = req.body
+    let result = await Lastwords.destroy({
+        where:{
+            id:id
+        }
+    })
+    console.log(id,'번이 삭제되었음')
+    let afterDelete = await Lastwords.findAll({
+        where:{
+            user_email: word_user_email,
+        }
+    })
+    res.json(afterDelete)
+}
+
+let email_check = async(req, res) => {
+    let {email} = req.body
+    let result = await Users.findOne(
+        {where:{
+            user_email : email
+        }}
+    )
+
+    
+
+    if(result==null){
+        res.json({result: true})
+    }else{
+        res.json({result: false})
+    }
+}
+
+
 module.exports = {
-    join, login, confirmEmail, getUserInfo
+    join, login, confirmEmail, getUserInfo, deletePost, deleteWord, email_check
 }

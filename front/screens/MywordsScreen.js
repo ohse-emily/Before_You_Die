@@ -15,7 +15,7 @@ const Mywords = ({ navigation }) => {
     // AsyncStorage에서 user_email 가져오기 
     const mywordsSubmit = async (sub, con, sen) => {
         try {
-            let user_email = await AsyncStorage.getItem('@user_email')
+            let user_email = await AsyncStorage.getItem('@email_key')
             console.log(sub, con, sen)
             let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
             let url = `http://192.168.200.112:3000/msg/mywords`

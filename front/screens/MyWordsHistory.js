@@ -4,36 +4,40 @@ import {
     KeyboardAvoidingView, Button,
 } from 'react-native'
 
-const MyMessages = ({ route, navigation } ) => {
+const MyWordsHistory = ({ route, navigation } ) => {
 
     // 파라미터로 MyInfoScreen에서 리스트를 넘겨받는다. - 신우
-    const {list, deleteMsgHandler} = route.params
+    const {list, deleteWordHandler } = route.params
 
-    const deleteCard = (id,msg_user_email) => {
+    const deleteCard = (id,word_user_email) => {
 
-        const newList = deleteMsgHandler(id,msg_user_email);
-        // then을 써서 newList를 받아올 때까지 기다림 - 신우
+        const newList = deleteWordHandler(id,word_user_email);
         newList.then( data => {
-            // 새로 받은 리스트와 딜리트핸들러 전달 - 신우
-            navigation.navigate('MyMessages',{list:data,deleteMsgHandler}) 
+            navigation.navigate('MyWordsHistory',{list:data,deleteWordHandler}) 
         })
     }
 
     // 리스트 수에 맞게 컴포넌트 렌더링 - 신우
-    const returnMessages = list.map((v,k)=>{
-        let {id, msg_user_email} = v
+    const returnWords = list.map((v,k)=>{
+        let {id, user_email} = v
         return (
             <View style={styles.ventingInput} key = {k}>
-                <Button title='삭제' onPress={()=>deleteCard(id, msg_user_email)}/>
+                <Button title='삭제' onPress={()=>deleteCard(id, user_email)}/>
                 <Text> 
                     순번  {k+1}
                     아이디 {v.id}
                 </Text>
                 <Text> 
-                    받는 사람 이메일  {v.msg_email}
+                    제목  {v.lastword_subject}
                 </Text>
                 <Text>
                     내용 {v.msg_content}
+                </Text>
+                <Text>
+                    보낸사람 {v.user_email}
+                </Text>
+                <Text>
+                    가명 {v.lastword_sender}
                 </Text>
                 <Text>
                     기타 레이아웃 등 추가사항 생각해보기... 수정기능 구현?
@@ -46,7 +50,7 @@ const MyMessages = ({ route, navigation } ) => {
         <SafeAreaView style={styles.ventingContainer}>
             <ScrollView >
                 <KeyboardAvoidingView style={styles.ventingAvoidingView}>
-                    {returnMessages}
+                    {returnWords}
                 </KeyboardAvoidingView>
             </ScrollView>
         </SafeAreaView>
@@ -54,7 +58,7 @@ const MyMessages = ({ route, navigation } ) => {
 }
 
 
-export default MyMessages
+export default MyWordsHistory
 
 const styles = StyleSheet.create({
     ventingContainer: {

@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 module.exports = class Messages extends Sequelize.Model{
     static init(sequelize){
         return super.init({
-            msg_user_email:{
-                type:Sequelize.STRING(50),
+            msg_user_id:{
+                type:Sequelize.STRING(10000),
                 allowNull:false,
             },
             msg_content:{

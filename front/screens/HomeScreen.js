@@ -1,30 +1,50 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 // popup 
 import MainPopup from './Popup';
 
 
-const HomeScreen = ({ navigation }) => {
 
-    const [popupCheck, setPopcupCheck] = useState(true)
-    const [noSeeOneWeek, setNoSeeOneWeek] = useState(false)
 
-    const handlePopup = () => {
-        setPopcupCheck(!popupCheck)
-        console.log(noSeeOneWeek)
-        //나중에 콘솔로그 대신 쿠키로 보내는걸로
+const HomeScreen = ({ navigation }, props) => {
+
+    
+    const [popupCheck, setPopcupCheck] = useState(false) // 기본값 창을 띄우지 않는다
+
+    const handlePopup = async (itemChecked) => {
+
+        setPopcupCheck(!popupCheck) // 닫기버튼을 눌렀을때
+        if(itemChecked){ // 일주일동안 보지않음이 체크되면
+            let currentTime = new Date()
+            // 604800000
+            let week = 604800000
+            let result = currentTime.getTime() + week           // 일주일동안 보지 않기 체크했을떄
+            let result2 = new Date(result)                      // 현재 시간 계산해서 AsyncStorage에 넣어주는 부분 by 성민
+            AsyncStorage.setItem('@time_key', String(result2))
+        }
     }
+    useEffect(()=>{ 
 
-    const handleOneWeek = () => {
-        setNoSeeOneWeek(true)
-    }
+        AsyncStorage.getItem('@time_key',(err,result)=>{
+            let currentTime = new Date()
+            result2 = new Date(result)
+                                                                  // 앱 시작할때 팝업 띄울지 말지 
+            if(currentTime.getTime()<=result2.getTime()){         // 결정하는 부분 by 성민
+                setPopcupCheck(false)
+            }else{
+                setPopcupCheck(true)
+            }
+        })
+    },[])
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: ' Main HOME',
         })
     }, [navigation])
-
+    
     return (
         <View style={styles.HomeLayout}>
             {popupCheck ? 
@@ -32,7 +52,6 @@ const HomeScreen = ({ navigation }) => {
                 value={popupCheck}
                 handlePopup={handlePopup}
                 which={"homescreen"}
-                handleOneWeek={handleOneWeek}
             />
             ):(
             <Text/>

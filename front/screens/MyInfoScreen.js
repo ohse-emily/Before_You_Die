@@ -4,15 +4,17 @@ import { View, Image, StyleSheet, Text, Alert, ScrollView, Button, TouchableOpac
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyInfoScreen = ({navigation}) => {
-  // 메시지를 담아놓는 state - 신우
-  const [messagesList, setMessagesList] = useState([])
-  // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
-  const [gotData, setGotData] = useState(false)
-  
-  useEffect(()=>{
-    // sendToken만으로는 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
-    sendToken()
-  },[gotData])
+    // 메시지를 담아놓는 state - 신우
+    const [messagesList, setMessagesList] = useState([])
+    const [wordsList, setWordsList] = useState([])
+    // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
+    const [gotData, setGotData] = useState(false)
+
+    useEffect(()=>{
+        // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
+        sendToken()
+    },[gotData])
+
     const createTwoButtonAlert = () =>
         Alert.alert("잠깐만요! ", "정말로 탈퇴하시겠습니까? (。_。)...",
         [
@@ -38,7 +40,7 @@ const MyInfoScreen = ({navigation}) => {
             
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
             AsyncStorage.clear(); 
-            // 
+            // 오류 수정 by 세연 
             navigation.navigate('RootStack')}
             }
         ]
@@ -46,6 +48,7 @@ const MyInfoScreen = ({navigation}) => {
 
     // 토큰을 이용하여 회원정보 가져오기 - 신우
     const sendToken = async () => {
+        console.log('샌드토큰 실행)')
         const userToken = async () => {
             try {
                 const value = await AsyncStorage.getItem('@storage_Key')
@@ -83,13 +86,44 @@ const MyInfoScreen = ({navigation}) => {
                     }
                 })
             let getData = await response.json()
-
             setMessagesList(getData[1])
+            setWordsList(getData[2])
             setGotData(true)
         }
     }
     
 
+    // 교수님 도움받은 구간
+    const deleteMsgHandler = async (id, msg_user_email) =>{
+        // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
+        let url = 'http://localhost:3000/user/deletepost/'
+        let data = {id, msg_user_email}
+        let response = await fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(data), 
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        const getData = await response.json()
+        return getData 
+    }
+
+    const deleteWordHandler = async (id, word_user_email) =>{
+        // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
+        let url = 'http://localhost:3000/user/deleteword/'
+        let data = {id, word_user_email}
+        let response = await fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(data), 
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        const getData = await response.json()
+        return getData 
+    }
+    
   return (
 
     <View style={styles.mypage_wrap}>
@@ -103,15 +137,29 @@ const MyInfoScreen = ({navigation}) => {
               require('../assets/icon.png')
             }
           />
-          {/* 요 아래에 고객의 email 주소 보이도록 해야할것 같아욥 */}
-          <Text>hye1209cj@naver.com</Text>    
+
+          {/* <Text>hye1209cj@naver.com</Text>    
         </View>
         <View style={styles.mypage_menu}>
-          <Text>나의 마지막 말 </Text>
-        </View>
+          <Text>나의 마지막 말 </Text> */}
+        
+        {/* 요 아래에 고객의 email 주소 보이도록 해야할것 같아욥 * + css */}
+          <Text>hye1209cj@naver.com</Text>
+        </View> 
+        <TouchableOpacity
+        style={styles.mypage_menu}
+        onPress = {()=>{navigation.navigate('MyWordsHistory',{
+            list:wordsList, deleteWordHandler: deleteWordHandler
+        })}}
+        >
+          <Text>나의 마지막 말</Text>
+        </TouchableOpacity>
         <TouchableOpacity 
         style={styles.mypage_menu}
-        onPress = {()=>{navigation.navigate('MyMessages',{list:messagesList}); console.log('move move')}}
+        // 함수를 넘기는 것이 아니라 값 자체를 넘겨받음 - 신우
+        onPress = {()=>{navigation.navigate('MyMessages',{
+            list:messagesList, deleteMsgHandler: deleteMsgHandler
+        })}}
         >
           <Text>나의 예약 문자/이메일</Text>
         </TouchableOpacity>

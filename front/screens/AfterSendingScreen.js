@@ -5,12 +5,16 @@ import {
     TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native'
 
-const AfterSending = () => {
+const AfterSending = ( {navigation} ) => {
     return (
         <SafeAreaView style={styles.afterSendingContainer}>
-            <View style={styles.afterSendingView}>
-                <Text> 용기 내 줘서 고마워요 ! </Text>
-            </View>
+                <TouchableOpacity 
+                style={styles.afterSendingView}
+                onPress = {()=>{navigation.navigate('Home')}}>
+                <View>
+                    <Text> 용기 내 줘서 고마워요 ! </Text>
+                </View>
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }

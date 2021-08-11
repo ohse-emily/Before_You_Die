@@ -17,7 +17,7 @@ module.exports = class Lastwords extends Sequelize.Model{
             },
             lastword_sender:{
                 type:Sequelize.STRING(50),
-                allowNull:true,
+                allowNull:false,
             },
             lastword_date:{
                 type:Sequelize.DATE,

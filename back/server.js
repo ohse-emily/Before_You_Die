@@ -7,7 +7,7 @@ const cors = require('cors');
 const router = require('./routers')
 const {sequelize} = require('./models');
 
-sequelize.sync({force:false,})
+sequelize.sync({force: false,})
 .then(()=>{console.log('DB 연결 성공')})
 .catch(()=>{console.log('DB 연결 실패')})
 

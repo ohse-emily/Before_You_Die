@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, ScrollView, } from 'react-native';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Formik } from 'formik'; //formik
 import { RadioButton } from 'react-native-paper';
 import { Octicons, Ionicons } from '@expo/vector-icons' //icons
@@ -9,6 +9,8 @@ import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 // for image upload
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import MainPopup from './Popup';
+
 
 const Signup = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
@@ -92,6 +94,18 @@ const Signup = ({ navigation }) => {
     //       });
     // }
 
+
+    const [popupCheck, setPopcupCheck] = useState(true)
+
+
+    const handlePopup = async (itemChecked) => {
+        if(!itemChecked){
+            Alert.alert('동의항목에 동의해주세요')
+            return
+        }
+        setPopcupCheck(!popupCheck)
+    }
+
     return (
         <KeyboardAvoidingWrapper>
             <View style={styles.styledContainer}>
@@ -99,11 +113,32 @@ const Signup = ({ navigation }) => {
                 <View style={styles.innerContainer}>
                     <Text style={styles.pageTitle}>BYD</Text>
                     <Text style={styles.subtitle}>회원가입</Text>
+                    {popupCheck ?(<MainPopup     // 회원가입 동의서 팝업창 띄우기 by 성민
+                        value={popupCheck}
+                        handlePopup={handlePopup}
+                        which={"handlePermission"}
+                        />
+                        ):<Text/>}
                     <Formik
                         initialValues={{ fullName: '', email: '', password: '', ConfirmPassword: '' }}
                         onSubmit={async (values) => {
                             values.user_image = image
                             let { ConfirmPassword, password, fullName, email, dateOfBirth } = values
+
+                            if(email.match( /@/ )==null){
+                                Alert.alert('이메일 형식에 맞춰주세요')
+                            }
+                           
+
+                            let url_email = 'http://192.168.200.112:3000/user/email_check'
+                            let email_options = {
+                                method :'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({email : email})
+                            }
+
+                            let response_email = await fetch(url_email, email_options)
+                            console.log(response_email)
 
                             if (ConfirmPassword != password) {
                                 Alert.alert('비밀번호가 일치하지 않습니다')
@@ -123,13 +158,11 @@ const Signup = ({ navigation }) => {
                             }
                             // 비동기 처리
                             let response = await fetch(url, options)
-                            let result = response.json()
-
-
+                            // let result = response.json()
 
                             alert('입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)')
-                            navigation.navigate('Welcome',)
-
+                            navigation.navigate('Welcome',{name: values.email})
+                            //우선 이메일을 이름 대신해서 넘기도록 설정함 - 신우
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -144,7 +177,7 @@ const Signup = ({ navigation }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <MyTextInput
-                                    label="별명"
+                                    label="별명" // 별명인지 이름인지
                                     icon="person"
                                     placeholder="김갑생"
                                     placeholderTextColor='#9CA3AF'
@@ -188,44 +221,10 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                 />
-
-                                {/* <Text>
-                                            개인정보보호법에 따라 BYD 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, {"\n"}
-                                            개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.{"\n"}
-                                            1. 수집하는 개인정보{"\n"}
-                                            저희 어플리케이션은 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.{"\n"}
-                                            {"\n"}
-                                            회원가입 시점에 BYD가 이용자로부터 수집하는 개인정보는 아래와 같습니다.{"\n"}
-                                            - 회원 가입 시에 ‘아이디, 비밀번호, 이메일’ 을 필수항목으로 수집합니다.{"\n"}
-                                            서비스 이용 과정에서 이용자로부터 수집하는 개인정보는 아래와 같습니다.{"\n"}
-                                            BYD 내의 개별 서비스 이용, 결제 과정에서 해당 서비스의 이용자에 한해 추가 개인정보 수집이 발생할 수 있습니다. 추가로 개인정보를 수집할 경우에는 {"\n"}
-                                            해당 개인정보 수집 시점에서 이용자에게 ‘수집하는 개인정보 항목, 개인정보의 수집 및 이용목적, 개인정보의 보관기간’에 대해 안내 드리고 동의를 받습니다.{"\n"}
-                                            {"\n"}
-                                            {"\n"}
-                                            2. 수집한 개인정보의 이용{"\n"}
-                                            BYD 및 BYD 관련 제반 서비스(모바일 웹/앱 포함)의 회원관리, 서비스 개발・제공 및 향상, 안전한 인터넷 이용환경 구축 등 아래의 목적으로만 개인정보를 이용합니다.{"\n"}
-                                            {"\n"}
-                                            - 회원 가입 의사의 확인, 이용자 식별, 회원탈퇴 의사의 확인 등 회원관리를 위하여 개인정보를 이용합니다.{"\n"}
-                                            - 콘텐츠 등 기존 서비스 제공(광고 포함)에 더하여, 인구통계학적 분석, 서비스 방문 및 이용기록의 분석, 개인정보 및 관심에 기반한 이용자간 관계의 형성, {"\n"}
-                                            지인 및 관심사 등에 기반한 맞춤형 서비스 제공 등 신규 서비스 요소의 발굴 및 기존 서비스 개선 등을 위하여 개인정보를 이용합니다.{"\n"}
-                                            - 법령 및 BYD 이용약관을 위반하는 회원에 대한 이용 제한 조치, 부정 이용 행위를 포함하여 서비스의 원활한 운영에 지장을 주는 행위에 대한 방지 및 제재,{"\n"}
-                                            - 계정도용 및 부정거래 방지, 약관 개정 등의 고지사항 전달, 분쟁조정을 위한 기록 보존, 민원처리 등 이용자 보호 및 서비스 운영을 위하여 개인정보를 이용합니다.{"\n"}
-                                            - 유료 서비스 제공에 따르는 본인인증, 구매 및 요금 결제, 상품 및 서비스의 배송을 위하여 개인정보를 이용합니다.{"\n"}
-                                            - 이벤트 정보 및 참여기회 제공, 광고성 정보 제공 등 마케팅 및 프로모션 목적으로 개인정보를 이용합니다.{"\n"}
-                                            - 서비스 이용기록과 접속 빈도 분석, 서비스 이용에 대한 통계, 서비스 분석 및 통계에 따른 맞춤 서비스 제공 및 광고 게재 등에 개인정보를 이용합니다.{"\n"}
-                                            - 보안, 프라이버시, 안전 측면에서 이용자가 안심하고 이용할 수 있는 서비스 이용환경 구축을 위해 개인정보를 이용합니다.{"\n"}
-                                            {"\n"}
-                                            3. 개인정보의 보관기간{"\n"}
-                                            회사는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 지체없이 파기하고 있습니다.{"\n"}
-                                            참고로 BYD는 ‘개인정보 유효기간제’에 따라 2년간 서비스를 이용하지 않은 회원의 개인정보를 별도로 분리 보관하여 관리하고 있습니다.{"\n"}
-                                            {"\n"}
-                                            4. 개인정보 수집 및 이용 동의를 거부할 권리{"\n"}
-                                            이용자는 개인정보의 수집 및 이용 동의를 거부할 권리가 있습니다. 회원가입 시 수집하는 최소한의 개인정보, 즉, {"\n"}
-                                            필수 항목에 대한 수집 및 이용 동의를 거부하실 경우, 회원가입이 어려울 수 있습니다.'{"\n"}
-                                    </Text> */}
-
-
-
+                                <Text style={styles.msgBox}>...</Text>
+                                <View style={styles.line} />
+                                {/* <RadioButton value="first" /><Text style = {styles.radioBox}>동의합니다.</Text>
+                                <RadioButton value="second"/><Text style = {styles.radioBox}>동의하지 않습니다.</Text> */}
                                 <TouchableOpacity style={styles.styledButton}
                                     onPress={handleSubmit}>
                                     <Text style={styles.buttonText}>
