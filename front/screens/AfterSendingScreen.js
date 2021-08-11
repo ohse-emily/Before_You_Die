@@ -6,11 +6,16 @@ import {
 } from 'react-native'
 
 const AfterSending = ( {navigation} ) => {
+
+      console.log(navigation.getState())
+
     return (
         <SafeAreaView style={styles.afterSendingContainer}>
                 <TouchableOpacity 
                 style={styles.afterSendingView}
+                // onPress = {()=>{navigation.popToTop()}}>
                 onPress = {()=>{navigation.navigate('Home')}}>
+                
                 <View>
                     <Text> 용기 내 줘서 고마워요 ! </Text>
                 </View>

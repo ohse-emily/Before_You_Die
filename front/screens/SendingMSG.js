@@ -5,12 +5,48 @@ import {
 
 } from 'react-native'
 import { Button, Input } from 'react-native-elements'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SendingMSG = ({ navigation }) => {
 
-    const [mywordsSubject, setMywordsSubject] = useState('')
+    const [mywordsReceiver, setMywordsReceiver] = useState('')
     const [mywordsContent, setMywordsContent] = useState('')
+
+    const mywordsSubmit = async (rec, con) => {
+
+        const reg = /[^0-9]/g
+        const newNumber = mywordsReceiver.replace(reg,"")
+        console.log(newNumber)
+
+
+        if(mywordsReceiver == ''){
+            alert('받는 사람을 기재해 주세요.')
+        } else if(mywordsReceiver.indexOf('+')!==-1){ // 국가코드 필터
+            alert('해외 SMS 전송은 지원하지 않습니다.')
+        }else if(mywordsReceiver.split('/[^0-9]/g')){
+            console.log(mywordsReceiver.split("/[^0-9]/g"))
+        }else if(mywordsContent == ''){
+            alert('내용을 작성해 주세요.')
+        } else{
+            try {
+                let user_email = await AsyncStorage.getItem('@email_key')
+                let mywordsData = { msg_mobile: rec, msg_content: con, msg_user_email: user_email, msg_method: 1}
+                let url = `http://localhost:3000/msg/mymessages`
+                try {
+                    await fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(mywordsData),
+                        headers: {'Content-Type': 'application/json'}
+                    })
+                    console.log(mywordsReceiver.split("/[^0-9]/g"))
+                } catch (e) { console.log(e, 'mywordsSubmit Fetch Post ERROR=', e)}            
+                navigation.navigate('AfterSending')
+                // console.log(mywordsReceiver, mywordsContent)
+            } catch (e) {console.log('mywordsSubmit Function ERROR =', e)}
+        }
+
+
+    }
 
     const sendMywords = () => {
         Keyboard.dismiss()
@@ -26,26 +62,27 @@ const SendingMSG = ({ navigation }) => {
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <>
                             <Input
-                                placeholder="받는 분의 핸드폰 번호를 입력해주세요"
+                                placeholder="받는 분의 전화번호를 숫자로만 적어주세요"
                                 autoFocus
                                 type="text"
-                                name="mywordsSubject"
-                                value={mywordsSubject}
-                                onChange={text => setMywordsSubject(text)}
+                                name="mywordsReceiver"
+                                value={mywordsReceiver}
+                                onChangeText={text => setMywordsReceiver(text)}
                             />
                             <TextInput
-                                placeholder="하고싶은 말을 전해주세요"
+                                placeholder="하고 싶은 말을 전해주세요"
                                 type="text"
                                 name="mywordsContent"
                                 value={mywordsContent}
-                                onChange={text => setMywordsContent(text)}
+                                onChangeText={text => setMywordsContent(text)}
                                 style={styles.mywordsInput}
                                 multiline={true}
                             />
                             <View style={styles.mywordsMargin} >
                                 <TouchableOpacity
                                     style={styles.mywordsButton}
-                                    onPress={() => navigation.navigate('AfterSending')}
+                                    onPress = {() => {mywordsSubmit(mywordsReceiver, mywordsContent); }}
+                                    // onPress={() => navigation.navigate('AfterSending')}
                                 >
                                     <Text>누군가에게 전하기</Text>
                                 </TouchableOpacity>
@@ -67,7 +104,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 8,
-        textAlignVertical: 'top',
+        textAlignVertical: 'top'
     },
     mywordsContainer: {
         alignItems: 'center',

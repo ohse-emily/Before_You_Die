@@ -7,13 +7,13 @@ import SendingEmail from './SendingEmail';
 import SendingMSG from './SendingMSG';
 import AfterSending from './AfterSendingScreen'
 import MainPopup from './Popup'
+import Home from './HomeScreen'
 
 function ToSomeone({ navigation }) {
   
   const [popupToSomeone, setPopupToSomeone] = useState(true)
   const PopupToFn = () => {
-    setPopupToSomeone(!popupToSomeone)
-    console.log('asdf')
+    setPopupToSomeone(!popupToSomeone)  
   }
 
   return (
@@ -30,7 +30,7 @@ function ToSomeone({ navigation }) {
       <View style={{ margin: 10 }, { width: '50%' }}>
         <Button
           title="이메일 보내기"
-          onPress={() => navigation.navigate('SendingEmail')}
+          onPress={() => navigation.push('SendingEmail')}
         />
       </View>
       <View style={{ height: 30 }}>
@@ -57,6 +57,7 @@ export default function App() {
         <Stack.Screen name="SendingEmail" component={SendingEmail} />
         <Stack.Screen name="SendingMSG" component={SendingMSG} />
         <Stack.Screen name="AfterSending" component={AfterSending} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );

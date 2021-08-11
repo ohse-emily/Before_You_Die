@@ -7,7 +7,7 @@ import {
 import MainPopup from './Popup'
 
 const Venting = ({ navigation }) => {
-
+    console.log(navigation.getState())
     const [ventingContent, setVentingContent] = useState('')
 
     const [popupVenting, setPopupVenting] = useState(true)

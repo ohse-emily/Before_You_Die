@@ -14,20 +14,27 @@ const Mywords = ({ navigation }) => {
     // mywords 를 백앤드로 보내기 -> db 추가! by 세연 
     // AsyncStorage에서 user_email 가져오기 
     const mywordsSubmit = async (sub, con, sen) => {
-        try {
-            let user_email = await AsyncStorage.getItem('@user_email')
-            console.log(sub, con, sen)
-            let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-            let url = `http://localhost:3000/msg/mywords`
+        if(mywordsSubject == ''){
+            alert('제목을 작성해 주세요.')
+        } else if(mywordsContent == ''){
+            alert('내용을 작성해 주세요.')
+        } else if(mywordsSender == ''){
+            alert('보내는 사람 이름을 작성해 주세요.')
+        } else{
             try {
-                await fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify(mywordsData),
-                    headers: {'Content-Type': 'application/json'}
-                })
-            } catch (e) { console.log(e, 'mywordsSubmit Fetch Post ERROR=', e)}            
-            navigation.navigate('AfterSending')
-        } catch (e) {console.log('mywordsSubmit Function ERROR =', e)}
+                let user_email = await AsyncStorage.getItem('@email_key')
+                let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
+                let url = `http://localhost:3000/msg/mywords`
+                try {
+                    await fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(mywordsData),
+                        headers: {'Content-Type': 'application/json'}
+                    })
+                } catch (e) { console.log(e, 'mywordsSubmit Fetch Post ERROR=', e)}            
+                navigation.navigate('AfterSending')
+            } catch (e) {console.log('mywordsSubmit Function ERROR =', e)}
+        }
     }
 
     const sendMywords = () => {

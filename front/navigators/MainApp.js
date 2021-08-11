@@ -15,10 +15,13 @@ import VentingScreen from './../screens/VentingScreen';
 import YourwordsScreen from './../screens/YourwordsScreen';
 import ToSomeoneScreen from './../screens/ToSomeoneScreen';
 import MyInfoScreen from './../screens/MyInfoScreen';
+import SendingMSG from './../screens/SendingMSG'
+import SendingEmail from './../screens/SendingEmail'
 
 // screens by Shinwoo
 import MyMessages from './../screens/MyMessages'
 import MyWordsHistory from './../screens/MyWordsHistory'
+import RootStack from './RootStack'
 
 const Stack=createStackNavigator()
 
@@ -49,6 +52,8 @@ const HomeStackScreen =()=>(
     <HomeStack.Screen name="Yourwords" component={YourwordsScreen} />
     <HomeStack.Screen name="Mywords" component={MywordsScreen}/>
     <HomeStack.Screen name="ToSomeone" component={ToSomeoneScreen}/>
+    <HomeStack.Screen name="SendingEmail" component={SendingEmail}/>
+    <HomeStack.Screen name="SendingMSG" component={SendingMSG}/>
     <HomeStack.Screen name="Venting" component={VentingScreen}/>
     <HomeStack.Screen name="AfterSending" component={AfterSendingScreen}/>
   </HomeStack.Navigator>
@@ -57,8 +62,9 @@ const HomeStackScreen =()=>(
 const MyInfoStackScreen =()=>(
   <MyInfoStack.Navigator screenOptions={HomeScreenOptions}>
     <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen}/>
-    <HomeStack.Screen name="MyWordsHistory" component={MyWordsHistory}/>
+    <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory}/>
     <MyInfoStack.Screen name="MyMessages" component={MyMessages}/>
+    <MyInfoStack.Screen name="Auth" component={RootStack}/>
   </MyInfoStack.Navigator>
 )
 

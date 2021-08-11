@@ -104,6 +104,7 @@ let getUserInfo = async (req,res) => {
     let {tokenValue} = req.body
     // 프론트 단으로 던질 정보를 넣을 배열 - 신우
     let infoArr = []
+    console.log(req.body)
     let user_email = getUserid(tokenValue)
     // 유저 정보 가져오기 - 신우
     let getUser = await Users.findOne({

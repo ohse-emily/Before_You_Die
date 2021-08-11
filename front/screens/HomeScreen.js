@@ -11,8 +11,7 @@ import MainPopup from './Popup';
 const HomeScreen = ({ navigation }, props) => {
 
 
-    const [popupCheck, setPopcupCheck] = useState(true)
-
+    const [popupCheck, setPopcupCheck] = useState(false)
 
     const handlePopup = async (itemChecked) => {
 
@@ -31,11 +30,9 @@ const HomeScreen = ({ navigation }, props) => {
             result2 = new Date(result)
                                                                   // 앱 시작할때 팝업 띄울지 말지 
             if(currentTime.getTime()>=result2.getTime()){         // 결정하는 부분 by 성민
-                console.log('팝업 중지중이야')
-                setPopcupCheck(popupCheck)
-            }else{
-                console.log('팝업 시작해요')
                 setPopcupCheck(!popupCheck)
+            }else{
+                setPopcupCheck(popupCheck)
             }
         })
     },[])

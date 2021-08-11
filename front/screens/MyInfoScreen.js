@@ -7,6 +7,7 @@ const MyInfoScreen = ({navigation}) => {
     // 메시지를 담아놓는 state - 신우
     const [messagesList, setMessagesList] = useState([])
     const [wordsList, setWordsList] = useState([])
+    const [userId, setUserId] = useState('')
     // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
     const [gotData, setGotData] = useState(false)
 
@@ -41,10 +42,10 @@ const MyInfoScreen = ({navigation}) => {
             console.log("OK Pressed"); 
             
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
-            AsyncStorage.clear(); 
+            // AsyncStorage.clear(); 
             //네비 이름 제대로 하기 - 신우
             // Home으로 잘 가지는 것을 보면 navigators가 서로 분리되어 있어서 그런 것이 확실함
-            navigation.navigate('Home')}
+            navigation.navigate('Auth')}
             }
         ]
     );
@@ -92,6 +93,7 @@ const MyInfoScreen = ({navigation}) => {
             setMessagesList(getData[1])
             setWordsList(getData[2])
             setGotData(true)
+            setUserId(getData[0].user_email)
         }
     }
     
@@ -142,7 +144,7 @@ const MyInfoScreen = ({navigation}) => {
               require('../assets/icon.png')
             }
           />
-          <Text>hye1209cj@naver.com</Text>
+          <Text>{userId}</Text>
         </View>
         <TouchableOpacity
         style={styles.mypage_menu}

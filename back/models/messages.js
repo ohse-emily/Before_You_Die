@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize');
+const moment = require('moment');
 
 module.exports = class Messages extends Sequelize.Model{
     static init(sequelize){
         return super.init({
-            msg_user_id:{
-                type:Sequelize.STRING(10000),
+            msg_user_email:{
+                type:Sequelize.STRING(50),
                 allowNull:false,
             },
             msg_content:{
@@ -16,7 +17,7 @@ module.exports = class Messages extends Sequelize.Model{
                 allowNull:false,
                 defaultValue:0, // 0 은 email /  문자 sns는 1 
             },
-            msg_email:{
+            msg_email:{ 
                 type:Sequelize.STRING(50),
                 allowNull:true,
             },
@@ -24,10 +25,10 @@ module.exports = class Messages extends Sequelize.Model{
                 type:Sequelize.STRING(50),
                 allowNull:true,
             },
-            msg_sender:{
-                type:Sequelize.STRING(50),
-                allowNull:false,
-            },
+            // msg_sender:{ 보내는 사람 항목 없으므로 삭제
+            //     type:Sequelize.STRING(50),
+            //     allowNull:false,
+            // },
             msg_write_date:{  
                 type:Sequelize.DATE,
                 allowNull:false,
@@ -35,7 +36,12 @@ module.exports = class Messages extends Sequelize.Model{
             },
             msg_send_date:{  
                 type:Sequelize.DATE,
-                allowNull:true,
+                allowNull:false,
+                defaultValue:Sequelize.NOW,
+                // defaultValue: moment(this.getDataValue('msg_write_date').clone().add(2,'year')).format('YYYY-MM-DD hh:ii:ss'),
+                // get: function(){
+                //     return moment(this.getDataValue('msg_write_date').clone().add(2,'year')).format()
+                // }
             }
         },{
             sequelize,
