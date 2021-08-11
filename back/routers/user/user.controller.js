@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Users, Lastwords, Messages } = require('../../models');
 const { createPW, email_verify_key, createToken, getUserid } = require('../../JWT');
 const nodemailer = require('nodemailer');
+const qs = require('qs')
 
 let join = async (req,res) => {
     let {fullName, email, password, user_image} = req.body
@@ -168,8 +169,24 @@ let deleteWord = async (req, res) => {
     res.json(afterDelete)
 }
 
+let email_check = async(req, res) => {
+    let {email} = req.body
+    let result = await Users.findOne(
+        {where:{
+            user_email : email
+        }}
+    )
+
+    
+
+    if(result==null){
+        res.json({result: true})
+    }else{
+        res.json({result: false})
+    }
+}
 
 
 module.exports = {
-    join, login, confirmEmail, getUserInfo, deletePost, deleteWord
+    join, login, confirmEmail, getUserInfo, deletePost, deleteWord, email_check
 }

@@ -40,6 +40,7 @@ const YourwordsStackScreen =()=>(
   </YourwordsStack.Navigator>
 )
 
+
 // Main Home -> 여기에 이동할 screens를 넣어야 해당 compo에서 navigate() 매서드 사용 가능  by 세연
 const HomeStackScreen =()=>(
   <HomeStack.Navigator 
