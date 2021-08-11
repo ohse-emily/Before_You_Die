@@ -5,11 +5,7 @@ import { Text, View, Modal, TouchableOpacity, StyleSheet,
 import {CheckBox} from 'react-native-elements'
 import { ScrollView } from "react-native-gesture-handler";
 
-<<<<<<< HEAD
 const MainPopup = ({handlePopup, value, which}) => {
-=======
-const MainPopup = ({handlePopup, value, which,}) => {
->>>>>>> 1bd730f7614f522c59dbea69acf197448c643865
   const [itemChecked,setItemChecked] = useState(false)
   let popupContent;
   let agree;
