@@ -18,15 +18,20 @@ const mywords = async (req, res) => {
     res.json({result:true})
 }
 
-// pwJWT = createPW(password)
-// Users.create({
-//     user_nickname: fullName,
-//     user_email : email,
-//     user_password : pwJWT,
-//     user_image: user_image,
-//     email_verify_key:email_key,
-// })
 
+
+// Your last words 너의 마지막 말을 db에서 하나 랜덤 추출해오기 by세연
+const yourwords = async(req,res)=>{
+    try{
+        let LastwordsList = await Lastwords.findAll({})
+        console.log('Getting yoursords List from db - sucess !! ')
+        res.json(LastwordsList)
+    }catch(e){
+        console.log('Getting yourwords List from db Failed')
+    }
+    console.log('last', LastwordsList)
+
+}
 
 
 
@@ -35,5 +40,5 @@ const mywords = async (req, res) => {
 
 
 module.exports = {
-    mywords,
+    mywords, yourwords, 
 }

@@ -15,7 +15,7 @@ const MyInfoScreen = ({navigation}) => {
     sendToken()
   },[gotData])
     const createTwoButtonAlert = () =>
-        Alert.alert("경고", "정말로 탈퇴하시겠습니까?",
+        Alert.alert("잠깐만요! (。_。)", "정말로 탈퇴하시겠습니까?",
         [
             {
             text: "Cancel",
@@ -27,7 +27,7 @@ const MyInfoScreen = ({navigation}) => {
     );
 
     const createTwoButtonAlert2 = () =>
-        Alert.alert("로그아웃", "로그아웃 하시겠습니까?",
+        Alert.alert("로그아웃 ( ͡° ͜ʖ ͡°)", "로그아웃 하시겠습니까?",
         [
             {
             text: "Cancel",
