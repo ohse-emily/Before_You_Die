@@ -11,15 +11,10 @@ const StatusBarHeight = Constants.statusBarHeight;
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 
-// import Context from '../context/context'
-// import reducer from '../context/reducer'
-
-
 const Login = ({navigation}) => {
     // context 저장소 로그인 시 user 정보 저장  by 세연 
     // const globalStore = useContext(Context)
     // const [state, dispatch]  = useReducer(reducer,globalStore)
-
     const [hidePassword, setHidePassword] = useState(true)
 
     const storeData = async (value, user_email) => {
@@ -48,7 +43,7 @@ const Login = ({navigation}) => {
                         initialValues = {{user_email:'', user_password: ''}}
                         onSubmit = {async (values)=>{
                                 
-                            let url = 'http://192.168.0.16:3000/user/login/'
+                            let url = 'http://192.168.200.112:3000/user/login/'
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!

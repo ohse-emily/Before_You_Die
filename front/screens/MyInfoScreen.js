@@ -8,14 +8,13 @@ const MyInfoScreen = ({navigation}) => {
   const [messagesList, setMessagesList] = useState([])
   // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
   const [gotData, setGotData] = useState(false)
-  const test = '1234'
   
   useEffect(()=>{
     // sendToken만으로는 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
     sendToken()
   },[gotData])
     const createTwoButtonAlert = () =>
-        Alert.alert("잠깐만요! (。_。)", "정말로 탈퇴하시겠습니까?",
+        Alert.alert("잠깐만요! ", "정말로 탈퇴하시겠습니까? (。_。)...",
         [
             {
             text: "Cancel",
@@ -26,8 +25,8 @@ const MyInfoScreen = ({navigation}) => {
         ]
     );
 
-    const createTwoButtonAlert2 = () =>
-        Alert.alert("로그아웃 ( ͡° ͜ʖ ͡°)", "로그아웃 하시겠습니까?",
+    const logout = () =>
+        Alert.alert("로그아웃", "(. ❛ ᴗ ❛.) 로그아웃 하시겠습니까?  ",
         [
             {
             text: "Cancel",
@@ -39,7 +38,7 @@ const MyInfoScreen = ({navigation}) => {
             
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
             AsyncStorage.clear(); 
-            //네비 이름 제대로 하기 - 신우
+            // 
             navigation.navigate('RootStack')}
             }
         ]
@@ -63,10 +62,10 @@ const MyInfoScreen = ({navigation}) => {
                         getInfo(data)
                     } else {
                         // 만약에 대비하여 만들어놓은 장치로, - 신우
-                        // 토큰이 존재하지 않는데 회원정보 페이지를 보면 안되기 때문에 - 신우
-                        // 설정해놓음. 맨 처음 페이지로 가도록 해놔야 하는데 네비 수정 후 주석 해제하기. - 신우
+                        // 토큰이 존재하지 않는데 회원정보 페이지를 보면 안되기 때문에 
+                        // 설정해놓음. 맨 처음 페이지로 가도록 해놔야 하는데 네비 수정 후 주석 해제하기. 
                         alert('토큰이 만료되었습니다. 다시 로그인을 해주세요 :) ')
-                        // navigation.navigate('RootStack')} - 신우
+                        // navigation.navigate('RootStack')} 
                     }
             })
             .catch((e)=>{
@@ -96,36 +95,35 @@ const MyInfoScreen = ({navigation}) => {
     <View style={styles.mypage_wrap}>
       <ScrollView>
         <View style={styles.profile_image_container}>
-          <View>
-            <Text>마이페이지</Text>
-          </View>
           <Button title="zxc"/>
           <Image
             style={styles.tinyLogo}
+            // 고객의 프로필 사진 보이도록 만들기 
             source={
               require('../assets/icon.png')
             }
           />
-          <Text>hye1209cj@naver.com</Text>
+          {/* 요 아래에 고객의 email 주소 보이도록 해야할것 같아욥 */}
+          <Text>hye1209cj@naver.com</Text>    
         </View>
         <View style={styles.mypage_menu}>
-          <Text>나의 마지막말</Text>
-        </View>
-        <View style={styles.mypage_menu}>
-          <Text>나의 예약 문자</Text>
+          <Text>나의 마지막 말 </Text>
         </View>
         <TouchableOpacity 
         style={styles.mypage_menu}
         onPress = {()=>{navigation.navigate('MyMessages',{list:messagesList}); console.log('move move')}}
         >
-          <Text>나의 예약 메세지</Text>
+          <Text>나의 예약 문자/이메일</Text>
         </TouchableOpacity>
+        <View style={styles.mypage_menu}>
+          <Text>아직 어떤 menu인지 안정함</Text>
+        </View>
         <View style={styles.mypage_menu}>
           <Text>내 결제</Text>
         </View>
         <View style={styles.mypage_out_container}>
           <View style={styles.mypage_out}>
-            <Text style={styles.mypage_out_text} onPress={createTwoButtonAlert2}>로그아웃</Text>
+            <Text style={styles.mypage_out_text} onPress={logout}>로그아웃</Text>
           </View>
           <View style={styles.mypage_out}>
             <Text style={styles.mypage_out_text} onPress={createTwoButtonAlert}>회원탈퇴</Text>

@@ -18,7 +18,7 @@ const Mywords = ({ navigation }) => {
             let user_email = await AsyncStorage.getItem('@user_email')
             console.log(sub, con, sen)
             let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-            let url = `http://192.168.0.16:3000/msg/mywords`
+            let url = `http://192.168.200.112:3000/msg/mywords`
             try {
                 await fetch(url, {
                     method: 'POST',
@@ -30,9 +30,9 @@ const Mywords = ({ navigation }) => {
         } catch (e) {console.log('mywordsSubmit Function ERROR =', e)}
     }
 
-    const sendMywords = () => {
-        Keyboard.dismiss()
-    }
+    // const sendMywords = () => {
+    //     Keyboard.dismiss()
+    // }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
