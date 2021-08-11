@@ -10,32 +10,32 @@ import MainPopup from './Popup';
 
 const HomeScreen = ({ navigation }, props) => {
 
-
-    const [popupCheck, setPopcupCheck] = useState(true)
-
+    
+    const [popupCheck, setPopcupCheck] = useState(false)
 
     const handlePopup = async (itemChecked) => {
 
         setPopcupCheck(!popupCheck)
         if(itemChecked){
             let currentTime = new Date()
-            let week = 604800000
+            // 604800000
+            let week = 1
             let result = currentTime.getTime() + week           // 일주일동안 보지 않기 체크했을떄
             let result2 = new Date(result)                      // 현재 시간 계산해주는 부분 by 성민
             AsyncStorage.setItem('@time_key', String(result2))
         }
     }
     useEffect(()=>{
+
         AsyncStorage.getItem('@time_key',(err,result)=>{
+
             let currentTime = new Date()
             result2 = new Date(result)
                                                                   // 앱 시작할때 팝업 띄울지 말지 
             if(currentTime.getTime()>=result2.getTime()){         // 결정하는 부분 by 성민
-                console.log('팝업 중지중이야')
-                setPopcupCheck(popupCheck)
-            }else{
-                console.log('팝업 시작해요')
                 setPopcupCheck(!popupCheck)
+            }else{
+                setPopcupCheck(popupCheck)
             }
         })
     },[])
@@ -45,7 +45,7 @@ const HomeScreen = ({ navigation }, props) => {
             title: ' Main HOME',
         })
     }, [navigation])
-
+    
     return (
         <View style={styles.HomeLayout}>
             {popupCheck ? 

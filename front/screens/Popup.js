@@ -4,11 +4,7 @@ import { Text, View, Modal, TouchableOpacity, StyleSheet,
 } from "react-native";
 import {CheckBox} from 'react-native-elements'
 
-<<<<<<< HEAD
-const MainPopup = ({handlePopup, value, which}) => {
-=======
 const MainPopup = ({handlePopup, value, which,}) => {
->>>>>>> b01496e62fca57f30e4c05cefe8c7f00c1eb7c59
   const [itemChecked,setItemChecked] = useState(false)
   let popupContent;
   let agree;
@@ -27,10 +23,6 @@ const MainPopup = ({handlePopup, value, which,}) => {
     setItemChecked(!itemChecked)
   }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> b01496e62fca57f30e4c05cefe8c7f00c1eb7c59
   return (
     <Modal animationType="slide" transparent={true} 
     // visible={props.visible}
