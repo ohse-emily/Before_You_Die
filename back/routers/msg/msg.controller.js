@@ -1,11 +1,11 @@
 require('dotenv').config();
+const {Sequelize} = require('../../models')
 const { Users, Lastwords, Messages } = require('../../models');
-const { createPW, email_verify_key, createToken, getUserid } = require('../../JWT');
-
 
 // mylast words 나의 마지막 말 Lastwords DB에 insert  by 세연 
 const mywords = async (req, res) => {
     let { lastword_subject, lastword_content, lastword_sender, user_email } = req.body;
+    console.log(user_email,lastword_subject, lastword_content, lastword_sender)
     try {
         await Lastwords.create({
             user_email, lastword_subject, lastword_content, lastword_sender
@@ -37,14 +37,13 @@ const mymessages = async (req, res) => {
 // Your last words 너의 마지막 말을 db에서 하나 랜덤 추출해오기 by세연
 const yourwords = async(req,res)=>{
     try{
-        let LastwordsList = await Lastwords.findAll({})
-        console.log('Getting yoursords List from db - sucess !! ')
-        res.json(LastwordsList)
+        let RandomLastword = await Lastwords.findAll({order:Sequelize.literal('rand()'), limit:1})
+        
+        console.log('Getting yourwords List from db - success !! ', RandomLastword)
+        res.json(RandomLastword)
     }catch(e){
-        console.log('Getting yourwords List from db Failed')
+        console.log('Getting yourwords List from db Failed,ERROR=', e)
     }
-    console.log('last', LastwordsList)
-
 }
 
 

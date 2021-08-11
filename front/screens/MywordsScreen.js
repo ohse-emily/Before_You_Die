@@ -14,6 +14,7 @@ const Mywords = ({ navigation }) => {
     // mywords 를 백앤드로 보내기 -> db 추가! by 세연 
     // AsyncStorage에서 user_email 가져오기 
     const mywordsSubmit = async (sub, con, sen) => {
+<<<<<<< HEAD
         if(mywordsSubject == ''){
             alert('제목을 작성해 주세요.')
         } else if(mywordsContent == ''){
@@ -21,6 +22,13 @@ const Mywords = ({ navigation }) => {
         } else if(mywordsSender == ''){
             alert('보내는 사람 이름을 작성해 주세요.')
         } else{
+=======
+        try {
+            let user_email = await AsyncStorage.getItem('@email_key')
+            console.log(sub, con, sen)
+            let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
+            let url = `http://192.168.200.112:3000/msg/mywords`
+>>>>>>> 1bd730f7614f522c59dbea69acf197448c643865
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
@@ -37,9 +45,9 @@ const Mywords = ({ navigation }) => {
         }
     }
 
-    const sendMywords = () => {
-        Keyboard.dismiss()
-    }
+    // const sendMywords = () => {
+    //     Keyboard.dismiss()
+    // }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
