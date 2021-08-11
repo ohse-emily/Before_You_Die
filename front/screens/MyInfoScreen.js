@@ -42,10 +42,10 @@ const MyInfoScreen = ({navigation}) => {
             console.log("OK Pressed"); 
             
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
-            // AsyncStorage.clear(); 
+            AsyncStorage.clear(); 
             //네비 이름 제대로 하기 - 신우
             // Home으로 잘 가지는 것을 보면 navigators가 서로 분리되어 있어서 그런 것이 확실함
-            navigation.navigate('Auth')}
+            navigation.navigate('Auth', {tab: 'none'})}
             }
         ]
     );

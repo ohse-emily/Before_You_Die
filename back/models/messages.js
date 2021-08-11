@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const moment = require('moment');
-
+console.log(  )
 module.exports = class Messages extends Sequelize.Model{
     static init(sequelize){
         return super.init({
@@ -35,13 +35,10 @@ module.exports = class Messages extends Sequelize.Model{
                 defaultValue:Sequelize.NOW,
             },
             msg_send_date:{  
-                type:Sequelize.DATE,
-                allowNull:false,
-                defaultValue:Sequelize.NOW,
-                // defaultValue: moment(this.getDataValue('msg_write_date').clone().add(2,'year')).format('YYYY-MM-DD hh:ii:ss'),
-                // get: function(){
-                //     return moment(this.getDataValue('msg_write_date').clone().add(2,'year')).format()
-                // }
+                type: Sequelize.DATE,
+                //자동 발신 시점
+                defaultValue:moment(this.msg_write_date).add(2, 'years').format('YYYY-MM-DD HH:mm:ss'), 
+                allowNull: false
             }
         },{
             sequelize,

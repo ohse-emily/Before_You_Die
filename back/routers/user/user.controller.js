@@ -80,15 +80,17 @@ let login = async (req, res) => {
         result.proceed=true;
         result.type='verifieduser'
         result.token=token
-        let loggedInAt = new Date().toLocaleDateString()
+        let loggedInAt = new Date()
+        console.log(loggedInAt,'로긴앳')
+        console.log(user_email,'유저이메일')
         let updateLoginTime = await Users.update({
             login_date: loggedInAt
         },{
             where:{ user_email: user_email
-
             }
         })
-        console.log(updateLoginTime)
+        console.log(updateLoginTime,'업뎃로긴시간')
+        //여기에 메시지 불러와서 다같이 업뎃
         
     } else if(getUser !== null && getUser.email_verify == 0) {
         // 인증안됨

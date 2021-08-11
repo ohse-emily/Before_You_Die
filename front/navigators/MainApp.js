@@ -31,6 +31,7 @@ const HomeScreenOptions={
   headerStyle:{backgroundColor:'lightblue'},
   headerTitleStyle:{color:'black', justifyContent:'center'},
   headerTintColor:'white',
+  
 }
 const Tabs = createBottomTabNavigator();
 const YourwordsStack = createStackNavigator();
