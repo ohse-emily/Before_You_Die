@@ -136,6 +136,12 @@ const Signup = ({ navigation }) => {
                             //     headers: { 'Content-Type': 'application/json' },
                             //     body: JSON.stringify({email : email})
                             // }
+                            let url_email = 'http://192.168.0.26:3000/user/email_check'
+                            let email_options = {
+                                method :'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({email : email})
+                            }
 
                             // let response_email = await fetch(url_email, email_options)
                             // console.log(response_email)
@@ -151,6 +157,11 @@ const Signup = ({ navigation }) => {
 
                             // 백앤드 가입 정보 보내기 by 성민 
                             let url = 'http://192.168.0.119:3000/user/join'
+
+                            let url = 'http://192.168.0.26:3000/user/join'
+
+                            let url = 'http://localhost:3000/user/join'
+
                             let options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -177,7 +188,7 @@ const Signup = ({ navigation }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <MyTextInput
-                                    label="" 
+                                    label="" // 별명인지 이름인지
                                     icon="person"
                                     placeholder="별명을 입력해 주세요."
                                     placeholderTextColor='#9CA3AF'
@@ -211,7 +222,7 @@ const Signup = ({ navigation }) => {
                                 <MyTextInput
                                     label=""
                                     icon="lock"
-                                    placeholder="비밀번호를 다시 입력해 주세요."
+                                    placeholder="비밀번호를 다시 입력해주세요."
                                     placeholderTextColor='#9CA3AF'
                                     onChangeText={handleChange('password')}
                                     onBlur={handleBlur('password')}
@@ -254,7 +265,7 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
     return (
         <View>
             <View style={styles.leftIcon}>
-                <Octicons name={icon} size={30} color='#6D28D9' />
+                <Octicons name={icon} size={30} color='mediumpurple' />
             </View>
             <Text style={styles.styledInputLabel}>{label}</Text>
             <TextInput
@@ -283,31 +294,34 @@ const styles = StyleSheet.create({
         paddingTop: 77,// if Android`${StatusBarHeight + 40}`,
         // ${StatusBarHeight && `paddingTop:${StatusBarHeight}px`};
         backgroundColor: '#ffffff', //primary
+        justifyContent: 'center'
     },
     innerContainer: {
         flex: 1,
         width: '100%',
         alignItems: 'center',
+       
     },
     avatarArea: {
         width: '100%',
+        marginTop:-15,
         alignItems: 'center',
     },
     avatar: {
-        width: 100,
-        height: 100,
+        width: 70,
+        height: 70,
         margin: 'auto',
     },
     pageTitle: {
         fontSize: 30,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#6D28D9', //brand,
+        color: 'mediumpurple', //brand,
         padding: 10,
     },
-    subTitle: {
+    subtitle: {
         fontSize: 18,
-        marginBottom: 20,
+        // marginBottom: 10,
         letterSpacing: 1,
         fontWeight: 'bold',
         color: '#1F2937'// tertiary,
@@ -317,7 +331,7 @@ const styles = StyleSheet.create({
     },
     leftIcon: {
         left: 15,
-        top: 38,
+        top: 33,
         position: 'absolute',
         zIndex: 1,
     },
@@ -334,8 +348,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         fontSize: 16,
         height: 60,
-        marginTop: 3,
-        marginBottom: 10,
+        marginTop: 0,
+        marginBottom: 0,
         color: '#1F2937', //tertiary
     },
     ScrollView: {
@@ -344,17 +358,17 @@ const styles = StyleSheet.create({
     },
     rightIcon: {
         right: 15,
-        top: 38,
+        top: 33,
         position: 'absolute',
         zIndex: 1,
     },
     styledButton: {
         padding: 15,
-        backgroundColor: '#6D28D9', //brand,
+        backgroundColor: 'mediumpurple', //brand,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        marginTop: 5,
+        marginTop: 25,
         height: 60,
     },
     buttonText: {
@@ -388,12 +402,12 @@ const styles = StyleSheet.create({
         alignContent: 'center',
     },
     textLinkContent: {
-        color: '#6D28D9', //brand,
+        color: 'mediumpurple', //brand,
         fontSize: 15,
     },
     profile_img: {
-        width: 100,
-        height: 100,
+        width: 70,
+        height: 70,
     },
     radioBox: {
 

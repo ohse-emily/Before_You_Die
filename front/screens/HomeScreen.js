@@ -9,10 +9,8 @@ import MainPopup from './Popup';
 
 
 const HomeScreen = ({ navigation }, props) => {
-
     
     const [popupCheck, setPopcupCheck] = useState(false) // 기본값 창을 띄우지 않는다
-
     const handlePopup = async (itemChecked) => {
 
         setPopcupCheck(!popupCheck) // 닫기버튼을 눌렀을때
@@ -31,10 +29,14 @@ const HomeScreen = ({ navigation }, props) => {
             let currentTime = new Date()
             result2 = new Date(result)
                                                                   // 앱 시작할때 팝업 띄울지 말지 
-            if(currentTime.getTime()<=result2.getTime()){         // 결정하는 부분 by 성민
-                setPopcupCheck(false)
+            if(currentTime.getTime()>=result2.getTime()){         // 결정하는 부분 by 성민
+                setPopcupCheck(!popupCheck)
             }else{
-                setPopcupCheck(true)
+                setPopcupCheck(popupCheck)
+            // if(currentTime.getTime()<=result2.getTime()){         // 결정하는 부분 by 성민
+            //     setPopcupCheck(false)
+            // }else{
+            //     setPopcupCheck(true)  어떤거?????
             }
         })
     },[])

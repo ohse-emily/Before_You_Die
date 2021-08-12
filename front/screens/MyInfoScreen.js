@@ -17,15 +17,53 @@ const MyInfoScreen = ({navigation}) => {
         sendToken()
     },[gotData])
 
-    const createTwoButtonAlert = () =>
+    const deleteAcc = () =>
         Alert.alert("잠깐만요! ", "정말로 탈퇴하시겠습니까? (。_。)...",
         [
             {
-            text: "Cancel",
+            text: "취소",
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
             },
-            { text: "OK", onPress: () => console.log("OK Pressed") }
+            { text: "탈퇴하기", onPress: async () => {
+              console.log("OK Pressed")
+              
+              let url = 'http://localhost:3000/user/deleteacc/'
+              let response = await fetch(url, {
+                  method: 'POST', // or 'PUT'
+                  body: JSON.stringify({userId}), // data can be `string` or {object}!
+                  headers:{
+                    'Content-Type': 'application/json'
+                  }
+              }); 
+              let getData = await response.json()
+              const {goBackMain} = getData
+              try{
+                if(goBackMain){
+                  alert('회원 탈퇴가 완로되었습니다.')
+                  // navigation.navigate('RootStack')
+                } else{
+                  alert('오류가 발생하였습니다.')
+                }
+              } catch(e) {
+                alert('서버와의 접속이 원활하지 않습니다. 잠시 후 다시 시도해주세요.')
+                console.log(e,'deleteAccError')
+              }
+              console.log(goBackMain,'회원탈퇴시')
+              // try{
+              //     if(getData.proceed==true){
+              //         navigation.navigate("MainApp")
+              //         storeData(getData.token, values.user_email)
+              //     }
+              //     else if(getData.proceed == false && getData.type == 'noverified'){
+              //         alert('이메일 인증을 완료해주세요.')
+              //     } else if(getData.proceed == false && getData.type == 'nouser'){
+              //         alert('아이디와 비밀번호를 확인해주세요')
+              //     }
+              // } catch(e){
+              //     console.log(e)
+              // }
+            } }
         ]
     );
 
@@ -33,18 +71,17 @@ const MyInfoScreen = ({navigation}) => {
         Alert.alert("로그아웃", "(. ❛ ᴗ ❛.) 로그아웃 하시겠습니까?  ",
         [
             {
-            text: "Cancel",
+            text: "취소",
             onPress: () => {console.log("Cancel Pressed");},
             style: "cancel"
             },
-            { text: "OK", onPress: () => {
+            { text: "로그아웃", onPress: () => {
             console.log("OK Pressed"); 
-            
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
             AsyncStorage.clear();  // asyncstorage clear를 안해야 일주일간 보지 않음이 작동이 됨 by 성민
             // 오류 수정 by 세연 멋졍
-            navigation.navigate('RootStack')}
-            }
+            navigation.navigate('Auth')
+            }}
         ]
     );
 
@@ -181,7 +218,7 @@ const MyInfoScreen = ({navigation}) => {
             <Text style={styles.mypage_out_text} onPress={logout}>로그아웃</Text>
           </View>
           <View style={styles.mypage_out}>
-            <Text style={styles.mypage_out_text} onPress={createTwoButtonAlert}>회원탈퇴</Text>
+            <Text style={styles.mypage_out_text} onPress={deleteAcc}>회원탈퇴</Text>
           </View>
         </View>
 
