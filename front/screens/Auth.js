@@ -43,6 +43,7 @@ const Auth = ({navigation}) => {
     )
 }
 
+<<<<<<< HEAD
 const LogoutAuth = ({navigation}) => {
 
     const getData = async () => {
@@ -76,5 +77,7 @@ const LogoutAuth = ({navigation}) => {
         <View></View>
     )
 }
+=======
+>>>>>>> 157c3d37e24ffbd3278305f5d9b566a9e85e5284
 
 export default Auth
