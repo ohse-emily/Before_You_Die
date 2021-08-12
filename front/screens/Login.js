@@ -50,11 +50,7 @@ const Login = ({navigation}) => {
                         initialValues = {{user_email:'', user_password: ''}}
                         onSubmit = {async (values)=>{
                                 
-<<<<<<< HEAD
                             let url = 'http://192.168.0.26:3000/user/login/'
-=======
-                            let url = 'http://192.168.0.22:3000/user/login/'
->>>>>>> a7021a7f7edd81e5a2f5c8b5df31b478123f5163
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!

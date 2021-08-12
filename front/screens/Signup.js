@@ -150,11 +150,7 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-<<<<<<< HEAD
                             let url = 'http://192.168.0.26:3000/user/join'
-=======
-                            let url = 'http://localhost:3000/user/join'
->>>>>>> a7021a7f7edd81e5a2f5c8b5df31b478123f5163
                             let options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
