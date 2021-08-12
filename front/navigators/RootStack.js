@@ -30,7 +30,7 @@ const RootStack = () => {
                     // }}
                     {headerShown:false}
                 }
-                initialRouteName="Login"
+                initialRouteName="Auth"
             >
                 <Stack.Screen name= "Auth" component={Auth} />
                 <Stack.Screen name = "Main" component={Main}/>
@@ -41,7 +41,7 @@ const RootStack = () => {
                 name = "Welcome" 
                 component={Welcome}
                 />
-                <Stack.Screen name="MainApp" component={MainApp}/>
+                {/* <Stack.Screen name="MainApp" component={MainApp}/> */}
             </Stack.Navigator>
         </NavigationContainer>
     )

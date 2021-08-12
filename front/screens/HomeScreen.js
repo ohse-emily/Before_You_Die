@@ -12,7 +12,6 @@ const HomeScreen = ({ navigation }, props) => {
 
     
     const [popupCheck, setPopcupCheck] = useState(false) // 기본값 창을 띄우지 않는다
-
     const handlePopup = async (itemChecked) => {
 
         setPopcupCheck(!popupCheck) // 닫기버튼을 눌렀을때

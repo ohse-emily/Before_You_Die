@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome, EvilIcons } from '@expo/vector-icons';
@@ -19,24 +18,23 @@ import YourwordsShowScreen from '../screens/YourwordsShowScreen';
 
 // screens by 신우
 import MyMessages from './../screens/MyMessages'
-import RootStack from './RootStack'
-
-// ? 
+import Login from './../screens/Login'
+import Auth from './../screens/Auth'
 import MyWordsHistory from './../screens/MyWordsHistory'
-const Stack=createStackNavigator()
 
 // Home 위에 제목 styles 
 const HomeScreenOptions = {
   headerStyle: { backgroundColor: 'lavender' },
   headerTitleStyle: { color: 'black', justifyContent: 'center' },
   headerTintColor: 'white',
-  headerMode:'screen',
-  cardStyle:{backgroundColor:'#ffffff'}
+  headerMode: 'screen',
+  cardStyle: { backgroundColor: '#ffffff' }
 }
 const Tabs = createBottomTabNavigator();
 const YourwordsStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const MyInfoStack = createStackNavigator();
+const LogoutStack = createStackNavigator();
 
 const YourwordsStackScreen = () => (
   <YourwordsStack.Navigator screenOptions={HomeScreenOptions}>
@@ -51,6 +49,7 @@ const HomeStackScreen = () => (
   <HomeStack.Navigator
     screenOptions={HomeScreenOptions}
   >
+    {/* <HomeStack.Screen name="LogoutAuth" component={LogoutAuth}/> */}
     <HomeStack.Screen name="Home" component={HomeScreen} />
     <HomeStack.Screen name="Yourwords" component={YourwordsScreen} />
     <HomeStack.Screen name="Mywords" component={MywordsScreen} />
@@ -58,6 +57,9 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="Venting" component={VentingScreen} />
     <HomeStack.Screen name="AfterSending" component={AfterSendingScreen} />
     <HomeStack.Screen name="YourwordsShow" component={YourwordsShowScreen} options={{ headerShown: false }} />
+    <HomeStack.Screen name="Login" component={Login} />
+    <HomeStack.Screen name="SendingEmail" component={SendingEmail} />
+    <HomeStack.Screen name="SendingMSG" component={SendingMSG} />
   </HomeStack.Navigator>
 )
 
@@ -65,55 +67,50 @@ const MyInfoStackScreen = () => (
   <MyInfoStack.Navigator screenOptions={HomeScreenOptions}>
     <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen} />
     <MyInfoStack.Screen name="MyMessages" component={MyMessages} />
-    <MyInfoStack.Screen name="RootStack" component={RootStack} options={{ headerShown: false }}/>
-    {/* <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen}/>
-    <HomeStack.Screen name="MyWordsHistory" component={MyWordsHistory}/>
-    <MyInfoStack.Screen name="MyMessages" component={MyMessages}/> */}
+    <MyInfoStack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
   </MyInfoStack.Navigator>
 )
 
 //MainApp로 이름 변경
 export default function MainApp({ navigation }) {
   return (
-      <NavigationContainer independent={true}>
-        <Tabs.Navigator
-          initialRouteName="HomeTab"
-          screenOptions={{
-            tabBarHideOnKeyboard: true,
-            tabBarStyle: [
-              {
-                display: 'flex'
-              },
-              null
-            ]
-          }}
-        >
-          <Tabs.Screen
-            name="YourwordsTab"
-            component={YourwordsStackScreen}
-            options={{
-              headerShown: false,
-              tabBarIcon: () => (<FontAwesome name="telegram" size={30} />)
-            }}
-          />
-          <Tabs.Screen
-            name="HomeTab"
-            component={HomeStackScreen}
-            options={{
-              headerShown: false,
-              tabBarIcon: () => (<EvilIcons name="heart" size={40} color="black" />)
-            }}
-          />
-          <Tabs.Screen
-            name="MyInfoTab"
-            component={MyInfoStackScreen}
-            options={{
-              headerShown: false,
-              tabBarIcon: () => (<FontAwesome name="grav" size={30} />)
-            }}
-          />
-        </Tabs.Navigator>
-      </NavigationContainer>
+    <Tabs.Navigator
+      initialRouteName="HomeTab"
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        tabBarStyle: [
+          {
+            display: 'flex'
+          },
+          null
+        ]
+      }}
+    >
+      <Tabs.Screen
+        name="YourwordsTab"
+        component={YourwordsStackScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (<FontAwesome name="telegram" size={30} />)
+        }}
+      />
+      <Tabs.Screen
+        name="HomeTab"
+        component={HomeStackScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (<EvilIcons name="heart" size={40} color="black" />)
+        }}
+      />
+      <Tabs.Screen
+        name="MyInfoTab"
+        component={MyInfoStackScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (<FontAwesome name="grav" size={30} />)
+        }}
+      />
+    </Tabs.Navigator>
   )
 }
 

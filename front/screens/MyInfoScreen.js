@@ -42,8 +42,8 @@ const MyInfoScreen = ({navigation}) => {
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
             AsyncStorage.clear(); 
             // 오류 수정 by 세연 멋졍
-            navigation.navigate('RootStack')}
-            }
+            navigation.navigate('Auth')
+            }}
         ]
     );
 
@@ -77,7 +77,7 @@ const MyInfoScreen = ({navigation}) => {
         })
 
         const getInfo = async (token) => {
-            let url = 'http://localhost:3000/user/userinfo/'
+            let url = 'http://192.168.0.26:3000/user/userinfo/'
             let value = {tokenValue:token}
             let response = await fetch(url, {
                     method: 'POST', // or 'PUT'
@@ -98,7 +98,7 @@ const MyInfoScreen = ({navigation}) => {
     // 교수님 도움받은 구간
     const deleteMsgHandler = async (id, msg_user_email) =>{
         // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-        let url = 'http://localhost:3000/user/deletepost/'
+        let url = 'http://192.168.0.26:3000/user/deletepost/'
         let data = {id, msg_user_email}
         let response = await fetch(url, {
             method: 'POST', 
