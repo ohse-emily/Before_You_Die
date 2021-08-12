@@ -151,7 +151,7 @@ const MyInfoScreen = ({navigation}) => {
         {/* 요 아래에 고객의 email 주소 보이도록 해야할것 같아욥 * + css */}
           <Text>{userId}</Text>
         </View> 
-        <View style="mypage_container">
+        <View style={styles.mypage_container}>
           <TouchableOpacity
           style={styles.mypage_menu}
           onPress = {()=>{navigation.navigate('MyWordsHistory',{
@@ -218,17 +218,19 @@ const styles = StyleSheet.create({
   mypage_container: {
     width:  500,
     height: 500,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     flexDirection:'row',
+    flexWrap: 'wrap'
   },
   mypage_menu: {
     borderColor: '#DCDCDC',
     borderWidth:1,
-    width: '30%',
+    width: '45%',
     height: 150,
     marginTop: 5,
     marginBottom: 5,
     backgroundColor: '#fff',
+    justifyContent : 'center',
   
   },
   mypage_text:{
