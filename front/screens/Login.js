@@ -50,7 +50,7 @@ const Login = ({navigation}) => {
                         initialValues = {{user_email:'', user_password: ''}}
                         onSubmit = {async (values)=>{
                                 
-                            let url = 'http://192.168.200.112:3000/user/login/'
+                            let url = 'http://192.168.0.22:3000/user/login/'
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!
@@ -78,9 +78,9 @@ const Login = ({navigation}) => {
                     {({handleChange, handleBlur, handleSubmit, values})=>(
                         <View style={styles.styledFormArea}>
                             <MyTextInput
-                                label="이메일 주소"
+                                label=""
                                 icon="mail"
-                                placeholder="이메일을 입력해 주세요."
+                                placeholder="이메일 주소를 입력해 주세요."
                                 placeholderTextColor='#9CA3AF' //darkLight
                                 onChangeText = {handleChange('user_email')}
                                 onBlur={handleBlur('user_email')}
@@ -88,9 +88,9 @@ const Login = ({navigation}) => {
                                 keyboardType="email-address"
                             />
                             <MyTextInput
-                                label="비밀번호"
+                                label=""
                                 icon="lock"
-                                placeholder="* * * * * * * * "
+                                placeholder="비밀번호를 입력해 주세요."
                                 placeholderTextColor= '#9CA3AF' //darkLight
                                 onChangeText = {handleChange('user_password')}
                                 onBlur={handleBlur('user_password')}
@@ -100,8 +100,8 @@ const Login = ({navigation}) => {
                                 hidePassword={hidePassword}
                                 setHidePassword = {setHidePassword}
                             />
-                            <Text style={styles.msgBox}>...</Text>
-                            <View style={styles.line}/>
+                            {/* <Text style={styles.msgBox}>...</Text>
+                            <View style={styles.line}/> */}
                             <TouchableOpacity 
                                 style={styles.styledButton}
                                 onPress = {handleSubmit}
@@ -135,7 +135,7 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
     return(
         <View>
             <View style={styles.leftIcon}>
-                <Octicons name={icon} size={30} color='#6D28D9' />
+                <Octicons name={icon} size={30} color='mediumpurple' />
             </View>
             <Text style={styles.styledInputLabel}>{label}</Text>
             <TextInput 
@@ -172,12 +172,13 @@ const styles = StyleSheet.create({
     pageLogo:{
         width:250,
         height:200,
+        display: 'none'
     },
     pageTitle:{
         fontSize: 30,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#6D28D9', //brand,
+        color: 'mediumpurple', //brand,
         padding:10,
     },
     subTitle:{
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
     },
     leftIcon:{
         left: 15,
-        top: 38,
+        top: 33,
         position: 'absolute',
         zIndex: 1,
     },
@@ -215,13 +216,13 @@ const styles = StyleSheet.create({
     },
     rightIcon:{
         right: 15,
-        top: 38,
+        top: 33,
         position: 'absolute',
         zIndex: 1,
     },
     styledButton:{
         padding: 15,
-        backgroundColor: '#6D28D9', //brand,
+        backgroundColor: 'mediumpurple', //brand,
         justifyContent: 'center',
         alignItems:'center',
         borderRadius: 5,
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
         height: 60,
     },
     buttonText:{
-        color: '#ffffff', //primary,
+        color: 'white', //primary,
         fontSize: 16,
     },
     msgBox:{

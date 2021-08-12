@@ -14,7 +14,7 @@ const storeData = async (value) => {
 
 
 
-const Auth = ({navigation}) => {
+const Auth = ({navigation}, ) => {
 
     const getData = async () => {
         try {

@@ -101,8 +101,6 @@ let login = async (req, res) => {
     res.json(result)
 }
 
-
-
 let getUserInfo = async (req,res) => {
     let {tokenValue} = req.body
     // 프론트 단으로 던질 정보를 넣을 배열 - 신우
@@ -189,7 +187,20 @@ let email_check = async(req, res) => {
     }
 }
 
+let deleteAcc = async(req, res) => {
+    let user_email = req.body.userId
+    result = await Users.findOne({  // 나중에 destroy로 바꾸기 - 신우
+        where:{
+            user_email,
+        }
+    })
+    console.log(result.dataValues)
+    res.json({goBackMain: true})
+}
+
 
 module.exports = {
-    join, login, confirmEmail, getUserInfo, deletePost, deleteWord, email_check
+    join, login, confirmEmail, 
+    getUserInfo, deletePost, deleteWord, 
+    email_check, deleteAcc,
 }

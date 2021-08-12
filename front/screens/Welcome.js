@@ -9,23 +9,27 @@ import {Formik} from 'formik';
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
 
 const Welcome = ({route, navigation}) => {
-    const {name} = route.params
+    // const {name} = route.params
     return(
         <>
             <StatusBar style="dark"/>
             <View style={styles.innerContainer}>
-                <Image style={styles.welcomeImage} 
+                {/* <Image style={styles.welcomeImage} 
                 resizeMode = "cover" 
-                source={require('./../assets/sam.jpeg')}/>
+                source={require('./../assets/sam.jpeg')}/> */}
                 <View style={styles.welcomeContainer}>
-                    <Text style={styles.pageTitle}>이랏샤이마세</Text>
-                    <Text style={styles.subtitle}>{name}님, 회원가입을 축하합니다.</Text>
+                    <Text style={styles.pageTitle}>어서오세요!</Text>
+                    <Text style={styles.subtitle}>
+                        {/* {name} */} 
+                        님, 회원가입을 축하합니다.
+                    </Text>
                     <View style={styles.styledFormArea}>
-                    <Image style={styles.avatar} 
+                    {/* <Image style={styles.avatar} 
                     resizeMode = "cover" 
                     source={require('./../assets/sam.jpeg')}
-                    />
-                        <View style={styles.line}/>
+                    /> */}
+                        <View style={styles.avatar}><Text>asd</Text></View>
+                        {/* <View style={styles.line}/> */}
                         <TouchableOpacity style={styles.styledButton}
                             onPress = {()=>{navigation.navigate('Login')}}>
                             <Text style={styles.buttonText}>
@@ -52,22 +56,26 @@ const styles = StyleSheet.create({
         fontSize: 35,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#6D28D9', //brand,
+        color: 'mediumpurple', //brand,
         padding:10,
+        marginBottom: 100
     },
-    subTitle:{ //웰컴으로
+    subtitle:{ //웰컴으로
         fontSize: 18,
-        marginBottom: 5,
+        marginBottom: 20,
         letterSpacing: 1,
         fontWeight: 'normal',
         color: '#1F2937'// tertiary,
     },
     styledFormArea:{
         width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     styledButton:{
+        width: '100%',
         padding: 15,
-        backgroundColor: '#6D28D9', //brand,
+        backgroundColor: 'mediumpurple', //brand,
         justifyContent: 'center',
         alignItems:'center',
         borderRadius: 5,
@@ -102,8 +110,6 @@ const styles = StyleSheet.create({
         height: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection:'column',
-        flex:1,
         borderRadius: 50,
         borderWidth: 2,
         borderColor: '#E5E7EB',

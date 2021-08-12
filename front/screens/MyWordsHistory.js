@@ -8,10 +8,7 @@ const MyWordsHistory = ({ route, navigation } ) => {
 
     // 파라미터로 MyInfoScreen에서 리스트를 넘겨받는다. - 신우
     const {list, deleteWordHandler } = route.params
-<<<<<<< HEAD
     let returnWords
-=======
->>>>>>> 1bd730f7614f522c59dbea69acf197448c643865
 
     const deleteCard = (id,word_user_email) => {
 

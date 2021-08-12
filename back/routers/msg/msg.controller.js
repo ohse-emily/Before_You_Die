@@ -35,11 +35,13 @@ const mymessages = async (req, res) => {
 }
 
 // Your last words 너의 마지막 말을 db에서 하나 랜덤 추출해오기 by세연
+// Your last words 너의 마지막 말을 db에서 랜덤 하나 추출  by세연
 const yourwords = async(req,res)=>{
     try{
         let RandomLastword = await Lastwords.findAll({order:Sequelize.literal('rand()'), limit:1})
         
         console.log('Getting yourwords List from db - success !! ', RandomLastword)
+        console.log(RandomLastword,'RandomLastword')
         res.json(RandomLastword)
     }catch(e){
         console.log('Getting yourwords List from db Failed,ERROR=', e)
