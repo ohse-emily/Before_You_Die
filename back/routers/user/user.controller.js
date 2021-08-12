@@ -1,7 +1,8 @@
 require('dotenv').config();
-const { Users, Lastwords, Messages } = require('../../models');
+const { sequelize, Users, Lastwords, Messages } = require('../../models/index');
 const { createPW, email_verify_key, createToken, getUserid } = require('../../JWT');
 const nodemailer = require('nodemailer');
+// const sequelize = require('sequelize')
 const qs = require('qs')
 
 let join = async (req,res) => {
@@ -10,8 +11,8 @@ let join = async (req,res) => {
     let email_key = email_verify_key();
 
     // front 에서 받아온 정보 db Users 에 저장 by 성민
-    pwJWT = createPW(password)
-    Users.create({
+    let pwJWT = createPW(password)
+    await Users.create({
         user_nickname: fullName,
         user_email : email,
         user_password : pwJWT,
@@ -19,8 +20,9 @@ let join = async (req,res) => {
         email_verify_key:email_key,
     })
 
-    // email 인증 메일 보내기 by 세연 
+    await sequelize.query(`update users set join_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${email}'`)
 
+    // email 인증 메일 보내기 by 세연 
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
         host: 'smtp.gmail.com',
@@ -66,7 +68,6 @@ let confirmEmail = async (req, res) => {
 
 let login = async (req, res) => {
     let {user_email, user_password} = req.body
-    console.log(user_password)
     let pwJWT = createPW(user_password)
     let token = createToken(user_email)
 
@@ -81,17 +82,11 @@ let login = async (req, res) => {
         result.proceed=true;
         result.type='verifieduser'
         result.token=token
-        let loggedInAt = new Date()
+        let loggedInAt = new Date().toLocaleDateString()
         console.log(loggedInAt,'로긴앳')
         console.log(user_email,'유저이메일')
-        let updateLoginTime = await Users.update({
-            login_date: loggedInAt
-        },{
-            where:{ user_email: user_email
-            }
-        })
-        console.log(updateLoginTime,'업뎃로긴시간')
-        //여기에 메시지 불러와서 다같이 업뎃
+        await sequelize.query(`update users set login_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${user_email}'`)
+
         
     } else if(getUser !== null && getUser.email_verify == 0) {
         // 인증안됨
@@ -189,7 +184,7 @@ let email_check = async(req, res) => {
 
 let deleteAcc = async(req, res) => {
     let user_email = req.body.userId
-    result = await Users.findOne({  // 나중에 destroy로 바꾸기 - 신우
+    let result = await Users.findOne({  // 나중에 destroy로 바꾸기 - 신우
         where:{
             user_email,
         }
