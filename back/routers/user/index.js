@@ -11,5 +11,6 @@ router.post('/deletepost', controller.deletePost)
 router.post('/deleteword', controller.deleteWord)
 router.post('/email_check', controller.email_check)
 router.post('/deleteacc', controller.deleteAcc)
+router.post('/transformPw', controller.transformPw)
 
 module.exports = router;

@@ -198,9 +198,14 @@ let deleteAcc = async(req, res) => {
     res.json({goBackMain: true})
 }
 
+let transformPw = async(req,res)=> {
+    
+}
+
+
 
 module.exports = {
     join, login, confirmEmail, 
     getUserInfo, deletePost, deleteWord, 
-    email_check, deleteAcc,
+    email_check, deleteAcc, transformPw
 }
