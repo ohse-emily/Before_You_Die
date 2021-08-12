@@ -1,16 +1,10 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { Button, View, Text, TextInput } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
+import { Button, View, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-// import SendingEmail from './SendingEmail';
-// import SendingMSG from './SendingMSG';
-// import AfterSending from './AfterSendingScreen'
 import MainPopup from './Popup'
-// import Home from './HomeScreen'
 
 function ToSomeone({ navigation }) {
-  
   const [popupToSomeone, setPopupToSomeone] = useState(true)
   const PopupToFn = () => {
     setPopupToSomeone(!popupToSomeone)  
@@ -45,8 +39,6 @@ function ToSomeone({ navigation }) {
     </View>
   );
 }
-
-const Stack = createStackNavigator();
 
 export default ToSomeone
 
