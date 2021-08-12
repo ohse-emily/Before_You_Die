@@ -8,6 +8,7 @@ const MyInfoScreen = ({navigation}) => {
     const [messagesList, setMessagesList] = useState([])
     const [wordsList, setWordsList] = useState([])
     const [userId, setUserId] = useState('')
+    const [userImg, setUserImg] = useState('../assets/icon.png')
     // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
     const [gotData, setGotData] = useState(false)
 
@@ -40,7 +41,7 @@ const MyInfoScreen = ({navigation}) => {
             console.log("OK Pressed"); 
             
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
-            AsyncStorage.clear(); 
+            AsyncStorage.clear();  // asyncstorage clear를 안해야 일주일간 보지 않음이 작동이 됨 by 성민
             // 오류 수정 by 세연 멋졍
             navigation.navigate('RootStack')}
             }
@@ -76,8 +77,8 @@ const MyInfoScreen = ({navigation}) => {
                 console.log(e)
         })
 
-        const getInfo = async (token) => {
-            let url = 'http://localhost:3000/user/userinfo/'
+        const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
+            let url = 'http://192.168.0.119:3000/user/userinfo/'
             let value = {tokenValue:token}
             let response = await fetch(url, {
                     method: 'POST', // or 'PUT'
@@ -91,6 +92,8 @@ const MyInfoScreen = ({navigation}) => {
             setWordsList(getData[2])
             setGotData(true)
             setUserId(getData[0].user_email)
+
+            
         }
     }
     
@@ -98,7 +101,7 @@ const MyInfoScreen = ({navigation}) => {
     // 교수님 도움받은 구간
     const deleteMsgHandler = async (id, msg_user_email) =>{
         // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-        let url = 'http://localhost:3000/user/deletepost/'
+        let url = 'http://192.168.0.119:3000/user/deletepost/'
         let data = {id, msg_user_email}
         let response = await fetch(url, {
             method: 'POST', 
@@ -113,7 +116,7 @@ const MyInfoScreen = ({navigation}) => {
 
     const deleteWordHandler = async (id, word_user_email) =>{
         // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-        let url = 'http://localhost:3000/user/deleteword/'
+        let url = 'http://192.168.0.119:3000/user/deleteword/'
         let data = {id, word_user_email}
         let response = await fetch(url, {
             method: 'POST', 
@@ -131,12 +134,12 @@ const MyInfoScreen = ({navigation}) => {
     <View style={styles.mypage_wrap}>
       <ScrollView>
         <View style={styles.profile_image_container}>
-          <Button title="zxc"/>
           <Image
             style={styles.tinyLogo}
             // 고객의 프로필 사진 보이도록 만들기 
+
             source={
-              require('../assets/icon.png')
+              require('../assets/user_.png')
             }
           />
 
@@ -148,29 +151,31 @@ const MyInfoScreen = ({navigation}) => {
         {/* 요 아래에 고객의 email 주소 보이도록 해야할것 같아욥 * + css */}
           <Text>{userId}</Text>
         </View> 
-        <TouchableOpacity
-        style={styles.mypage_menu}
-        onPress = {()=>{navigation.navigate('MyWordsHistory',{
-            list:wordsList, deleteWordHandler: deleteWordHandler
-        })}}
-        >
-          <Text>나의 마지막 말</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.mypage_menu}
-        // 함수를 넘기는 것이 아니라 값 자체를 넘겨받음 - 신우
-        onPress = {()=>{navigation.navigate('MyMessages',{
-            list:messagesList, deleteMsgHandler: deleteMsgHandler
-        })}}
-        >
-          <Text>나의 예약 문자/이메일</Text>
-        </TouchableOpacity>
-        <View style={styles.mypage_menu}>
-          <Text>아직 어떤 menu인지 안정함</Text>
-        </View>
-        <View style={styles.mypage_menu}>
-          <Text>내 결제</Text>
-        </View>
+        <View style="mypage_container">
+          <TouchableOpacity
+          style={styles.mypage_menu}
+          onPress = {()=>{navigation.navigate('MyWordsHistory',{
+              list:wordsList, deleteWordHandler: deleteWordHandler
+          })}}
+          >
+            <Text style={styles.mypage_text}>나의 마지막 말</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+          style={styles.mypage_menu}
+          // 함수를 넘기는 것이 아니라 값 자체를 넘겨받음 - 신우
+          onPress = {()=>{navigation.navigate('MyMessages',{
+              list:messagesList, deleteMsgHandler: deleteMsgHandler
+          })}}
+          >
+            <Text style={styles.mypage_text}>나의 예약 문자/이메일</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.mypage_menu}>
+            <Text style={styles.mypage_text}>아직 어떤 menu인지 안정함</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.mypage_menu}>
+            <Text style={styles.mypage_text}>내 결제</Text>
+          </TouchableOpacity>
+      </View>
         <View style={styles.mypage_out_container}>
           <View style={styles.mypage_out}>
             <Text style={styles.mypage_out_text} onPress={logout}>로그아웃</Text>
@@ -179,6 +184,7 @@ const MyInfoScreen = ({navigation}) => {
             <Text style={styles.mypage_out_text} onPress={createTwoButtonAlert}>회원탈퇴</Text>
           </View>
         </View>
+
       </ScrollView>
     </View>
   );
@@ -209,14 +215,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F8FF',
     height: '100%'
   },
+  mypage_container: {
+    width:  500,
+    height: 500,
+    backgroundColor: 'red',
+    flexDirection:'row',
+  },
   mypage_menu: {
-    width: '100%',
-    height: 80,
+    borderColor: '#DCDCDC',
+    borderWidth:1,
+    width: '30%',
+    height: 150,
     marginTop: 5,
     marginBottom: 5,
     backgroundColor: '#fff',
-    flexDirection: 'row',
-    alignItems: 'stretch',
+  
+  },
+  mypage_text:{
+    fontSize: 17
   },
   mypage_out_container: {
     flexDirection: 'row-reverse'
