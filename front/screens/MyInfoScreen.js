@@ -115,7 +115,7 @@ const MyInfoScreen = ({navigation}) => {
         })
 
         const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
-            let url = 'http://192.168.0.119:3000/user/userinfo/'
+            let url = 'http://localhost:3000/user/userinfo/'
             let value = {tokenValue:token}
             let response = await fetch(url, {
                     method: 'POST', // or 'PUT'
@@ -138,7 +138,7 @@ const MyInfoScreen = ({navigation}) => {
     // 교수님 도움받은 구간
     const deleteMsgHandler = async (id, msg_user_email) =>{
         // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-        let url = 'http://192.168.0.119:3000/user/deletepost/'
+        let url = 'http://localhost:3000/user/deletepost/'
         let data = {id, msg_user_email}
         let response = await fetch(url, {
             method: 'POST', 
@@ -153,7 +153,7 @@ const MyInfoScreen = ({navigation}) => {
 
     const deleteWordHandler = async (id, word_user_email) =>{
         // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-        let url = 'http://192.168.0.119:3000/user/deleteword/'
+        let url = 'http://localhost:3000/user/deleteword/'
         let data = {id, word_user_email}
         let response = await fetch(url, {
             method: 'POST', 

@@ -136,12 +136,13 @@ const Signup = ({ navigation }) => {
                             //     headers: { 'Content-Type': 'application/json' },
                             //     body: JSON.stringify({email : email})
                             // }
-                            let url_email = 'http://192.168.0.26:3000/user/email_check'
+                            let url_email = 'http://localhost:3000/user/email_check'
                             let email_options = {
                                 method :'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({email : email})
                             }
+                            console.log(email_options)
 
                             // let response_email = await fetch(url_email, email_options)
                             // console.log(response_email)
@@ -156,9 +157,6 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-                            let url = 'http://192.168.0.119:3000/user/join'
-
-                            let url = 'http://192.168.0.26:3000/user/join'
 
                             let url = 'http://localhost:3000/user/join'
 

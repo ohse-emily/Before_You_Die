@@ -15,11 +15,7 @@ function YourwordsShowScreen({ navigation }) {
     useEffect(() => {
         setTimeout(() => {
             const fetchYourword = async () => {
-<<<<<<< HEAD
-                let getYourword = await axios.get('http://192.168.0.26:3000/msg/yourwords')    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
-=======
                 let getYourword = await axios.get('http://localhost:3000/msg/yourwords')    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
->>>>>>> a7021a7f7edd81e5a2f5c8b5df31b478123f5163
 
                 setYourword(getYourword.data)
                 setIsLoading(true)
