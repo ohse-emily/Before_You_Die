@@ -15,6 +15,7 @@ const MyInfoScreen = ({ navigation }) => {
   useEffect(() => {
     // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
     sendToken()
+    console.log('변함')
   }, [gotData])
 
   const deleteAcc = () =>
@@ -81,7 +82,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "로그아웃", onPress: () => {
             console.log("OK Pressed");
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
-            AsyncStorage.clear();  // asyncstorage clear를 안해야 일주일간 보지 않음이 작동이 됨 by 성민
+            AsyncStorage.removeItem('@storage_Key');  // asyncstorage clear를 안해야 일주일간 보지 않음이 작동이 됨 by 성민
             // 오류 수정 by 세연 멋졍
             navigation.navigate('Auth')
           }
@@ -118,25 +119,6 @@ const MyInfoScreen = ({ navigation }) => {
         console.log(e)
       })
 
-<<<<<<< HEAD
-        const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
-            let url = 'http://localhost:3000/user/userinfo/'
-            let value = {tokenValue:token}
-            let response = await fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(value), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                    }
-                })
-            let getData = await response.json()
-            setMessagesList(getData[1])
-            setWordsList(getData[2])
-            setGotData(true)
-            setUserId(getData[0].user_email)
-
-            
-=======
     const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
       let url = 'http://192.168.0.26:3000/user/userinfo/'
       let value = { tokenValue: token }
@@ -145,7 +127,6 @@ const MyInfoScreen = ({ navigation }) => {
         body: JSON.stringify(value), // data can be `string` or {object}!
         headers: {
           'Content-Type': 'application/json'
->>>>>>> 157c3d37e24ffbd3278305f5d9b566a9e85e5284
         }
       })
       let getData = await response.json()
@@ -154,39 +135,6 @@ const MyInfoScreen = ({ navigation }) => {
       setGotData(true)
       setUserId(getData[0].user_email)
 
-<<<<<<< HEAD
-    // 교수님 도움받은 구간
-    const deleteMsgHandler = async (id, msg_user_email) =>{
-        // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-        let url = 'http://localhost:3000/user/deletepost/'
-        let data = {id, msg_user_email}
-        let response = await fetch(url, {
-            method: 'POST', 
-            body: JSON.stringify(data), 
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
-        const getData = await response.json()
-        return getData 
-    }
-
-    const deleteWordHandler = async (id, word_user_email) =>{
-        // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-        let url = 'http://localhost:3000/user/deleteword/'
-        let data = {id, word_user_email}
-        let response = await fetch(url, {
-            method: 'POST', 
-            body: JSON.stringify(data), 
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
-        const getData = await response.json()
-        return getData 
-=======
-
->>>>>>> 157c3d37e24ffbd3278305f5d9b566a9e85e5284
     }
   }
 

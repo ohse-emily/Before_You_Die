@@ -47,19 +47,10 @@ const Login = ({ navigation }) => {
                     <Text style={styles.subtitle}>로그인</Text>
 
                     <Formik
-<<<<<<< HEAD
-                        initialValues = {{user_email:'', user_password: ''}}
-                        onSubmit = {async (values)=>{
-                                
-
-                            let url = 'http://localhost:3000/user/login/'
-
-=======
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values) => {
 
-                            let url = 'http://192.168.0.26:3000/user/login/'
->>>>>>> 157c3d37e24ffbd3278305f5d9b566a9e85e5284
+                            let url = 'http://localhost:3000/user/login/'
 
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'

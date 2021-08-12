@@ -20,20 +20,11 @@ const Mywords = ({ navigation }) => {
             alert('내용을 작성해 주세요.')
         } else if (mywordsSender == '') {
             alert('보내는 사람 이름을 작성해 주세요.')
-<<<<<<< HEAD
-        } else{
-
-            try {
-                let user_email = await AsyncStorage.getItem('@email_key')
-                let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-                let url = `http://localhost:3000/msg/mywords`
-=======
         } else {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-                let url = `http://192.168.0.26:3000/msg/mywords`
->>>>>>> 157c3d37e24ffbd3278305f5d9b566a9e85e5284
+                let url = `http://localhost:3000/msg/mywords`
 
                 try {
                     await fetch(url, {

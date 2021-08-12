@@ -127,15 +127,9 @@ const Signup = ({ navigation }) => {
 
                             if(email.match( /@/ )==null){
                                 Alert.alert('이메일 형식에 맞춰주세요')
+                                return
                             }
-                           
 
-                            // let url_email = 'http://192.168.0.119:3000/user/email_check'
-                            // let email_options = {
-                            //     method :'POST',
-                            //     headers: { 'Content-Type': 'application/json' },
-                            //     body: JSON.stringify({email : email})
-                            // }
                             let url_email = 'http://localhost:3000/user/email_check'
                             let email_options = {
                                 method :'POST',
@@ -157,13 +151,7 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-<<<<<<< HEAD
-
                             let url = 'http://localhost:3000/user/join'
-
-=======
-                            let url = 'http://192.168.0.26:3000/user/join'
->>>>>>> 157c3d37e24ffbd3278305f5d9b566a9e85e5284
                             let options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
