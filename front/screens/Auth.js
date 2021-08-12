@@ -43,11 +43,7 @@ const Auth = ({navigation}) => {
     )
 }
 
-<<<<<<< HEAD
 const LogoutAuth = ({navigation}) => {
-=======
-const Auth = ({navigation}, ) => {
->>>>>>> a7021a7f7edd81e5a2f5c8b5df31b478123f5163
 
     const getData = async () => {
         try {

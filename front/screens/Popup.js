@@ -120,5 +120,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
   },
+  textScroll:{
+    marginBottom: 30,
+  }
 });
 
