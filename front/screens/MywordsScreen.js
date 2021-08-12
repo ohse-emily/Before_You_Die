@@ -21,11 +21,14 @@ const Mywords = ({ navigation }) => {
         } else if(mywordsSender == ''){
             alert('보내는 사람 이름을 작성해 주세요.')
         } else{
+<<<<<<< HEAD
         // try {
         //     let user_email = await AsyncStorage.getItem('@email_key')
         //     console.log(sub, con, sen)
         //     let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
         //     let url = `http://192.168.200.112:3000/msg/mywords`
+=======
+>>>>>>> a7021a7f7edd81e5a2f5c8b5df31b478123f5163
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
