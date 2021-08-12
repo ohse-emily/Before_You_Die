@@ -130,6 +130,12 @@ const Signup = ({ navigation }) => {
                             }
                            
 
+                            // let url_email = 'http://192.168.0.119:3000/user/email_check'
+                            // let email_options = {
+                            //     method :'POST',
+                            //     headers: { 'Content-Type': 'application/json' },
+                            //     body: JSON.stringify({email : email})
+                            // }
                             let url_email = 'http://192.168.0.26:3000/user/email_check'
                             let email_options = {
                                 method :'POST',
@@ -137,8 +143,8 @@ const Signup = ({ navigation }) => {
                                 body: JSON.stringify({email : email})
                             }
 
-                            let response_email = await fetch(url_email, email_options)
-                            console.log(response_email)
+                            // let response_email = await fetch(url_email, email_options)
+                            // console.log(response_email)
 
                             if (ConfirmPassword != password) {
                                 Alert.alert('비밀번호가 일치하지 않습니다')
@@ -188,7 +194,7 @@ const Signup = ({ navigation }) => {
                                 <MyTextInput
                                     label=""
                                     icon="mail"
-                                    placeholder="이메일을 입력해 주세요."
+                                    placeholder="이메일 주소를 입력해 주세요."
                                     placeholderTextColor='#9CA3AF'
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}

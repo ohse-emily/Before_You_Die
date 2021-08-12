@@ -68,6 +68,7 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen} />
     <MyInfoStack.Screen name="MyMessages" component={MyMessages} />
     <MyInfoStack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
+    <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory}/>
   </MyInfoStack.Navigator>
 )
 

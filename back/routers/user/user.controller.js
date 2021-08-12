@@ -10,8 +10,8 @@ let join = async (req,res) => {
     let email_key = email_verify_key();
 
     // front 에서 받아온 정보 db Users 에 저장 by 성민
-    pwJWT = createPW(password)
-    Users.create({
+    let pwJWT = createPW(password)
+    await Users.create({
         user_nickname: fullName,
         user_email : email,
         user_password : pwJWT,
@@ -20,7 +20,6 @@ let join = async (req,res) => {
     })
 
     // email 인증 메일 보내기 by 세연 
-
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
         host: 'smtp.gmail.com',
@@ -66,7 +65,6 @@ let confirmEmail = async (req, res) => {
 
 let login = async (req, res) => {
     let {user_email, user_password} = req.body
-    console.log(user_password)
     let pwJWT = createPW(user_password)
     let token = createToken(user_email)
 
@@ -189,7 +187,7 @@ let email_check = async(req, res) => {
 
 let deleteAcc = async(req, res) => {
     let user_email = req.body.userId
-    result = await Users.findOne({  // 나중에 destroy로 바꾸기 - 신우
+    let result = await Users.findOne({  // 나중에 destroy로 바꾸기 - 신우
         where:{
             user_email,
         }
