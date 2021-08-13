@@ -1,7 +1,8 @@
 require('dotenv').config();
-const { Users, Lastwords, Messages } = require('../../models');
+const { sequelize, Users, Lastwords, Messages } = require('../../models/index');
 const { createPW, email_verify_key, createToken, getUserid } = require('../../JWT');
 const nodemailer = require('nodemailer');
+// const sequelize = require('sequelize')
 const qs = require('qs')
 
 let join = async (req, res) => {
@@ -18,6 +19,8 @@ let join = async (req, res) => {
         user_image: user_image,
         email_verify_key: email_key,
     })
+
+    await sequelize.query(`update users set join_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${email}'`)
 
     // email 인증 메일 보내기 by 세연 
     let transporter = nodemailer.createTransport({
@@ -79,24 +82,17 @@ let login = async (req, res) => {
     let result = { proceed: false, type: 'nouser' }
     if (getUser !== null && getUser.email_verify == 1) {
         // 진행
-        result.proceed = true;
-        result.type = 'verifieduser'
-        result.token = token
-        let loggedInAt = new Date()
-        console.log(loggedInAt, '로긴앳')
-        console.log(user_email, '유저이메일')
-        let updateLoginTime = await Users.update({
-            login_date: loggedInAt
-        }, {
-            where: {
-                user_email: user_email
-            }
-        })
-        console.log(updateLoginTime, '업뎃로긴시간')
-        //여기에 메시지 불러와서 다같이 업뎃 
+        result.proceed=true;
+        result.type='verifieduser'
+        result.token=token
+        let loggedInAt = new Date().toLocaleDateString()
+        console.log(loggedInAt,'로긴앳')
+        console.log(user_email,'유저이메일')
+        await sequelize.query(`update users set login_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${user_email}'`)
 
-    } else if (getUser !== null && getUser.email_verify == 0) {
-        // 인증안됨 
+        
+    } else if(getUser !== null && getUser.email_verify == 0) {
+        // 인증안됨
         result.type = 'noverified'
     }
     // nouser 
@@ -224,9 +220,14 @@ let deleteAcc = async (req, res) => {
     res.json({ goBackMain: true })
 }
 
+let transformPw = async(req,res)=> {
+    
+}
+
+
 
 module.exports = {
-    join, login, confirmEmail,
-    getUserInfo, deletePost, deleteWord,
-    email_check, deleteAcc,
+    join, login, confirmEmail, 
+    getUserInfo, deletePost, deleteWord, 
+    email_check, deleteAcc, transformPw
 }

@@ -15,6 +15,7 @@ const MyInfoScreen = ({ navigation }) => {
   useEffect(() => {
     // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
     sendToken()
+    console.log('변함')
   }, [gotData])
 
   const deleteAcc = () =>
@@ -84,7 +85,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "로그아웃", onPress: () => {
             console.log("OK Pressed");
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
-            AsyncStorage.clear();  // asyncstorage clear를 안해야 일주일간 보지 않음이 작동이 됨 by 성민
+            AsyncStorage.removeItem('@storage_Key');  // asyncstorage clear를 안해야 일주일간 보지 않음이 작동이 됨 by 성민
             // 오류 수정 by 세연 멋졍
             navigation.navigate('Auth')
           }
@@ -137,7 +138,6 @@ const MyInfoScreen = ({ navigation }) => {
       setWordsList(getData[2])
       setGotData(true)
       setUserId(getData[0].user_email)
-
 
     }
   }
@@ -218,8 +218,9 @@ const MyInfoScreen = ({ navigation }) => {
           >
             <Text style={styles.mypage_text}>나의 예약 문자/이메일</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.mypage_menu}>
-            <Text style={styles.mypage_text}>아직 어떤 menu인지 안정함</Text>
+          <TouchableOpacity style={styles.mypage_menu}
+          onPress={()=>{navigation.navigate('TransformPw')}}>
+            <Text style={styles.mypage_text}>비밀번호 변경</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.mypage_menu}>
             <Text style={styles.mypage_text}>내 결제</Text>
@@ -265,25 +266,26 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   mypage_container: {
-    width: 500,
+    width:  '100%',
     height: 500,
+    alignItems: 'center',
     // backgroundColor: 'red',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
+
   },
   mypage_menu: {
     borderColor: '#DCDCDC',
-    borderWidth: 1,
-    width: '45%',
-    height: 150,
+    borderWidth:1,
+    width: '75%',
+    height: 50,
     marginTop: 5,
     marginBottom: 5,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-
+    justifyContent:'center'
+  
   },
-  mypage_text: {
-    fontSize: 17
+  mypage_text:{
+    fontSize: 17,
+    textAlign: 'center',
   },
   mypage_out_container: {
     flexDirection: 'row-reverse'

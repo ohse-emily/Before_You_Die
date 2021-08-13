@@ -22,6 +22,10 @@ import Login from './../screens/Login'
 import Auth from './../screens/Auth'
 import MyWordsHistory from './../screens/MyWordsHistory'
 
+// screens by 성민
+
+import TransformPw from './../screens/TransformPw'
+
 // Home 위에 제목 styles 
 const HomeScreenOptions = {
   headerStyle: { backgroundColor: 'lavender' },
@@ -68,7 +72,7 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="MyInfo" component={MyInfoScreen} />
     <MyInfoStack.Screen name="MyMessages" component={MyMessages} />
     <MyInfoStack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
-    <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory}/>
+    <MyInfoStack.Screen name="TransformPw" component={TransformPw} />
   </MyInfoStack.Navigator>
 )
 
