@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
-import axios from 'axios'
+import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationHelpersContext } from '@react-navigation/native';
-
 
 // 너의 이야기 click -> db (lastwords)에서 랜덤 1 개 FETCH 
 // axios 비동기 사용 -> return -> useEffect 
@@ -15,11 +14,9 @@ function YourwordsShowScreen({ navigation }) {
     useEffect(() => {
         setTimeout(() => {
             const fetchYourword = async () => {
-                let getYourword = await axios.get('http://192.168.0.26:3000/msg/yourwords')    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
-
+                let getYourword = await axios.get('http://192.168.0.22:3000/msg/yourwords')    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 setYourword(getYourword.data)
                 setIsLoading(true)
-
                 //날짜 형식 변환 -> state 저장 후 return 시 사용 
                 // let year = result.data[0].lastword_date.getFullyear();
                 // let month = result.data[0].lastword_date.getMonth()+1;
@@ -28,12 +25,10 @@ function YourwordsShowScreen({ navigation }) {
                 // day = day >= 10 ? day : '0' + day;
                 // let send_date = year+'.'+month+'.'+day;
                 // setSendDate(send_date)
-
             }
             fetchYourword();
         }, 3000)
     }, [])
-
 
     return (
         <ScrollView>
@@ -61,10 +56,10 @@ function YourwordsShowScreen({ navigation }) {
                     </View>
                     {/* homebutton을 여기에 만들려고 하다가 homebutton tab이 있어서
                     다른  메세지 보기를 누르는 버튼이 더 좋을 것 같아서 버튼추가함!  by 세연 */}
-                    <TouchableOpacity style={styles.anotherYourword} onPress={()=>navigation.navigate('Yourwords')}>
+                    <TouchableOpacity style={styles.anotherYourword} onPress={() => navigation.navigate('Yourwords')}>
                         <Text style={styles.anotherText}>또 다른 사람의 이야기 들어보기 </Text>
                     </TouchableOpacity>
-                    
+
                 </SafeAreaView>
             ) : (
                 <View style={styles.isLoading}>
@@ -81,7 +76,6 @@ function YourwordsShowScreen({ navigation }) {
 
 export default YourwordsShowScreen
 
-
 const styles = StyleSheet.create({
     yourwordContainer: {
         justifyContent: 'center',
@@ -97,17 +91,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 7,
-        padding:10,
+        padding: 10,
     },
     subjectText: {
 
     },
     isLoading: {
         flex: 1,
-        flexDirection:"column",
-        justifyContent:"center",
-        alignItems:"center",
-        marginTop:"40%",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "40%",
     },
     unlock: {
         color: 'pink',
@@ -115,7 +109,7 @@ const styles = StyleSheet.create({
     },
     loadingText: {
         fontSize: 15,
-        
+
     },
     yourwordRow: {
         flexDirection: 'row',
@@ -140,20 +134,20 @@ const styles = StyleSheet.create({
     yourwordBottom: {
         width: '83%',
         height: '80%',
-        padding:7,
+        padding: 7,
         flex: 1,
         alignItems: 'flex-end',
-        marginBottom:10,
+        marginBottom: 10,
     },
-    anotherYourword:{
-        borderWidth:2,
-        borderColor:'pink',
-        backgroundColor:'lavenderblush',
-        padding:9,
-        borderRadius:7,
+    anotherYourword: {
+        borderWidth: 2,
+        borderColor: 'pink',
+        backgroundColor: 'lavenderblush',
+        padding: 9,
+        borderRadius: 7,
     },
-    anotherText:{
-        color:'black',
+    anotherText: {
+        color: 'black',
     }
 
 })

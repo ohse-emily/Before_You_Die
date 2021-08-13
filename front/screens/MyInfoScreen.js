@@ -22,14 +22,14 @@ const MyInfoScreen = ({ navigation }) => {
       [
         {
           text: "취소",
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => console.log("user 탈퇴하기 Cancel Pressed"),
           style: "cancel"
         },
         {
           text: "탈퇴하기", onPress: async () => {
-            console.log("OK Pressed")
+            console.log(" user 탈퇴하기 clicked")
 
-            let url = 'http://localhost:3000/user/deleteacc/'
+            let url = 'http://192.168.0.22:3000/user/deleteacc/'
             let response = await fetch(url, {
               method: 'POST', // or 'PUT'
               body: JSON.stringify({ userId }), // data can be `string` or {object}!
@@ -39,18 +39,21 @@ const MyInfoScreen = ({ navigation }) => {
             });
             let getData = await response.json()
             const { goBackMain } = getData
+            console.log(goBackMain)
             try {
               if (goBackMain) {
-                alert('회원 탈퇴가 완로되었습니다.')
-                // navigation.navigate('RootStack')
+                alert('회원 탈퇴가 완료되었습니다.')
               } else {
-                alert('오류가 발생하였습니다.')
+                alert('회원 탈퇴 중 오류가 발생하였습니다.')
               }
             } catch (e) {
               alert('서버와의 접속이 원활하지 않습니다. 잠시 후 다시 시도해주세요.')
-              console.log(e, 'deleteAccError')
+              console.log( 'deleteAccError = ', e)
             }
-            console.log(goBackMain, '회원탈퇴시')
+            console.log(goBackMain, '회원탈퇴시 나오는 goBackMain 값 ')
+            // 회원 탈퇴 시 AsyncStorage 저장한 정보 삭제 by 세연 
+            AsyncStorage.clear(); 
+            navigation.navigate('Auth')
             // try{
             //     if(getData.proceed==true){
             //         navigation.navigate("MainApp")
@@ -119,7 +122,7 @@ const MyInfoScreen = ({ navigation }) => {
       })
 
     const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
-      let url = 'http://192.168.0.26:3000/user/userinfo/'
+      let url = 'http://192.168.0.22:3000/user/userinfo/'
       let value = { tokenValue: token }
       let response = await fetch(url, {
         method: 'POST', // or 'PUT'
@@ -129,6 +132,7 @@ const MyInfoScreen = ({ navigation }) => {
         }
       })
       let getData = await response.json()
+
       setMessagesList(getData[1])
       setWordsList(getData[2])
       setGotData(true)
@@ -142,7 +146,7 @@ const MyInfoScreen = ({ navigation }) => {
   // 교수님 도움받은 구간
   const deleteMsgHandler = async (id, msg_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.0.26:3000/user/deletepost/'
+    let url = 'http://192.168.0.22:3000/user/deletepost/'
     let data = { id, msg_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -157,7 +161,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   const deleteWordHandler = async (id, word_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.0.26:3000/user/deleteword/'
+    let url = 'http://192.168.0.22:3000/user/deleteword/'
     let data = { id, word_user_email }
     let response = await fetch(url, {
       method: 'POST',

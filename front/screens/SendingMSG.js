@@ -15,34 +15,34 @@ const SendingMSG = ({ navigation }) => {
     const mywordsSubmit = async (rec, con) => {
 
         const reg = /[^0-9]/g
-        const newNumber = mywordsReceiver.replace(reg,"")
+        const newNumber = mywordsReceiver.replace(reg, "")
         console.log(newNumber)
 
 
-        if(mywordsReceiver == ''){
+        if (mywordsReceiver == '') {
             alert('받는 사람을 기재해 주세요.')
-        } else if(mywordsReceiver.indexOf('+')!==-1){ // 국가코드 필터
+        } else if (mywordsReceiver.indexOf('+') !== -1) { // 국가코드 필터
             alert('해외 SMS 전송은 지원하지 않습니다.')
-        }else if(mywordsReceiver.split('/[^0-9]/g')){
+        } else if (mywordsReceiver.split('/[^0-9]/g')) {
             console.log(mywordsReceiver.split("/[^0-9]/g"))
-        }else if(mywordsContent == ''){
+        } else if (mywordsContent == '') {
             alert('내용을 작성해 주세요.')
-        } else{
+        } else {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
-                let mywordsData = { msg_mobile: rec, msg_content: con, msg_user_email: user_email, msg_method: 1}
-                let url = `http://192.168.0.26:3000/msg/mymessages`
+                let mywordsData = { msg_mobile: rec, msg_content: con, msg_user_email: user_email, msg_method: 1 }
+                let url = `http://192.168.0.22:3000/msg/mymessages`
                 try {
                     await fetch(url, {
                         method: 'POST',
                         body: JSON.stringify(mywordsData),
-                        headers: {'Content-Type': 'application/json'}
+                        headers: { 'Content-Type': 'application/json' }
                     })
                     console.log(mywordsReceiver.split("/[^0-9]/g"))
-                } catch (e) { console.log(e, 'mywordsSubmit Fetch Post ERROR=', e)}            
+                } catch (e) { console.log(e, 'mywordsSubmit Fetch Post ERROR=', e) }
                 navigation.navigate('AfterSending')
                 // console.log(mywordsReceiver, mywordsContent)
-            } catch (e) {console.log('mywordsSubmit Function ERROR =', e)}
+            } catch (e) { console.log('mywordsSubmit Function ERROR =', e) }
         }
 
 
@@ -81,8 +81,8 @@ const SendingMSG = ({ navigation }) => {
                             <View style={styles.mywordsMargin} >
                                 <TouchableOpacity
                                     style={styles.mywordsButton}
-                                    onPress = {() => {mywordsSubmit(mywordsReceiver, mywordsContent); }}
-                                    // onPress={() => navigation.navigate('AfterSending')}
+                                    onPress={() => { mywordsSubmit(mywordsReceiver, mywordsContent); }}
+                                // onPress={() => navigation.navigate('AfterSending')}
                                 >
                                     <Text>누군가에게 전하기</Text>
                                 </TouchableOpacity>

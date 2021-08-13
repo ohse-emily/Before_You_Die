@@ -99,7 +99,7 @@ const Signup = ({ navigation }) => {
 
 
     const handlePopup = async (itemChecked) => {
-        if(!itemChecked){
+        if (!itemChecked) {
             Alert.alert('동의항목에 동의해주세요')
             return
         }
@@ -113,34 +113,34 @@ const Signup = ({ navigation }) => {
                 <View style={styles.innerContainer}>
                     <Text style={styles.pageTitle}>BYD</Text>
                     <Text style={styles.subtitle}>회원가입</Text>
-                    {popupCheck ?(<MainPopup     // 회원가입 동의서 팝업창 띄우기 by 성민
+                    {popupCheck ? (<MainPopup     // 회원가입 동의서 팝업창 띄우기 by 성민
                         value={popupCheck}
                         handlePopup={handlePopup}
                         which={"handlePermission"}
-                        />
-                        ):<Text/>}
+                    />
+                    ) : <Text />}
                     <Formik
                         initialValues={{ fullName: '', email: '', password: '', ConfirmPassword: '' }}
                         onSubmit={async (values) => {
                             values.user_image = image
                             let { ConfirmPassword, password, fullName, email, dateOfBirth } = values
 
-                            if(email.match( /@/ )==null){
+                            if (email.match(/@/) == null) {
                                 Alert.alert('이메일 형식에 맞춰주세요')
                             }
-                           
 
-                            // let url_email = 'http://192.168.0.119:3000/user/email_check'
+
+                            // let url_email = 'http://192.168.0.22:3000/user/email_check'
                             // let email_options = {
                             //     method :'POST',
                             //     headers: { 'Content-Type': 'application/json' },
                             //     body: JSON.stringify({email : email})
                             // }
-                            let url_email = 'http://192.168.0.26:3000/user/email_check'
+                            let url_email = 'http://192.168.0.22:3000/user/email_check'
                             let email_options = {
-                                method :'POST',
+                                method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({email : email})
+                                body: JSON.stringify({ email: email })
                             }
 
                             // let response_email = await fetch(url_email, email_options)
@@ -156,7 +156,7 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-                            let url = 'http://192.168.0.26:3000/user/join'
+                            let url = 'http://192.168.0.22:3000/user/join'
                             let options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -167,7 +167,7 @@ const Signup = ({ navigation }) => {
                             // let result = response.json()
 
                             alert('입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)')
-                            navigation.navigate('Welcome',{name: values.email})
+                            navigation.navigate('Welcome', { name: values.email })
                             //우선 이메일을 이름 대신해서 넘기도록 설정함 - 신우
                         }}
                     >
@@ -295,11 +295,11 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-       
+
     },
     avatarArea: {
         width: '100%',
-        marginTop:-15,
+        marginTop: -15,
         alignItems: 'center',
     },
     avatar: {

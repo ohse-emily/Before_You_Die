@@ -50,8 +50,7 @@ const Login = ({ navigation }) => {
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values) => {
 
-                            let url = 'http://192.168.0.26:3000/user/login/'
-
+                            let url = 'http://192.168.0.22:3000/user/login/'
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!
@@ -160,8 +159,8 @@ export default Login;
 const styles = StyleSheet.create({
     styledContainer: {
         flex: 1,
-        padding:25,
-        paddingTop:77,// if Android`${StatusBarHeight + 40}`,
+        padding: 25,
+        paddingTop: 77,// if Android`${StatusBarHeight + 40}`,
         //${StatusBarHeight && `paddingTop:${StatusBarHeight}px`};
         backgroundColor: '#ffffff', //primary
         height: Dimensions.get('window').height

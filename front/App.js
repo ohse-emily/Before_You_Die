@@ -4,17 +4,16 @@ import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import MainApp from './navigators/MainApp'
 import Login from './screens/Login'
 import Auth from './screens/Auth'
 import Main from './screens/Main'
 import Signup from './screens/Signup'
 import Welcome from './screens/Welcome'
-import MyWordsHistory from './screens/MyWordsHistory'
 // import Splash from './screens/Splash'
+// fonts by 세연 
+
+
 
 const AppStack = createNativeStackNavigator();
 // 구조 변경 RootApp == App 에서 Tab의 여부로 Components 구별 by 세연  

@@ -1,12 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View, Image, Text, TextInput, TouchableOpacity, } from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, } from 'react-native';
 
-//formik
-import {Formik} from 'formik';
-
-//icons
-import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons'
 
 const Welcome = ({route, navigation}) => {
     // const {name} = route.params
@@ -14,30 +9,21 @@ const Welcome = ({route, navigation}) => {
         <>
             <StatusBar style="dark"/>
             <View style={styles.innerContainer}>
-                {/* <Image style={styles.welcomeImage} 
-                resizeMode = "cover" 
-                source={require('./../assets/sam.jpeg')}/> */}
                 <View style={styles.welcomeContainer}>
-                    <Text style={styles.pageTitle}>어서오세요!</Text>
-                    <Text style={styles.subtitle}>
-                        {/* {name} */} 
-                        님, 회원가입을 축하합니다.
-                    </Text>
+                    <Text style={styles.pageTitle}> 환영합니다!</Text>
                     <View style={styles.styledFormArea}>
-                    {/* <Image style={styles.avatar} 
-                    resizeMode = "cover" 
-                    source={require('./../assets/sam.jpeg')}
-                    /> */}
-                        <View style={styles.avatar}><Text>asd</Text></View>
-                        {/* <View style={styles.line}/> */}
-                        <TouchableOpacity style={styles.styledButton}
+                        <View style={styles.avatar}><Text>asd</Text></View>                       
+                    </View>
+                    <Text style={styles.subtitle}>
+                        입력하신 email로 인증을 진행해 주세요 : ) 
+                    </Text>
+
+                    <TouchableOpacity style={styles.styledButton}
                             onPress = {()=>{navigation.navigate('Login')}}>
                             <Text style={styles.buttonText}>
                                 로그인하러 가기
                             </Text>
                         </TouchableOpacity>
-                       
-                    </View>
                 </View>
             </View>
         </>
@@ -58,10 +44,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'mediumpurple', //brand,
         padding:10,
-        marginBottom: 100
+        marginBottom: 10
     },
     subtitle:{ //웰컴으로
-        fontSize: 18,
+        fontSize: 14,
         marginBottom: 20,
         letterSpacing: 1,
         fontWeight: 'normal',
@@ -106,14 +92,14 @@ const styles = StyleSheet.create({
     },
     //아바타 위치 수정 필요
     avatar:{
-        width:100,
-        height: 100,
+        width:190,
+        height: 190,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 50,
+        borderRadius: 100,
         borderWidth: 2,
         borderColor: '#E5E7EB',
         marginBottom: 10,
-        marginTop: 10,
+        
     }
 })

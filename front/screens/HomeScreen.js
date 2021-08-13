@@ -1,20 +1,19 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { Button } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 // popup 
 import MainPopup from './Popup';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
 const HomeScreen = ({ navigation }, props) => {
-    
+
     const [popupCheck, setPopcupCheck] = useState(false) // 기본값 창을 띄우지 않는다
     const handlePopup = async (itemChecked) => {
 
         setPopcupCheck(!popupCheck) // 닫기버튼을 눌렀을때
-        if(itemChecked){ // 일주일동안 보지않음이 체크되면
+        if (itemChecked) { // 일주일동안 보지않음이 체크되면
             let currentTime = new Date()
             // 604800000
             let week = 604800000
@@ -23,69 +22,84 @@ const HomeScreen = ({ navigation }, props) => {
             AsyncStorage.setItem('@time_key', String(result2))
         }
     }
-    useEffect(()=>{ 
 
-        AsyncStorage.getItem('@time_key',(err,result)=>{
+    useEffect(() => {
+        AsyncStorage.getItem('@time_key', (err, result) => {
             let currentTime = new Date()
             result2 = new Date(result)
-                                                                  // 앱 시작할때 팝업 띄울지 말지 
-            if(currentTime.getTime()>=result2.getTime()){         // 결정하는 부분 by 성민
+            // 앱 시작할때 팝업 띄울지 말지 
+            if (currentTime.getTime() >= result2.getTime()) {         // 결정하는 부분 by 성민
                 setPopcupCheck(!popupCheck)
-            }else{
+            } else {
                 setPopcupCheck(popupCheck)
-            // if(currentTime.getTime()<=result2.getTime()){         // 결정하는 부분 by 성민
-            //     setPopcupCheck(false)
-            // }else{
-            //     setPopcupCheck(true)  어떤거?????
+                // if(currentTime.getTime()<=result2.getTime()){         // 결정하는 부분 by 성민
+                //     setPopcupCheck(false)
+                // }else{
+                //     setPopcupCheck(true)  어떤거?????
             }
-        })
-    },[])
+        });
+    }, [])
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: ' Main HOME',
+            title: 'Before you die',
+            textAlign: 'center',
         })
     }, [navigation])
-    
+
     return (
         <View style={styles.HomeLayout}>
-            {popupCheck ? 
-            (<MainPopup
-                value={popupCheck}
-                handlePopup={handlePopup}
-                which={"homescreen"}
-            />
-            ):(
-            <Text/>
-            )}
+            {popupCheck ?
+                (
+                    <MainPopup
+                        value={popupCheck}
+                        handlePopup={handlePopup}
+                        which={"homescreen"}
+                    />
+                ) : (
+                    <Text />
+                )
+            }
             <View style={styles.HomeTopLayout}>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
                     onPress={() => navigation.navigate('Mywords')}
                 >
-                    <Text >나의 마지막 말 </Text>
+                    <View style={styles.padding}>
+                        <MaterialCommunityIcons name="email-send-outline" size={80} color="paleturquoise" />
+                    </View>
+                    <Text style={styles.mainFont}>내 이야기 보내기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
                     onPress={() => navigation.navigate('Yourwords')}
                 >
-                    <Text>너의 마지막 말</Text>
+                    <View style={styles.padding}>
+                        <MaterialCommunityIcons name="email-receive-outline" size={80} color="skyblue" />
+                    </View>
+                    <Text  style={styles.mainFont}>너의 이야기 듣기</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.HomePadding}></View>
-            <View style={styles.HomeBottomLayout}>
-                <TouchableOpacity  activeOpacity={0.5}
-                    style={styles.homeBtn2}
+            <View style={styles.HomeTopLayout}>
+                <TouchableOpacity activeOpacity={0.5}
+                    style={styles.homeBtn1}
                     onPress={() => navigation.navigate('ToSomeone')}
                 >
-                    <Text>누군가에게 나의 말 전하기</Text>
+                    <View style={styles.padding}>
+                        <MaterialCommunityIcons name="message-text-lock-outline" size={80} color="lightpink" />
+                    </View>
+                    <Text style={styles.mainFont}>너에게 쓰는 편지</Text>
                 </TouchableOpacity>
                 <View style={styles.HomePadding}></View>
                 <TouchableOpacity activeOpacity={0.5}
-                    style={styles.homeBtn2}
+                    style={styles.homeBtn1}
                     onPress={() => navigation.navigate('Venting')}
                 >
-                    <Text>고해성사</Text>
+                    <View style={styles.padding}>
+                        <MaterialCommunityIcons name="donkey" size={80} color="lightcoral" />
+                    </View>
+                    <Text style={styles.mainFont}>임금님귀는 당나귀 귀</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -96,12 +110,13 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
     HomeLayout: {
-        paddingTop:40,
+        paddingTop: 70,
         padding: 20,
     },
     HomeTopLayout: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+
     },
     HomeBottomLayout: {
         flexDirection: 'column',
@@ -109,23 +124,30 @@ const styles = StyleSheet.create({
     },
     homeBtn1: {
         width: 150,
-        height: 90,
-        backgroundColor:'lightpink',
-        alignItems:'center',
-        justifyContent:'center', 
-        borderRadius:7,
+        height: 30,
+
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
+
     },
     HomePadding: {
-        paddingBottom: 20,
+        paddingBottom: 150,
     },
     homeBtn2: {
-        width:230,
-        height:90,
-        backgroundColor: 'lightblue',        
-        alignItems:'center',
-        justifyContent:'center',
-        borderRadius:7,
+        width: 230,
+        height: 90,
+        backgroundColor: 'lightblue',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
 
+    },
+    padding: {
+        padding: 23,
+    },
+    mainFont:{
+        fontSize:15,
     }
 })
 
