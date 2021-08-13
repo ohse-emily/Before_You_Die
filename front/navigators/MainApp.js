@@ -23,7 +23,6 @@ import Auth from './../screens/Auth'
 import MyWordsHistory from './../screens/MyWordsHistory'
 
 // screens by 성민
-
 import TransformPw from './../screens/TransformPw'
 
 // Home 위에 제목 styles 
@@ -73,8 +72,11 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="MyMessages" component={MyMessages} />
     <MyInfoStack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
     <MyInfoStack.Screen name="TransformPw" component={TransformPw} />
+    <MyInfoStack.Screen name="Login" component={Login} />
   </MyInfoStack.Navigator>
 )
+
+
 
 //MainApp로 이름 변경
 export default function MainApp({ navigation }) {

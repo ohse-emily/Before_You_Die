@@ -16,7 +16,9 @@ const MyInfoScreen = ({ navigation }) => {
     // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
     sendToken()
     console.log('변함')
-  }, [gotData])
+  }, [])
+
+
 
   const deleteAcc = () =>
     Alert.alert("잠깐만요! ", "정말로 탈퇴하시겠습니까? (。_。)...",
@@ -30,7 +32,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "탈퇴하기", onPress: async () => {
             console.log("OK Pressed")
 
-            let url = 'http://localhost:3000/user/deleteacc/'
+            let url = 'http://192.168.0.7:3000/user/deleteacc/'
             let response = await fetch(url, {
               method: 'POST', // or 'PUT'
               body: JSON.stringify({ userId }), // data can be `string` or {object}!
@@ -43,7 +45,7 @@ const MyInfoScreen = ({ navigation }) => {
             try {
               if (goBackMain) {
                 alert('회원 탈퇴가 완로되었습니다.')
-                // navigation.navigate('RootStack')
+                
               } else {
                 alert('오류가 발생하였습니다.')
               }
@@ -133,6 +135,7 @@ const MyInfoScreen = ({ navigation }) => {
       setMessagesList(getData[1])
       setWordsList(getData[2])
       setGotData(true)
+      setUserImg(getData[0].user_image)
       setUserId(getData[0].user_email)
 
     }
@@ -169,6 +172,9 @@ const MyInfoScreen = ({ navigation }) => {
     const getData = await response.json()
     return getData
   }
+
+
+  
 
   return (
 
