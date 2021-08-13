@@ -15,12 +15,12 @@ const MyInfoScreen = ({ navigation }) => {
   useEffect(() => {
     // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
     sendToken()
-    console.log('변함')
+    
   }, [])
 
 
 
-  const deleteAcc = () =>
+  const deleteAcc = () => // 탈퇴 여부 확인하는 부분
     Alert.alert("잠깐만요! ", "정말로 탈퇴하시겠습니까? (。_。)...",
       [
         {
@@ -72,7 +72,7 @@ const MyInfoScreen = ({ navigation }) => {
       ]
     );
 
-  const logout = () =>
+  const logout = () => // 로그아웃 여부 확인하는 부분
     Alert.alert("로그아웃", "(. ❛ ᴗ ❛.) 로그아웃 하시겠습니까?  ",
       [
         {
@@ -122,7 +122,7 @@ const MyInfoScreen = ({ navigation }) => {
       })
 
     const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
-      let url = 'http://192.168.0.26:3000/user/userinfo/'
+      let url = 'http://192.168.0.7:3000/user/userinfo/'
       let value = { tokenValue: token }
       let response = await fetch(url, {
         method: 'POST', // or 'PUT'
@@ -132,12 +132,12 @@ const MyInfoScreen = ({ navigation }) => {
         }
       })
       let getData = await response.json()
+      console.log(getData)
       setMessagesList(getData[1])
       setWordsList(getData[2])
       setGotData(true)
       setUserImg(getData[0].user_image)
       setUserId(getData[0].user_email)
-
     }
   }
 
@@ -174,22 +174,12 @@ const MyInfoScreen = ({ navigation }) => {
   }
 
 
-  
-
   return (
 
     <View style={styles.mypage_wrap}>
       <ScrollView>
         <View style={styles.profile_image_container}>
-          <Image
-            style={styles.tinyLogo}
-            // 고객의 프로필 사진 보이도록 만들기 
-
-            source={
-              require('../assets/user_.png')
-            }
-          />
-
+          <Image source={ require('../assets/icon.png') } style={{ width: 100, height: 100 }} />
           {/* <Text>hye1209cj@naver.com</Text>    
         </View>
         <View style={styles.mypage_menu}>

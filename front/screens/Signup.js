@@ -135,11 +135,11 @@ const Signup = ({ navigation }) => {
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({email : email})
                             }
-                            console.log(email_options)
+                            
 
                             // let response_email = await fetch(url_email, email_options)
                             // console.log(response_email)
-                            if (password.length <= 6){
+                            if (password.length < 6){
                                 Alert.alert('비밀번호는 6자리 이상으로 해주세요')
                                 return
                             }
