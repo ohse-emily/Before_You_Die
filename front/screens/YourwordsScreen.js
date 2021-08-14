@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react'
-import { StyleSheet, SafeAreaView, Text, TouchableOpacity, Animated } from 'react-native'
+import { StyleSheet, SafeAreaView, TouchableOpacity, Animated } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
+import Text from './DefaultText';
 
 // header 없이 열쇠 아이콘 나오는 스크린 by 세연 
 const YourwordsScreen = ({ navigation }) => {

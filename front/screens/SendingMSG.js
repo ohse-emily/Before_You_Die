@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {
-    StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity,
+    StyleSheet, View, ScrollView, SafeAreaView, TouchableOpacity,
     KeyboardAvoidingView, TextInput, TouchableWithoutFeedback, Keyboard,
 
 } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Text from './DefaultText';
 
 const SendingMSG = ({ navigation }) => {
 
@@ -84,7 +85,7 @@ const SendingMSG = ({ navigation }) => {
                                     onPress={() => { mywordsSubmit(mywordsReceiver, mywordsContent); }}
                                 // onPress={() => navigation.navigate('AfterSending')}
                                 >
-                                    <Text>누군가에게 전하기</Text>
+                                    <Text>보내기</Text>
                                 </TouchableOpacity>
                             </View>
                         </>

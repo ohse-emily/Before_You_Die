@@ -1,9 +1,10 @@
 import React from 'react'
 import {
-    StyleSheet, Text, View, ScrollView, SafeAreaView,
+    StyleSheet,  View, ScrollView, SafeAreaView,
     KeyboardAvoidingView, TextInput,
     TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native'
+import Text from './DefaultText';
 
 const AfterSending = ( {navigation} ) => {
 

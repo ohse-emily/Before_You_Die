@@ -1,13 +1,13 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 // popup 
 import MainPopup from './Popup';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Text from './DefaultText';
 
 
-
-const HomeScreen = ({ navigation }, props) => {
+const HomeScreen = ({ navigation }) => {
 
     const [popupCheck, setPopcupCheck] = useState(false) // 기본값 창을 띄우지 않는다
     const handlePopup = async (itemChecked) => {
@@ -21,7 +21,7 @@ const HomeScreen = ({ navigation }, props) => {
             let result2 = new Date(result)                      // 현재 시간 계산해서 AsyncStorage에 넣어주는 부분 by 성민
             AsyncStorage.setItem('@time_key', String(result2))
         }
-    }
+    } 
 
     useEffect(() => {
         AsyncStorage.getItem('@time_key', (err, result) => {
@@ -99,7 +99,7 @@ const HomeScreen = ({ navigation }, props) => {
                     <View style={styles.padding}>
                         <MaterialCommunityIcons name="donkey" size={80} color="lightcoral" />
                     </View>
-                    <Text style={styles.mainFont}>임금님귀는 당나귀 귀</Text>
+                    <Text style={styles.mainFont}>임금님귀는{"\n"}당나귀 귀</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     homeBtn1: {
         width: 150,
         height: 30,
-
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7,
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
         padding: 23,
     },
     mainFont:{
-        fontSize:15,
+        fontSize:20,
     }
 })
 

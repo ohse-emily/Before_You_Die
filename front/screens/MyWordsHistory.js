@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import {
-    StyleSheet, Text, View, ScrollView, SafeAreaView,
+    StyleSheet, View, ScrollView, SafeAreaView,
     KeyboardAvoidingView, Button,
 } from 'react-native'
+import Text from './DefaultText';
 
 const MyWordsHistory = ({ route, navigation } ) => {
 

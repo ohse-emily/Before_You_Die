@@ -73,6 +73,7 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="MyMessages" component={MyMessages} />
     <MyInfoStack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
     <MyInfoStack.Screen name="TransformPw" component={TransformPw} />
+    <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory} />
   </MyInfoStack.Navigator>
 )
 
@@ -80,7 +81,7 @@ const MyInfoStackScreen = () => (
 export default function MainApp({ navigation }) {
   return (
     <Tabs.Navigator
-      initialRouteName="HomeTab"
+      initialRouteName="메인 화면"
       screenOptions={{
         tabBarHideOnKeyboard: true,
         tabBarStyle: [
@@ -92,7 +93,7 @@ export default function MainApp({ navigation }) {
       }}
     >
       <Tabs.Screen
-        name="YourwordsTab"
+        name="이야기 듣기"
         component={YourwordsStackScreen}
         options={{
           headerShown: false,
@@ -100,7 +101,7 @@ export default function MainApp({ navigation }) {
         }}
       />
       <Tabs.Screen
-        name="HomeTab"
+        name="메인 화면"
         component={HomeStackScreen}
         options={{
           headerShown: false,
@@ -108,7 +109,7 @@ export default function MainApp({ navigation }) {
         }}
       />
       <Tabs.Screen
-        name="MyInfoTab"
+        name="나의 정보"
         component={MyInfoStackScreen}
         options={{
           headerShown: false,

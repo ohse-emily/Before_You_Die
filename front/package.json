@@ -7,6 +7,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.2.0",
     "@expo/vector-icons": "^12.0.5",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/hooks": "^2.6.0",
@@ -18,7 +19,7 @@
     "expo": "~42.0.1",
     "expo-camera": "^11.2.2",
     "expo-constants": "~11.0.1",
-    "expo-font": "^9.2.1",
+    "expo-font": "~9.2.1",
     "expo-image-picker": "^10.2.2",
     "expo-permissions": "^12.1.1",
     "expo-splash-screen": "~0.11.2",
@@ -32,6 +33,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-form-component": "^0.1.17",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-global-props": "^1.1.5",
     "react-native-image-crop-picker": "^0.36.2",
     "react-native-paper": "^4.9.2",
     "react-native-reanimated": "~2.2.0",
@@ -42,6 +44,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "private": true,
   "name": "front",

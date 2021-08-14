@@ -11,9 +11,9 @@ const MainPopup = ({ handlePopup, value, which }) => {
   let popupContent;
   let agree;
   if (which === "homescreen") {
-
     agree = "일주일동안 보지 않기"
     popupContent = "BYD에 오신 것을 환영합니다. / 여기에 개인정보수집 동의 ? 이런거 넣기?"
+  
   } else if (which === "ToSomeoneScreen") {
 
     agree = "동의합니다."

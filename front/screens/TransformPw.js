@@ -2,7 +2,8 @@ import React from 'react';
  import { Alert, Button, TextInput, View } from 'react-native';
  import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
- 
+import Text from './DefaultText';
+
  TransformPw = () => {
     return(
    <Formik

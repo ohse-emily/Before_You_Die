@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import {
-    StyleSheet, Text, View, ScrollView, SafeAreaView,
+    StyleSheet, ScrollView, SafeAreaView,
     KeyboardAvoidingView, TextInput,
     TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native'
 import MainPopup from './Popup'
+import Text from './DefaultText';
 
 const Venting = ({ navigation }) => {
     console.log(navigation.getState())

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, } from 'react-native';
-
+import { StyleSheet, View, Image, TextInput, TouchableOpacity, Dimensions, } from 'react-native';
+import Text from './DefaultText';
 // save login data
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

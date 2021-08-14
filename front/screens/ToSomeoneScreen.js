@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MainPopup from './Popup'
+import Text from './DefaultText';
 
 function ToSomeone({ navigation }) {
   const [popupToSomeone, setPopupToSomeone] = useState(true)

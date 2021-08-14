@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Image, StyleSheet, Text, Alert, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Alert, ScrollView, Button, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Text from './DefaultText';
 
 const MyInfoScreen = ({ navigation }) => {
   // 메시지를 담아놓는 state - 신우
@@ -223,7 +224,10 @@ const MyInfoScreen = ({ navigation }) => {
             <Text style={styles.mypage_text}>비밀번호 변경</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.mypage_menu}>
-            <Text style={styles.mypage_text}>내 결제</Text>
+            <Text style={styles.mypage_text}>서비스 이용약관</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.mypage_menu}>
+            <Text style={styles.mypage_text}>개인정보 취급방침</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.mypage_out_container}>
@@ -244,12 +248,12 @@ export default MyInfoScreen
 
 const styles = StyleSheet.create({
   profile_image_container: {
-    paddingTop: 100,
+    paddingTop: 30,
     alignItems: "center",
   },
   tinyLogo: {
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
   },
   mypage_header_text: {
     paddingTop: 20,
@@ -262,7 +266,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   mypage_wrap: {
-    backgroundColor: '#F0F8FF',
+
     height: '100%'
   },
   mypage_container: {
@@ -273,15 +277,15 @@ const styles = StyleSheet.create({
 
   },
   mypage_menu: {
-    borderColor: '#DCDCDC',
-    borderWidth:1,
+    borderColor: 'lavender',
+    borderWidth:2,
     width: '75%',
-    height: 50,
+    height: 40,
     marginTop: 5,
     marginBottom: 5,
-    backgroundColor: '#fff',
-    justifyContent:'center'
-  
+    backgroundColor: 'ghostwhite',
+    justifyContent:'center',
+    borderRadius:8,
   },
   mypage_text:{
     fontSize: 17,

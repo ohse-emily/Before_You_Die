@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Image, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Formik } from 'formik'; //formik
 import { RadioButton } from 'react-native-paper';
 import { Octicons, Ionicons } from '@expo/vector-icons' //icons
@@ -10,7 +10,7 @@ import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import MainPopup from './Popup';
-
+import Text from './DefaultText';
 
 const Signup = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)

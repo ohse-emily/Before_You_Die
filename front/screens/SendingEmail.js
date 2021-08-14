@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {
-    StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity,
+    StyleSheet, View, ScrollView, SafeAreaView, TouchableOpacity,
     KeyboardAvoidingView, TextInput, TouchableWithoutFeedback, Keyboard,
 
 } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Text from './DefaultText';
 
 const SendingEmail = ({ navigation }) => {
 

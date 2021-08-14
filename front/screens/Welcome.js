@@ -1,29 +1,28 @@
 import React from 'react';
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View, Text, TouchableOpacity, } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View, Image, TouchableOpacity, } from 'react-native';
+import Text from './DefaultText';
 
-
-const Welcome = ({route, navigation}) => {
+const Welcome = ({ route, navigation }) => {
     // const {name} = route.params
-    return(
+    return (
         <>
-            <StatusBar style="dark"/>
+            <StatusBar style="dark" />
             <View style={styles.innerContainer}>
                 <View style={styles.welcomeContainer}>
                     <Text style={styles.pageTitle}> 환영합니다!</Text>
                     <View style={styles.styledFormArea}>
-                        <View style={styles.avatar}><Text>asd</Text></View>                       
+                        {/* <View style={styles.avatar}><Image source={require('')} /></View> */}
                     </View>
                     <Text style={styles.subtitle}>
-                        입력하신 email로 인증을 진행해 주세요 : ) 
+                        입력하신 email로 인증을 진행해 주세요 : )
                     </Text>
-
                     <TouchableOpacity style={styles.styledButton}
-                            onPress = {()=>{navigation.navigate('Login')}}>
-                            <Text style={styles.buttonText}>
-                                로그인하러 가기
-                            </Text>
-                        </TouchableOpacity>
+                        onPress={() => { navigation.navigate('Login') }}>
+                        <Text style={styles.buttonText}>
+                            로그인하러 가기
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </>
@@ -33,66 +32,66 @@ const Welcome = ({route, navigation}) => {
 export default Welcome;
 
 const styles = StyleSheet.create({
-    innerContainer:{
-        flex:1,
-        width:'100%',
+    innerContainer: {
+        flex: 1,
+        width: '100%',
         alignItems: 'center',
     },
-    pageTitle:{
+    pageTitle: {
         fontSize: 35,
         textAlign: 'center',
         fontWeight: 'bold',
         color: 'mediumpurple', //brand,
-        padding:10,
+        padding: 10,
         marginBottom: 10
     },
-    subtitle:{ //웰컴으로
+    subtitle: { //웰컴으로
         fontSize: 14,
         marginBottom: 20,
         letterSpacing: 1,
         fontWeight: 'normal',
         color: '#1F2937'// tertiary,
     },
-    styledFormArea:{
+    styledFormArea: {
         width: '90%',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    styledButton:{
+    styledButton: {
         width: '100%',
         padding: 15,
         backgroundColor: 'mediumpurple', //brand,
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         borderRadius: 5,
         marginTop: 5,
         height: 60,
     },
-    buttonText:{
+    buttonText: {
         color: '#ffffff', //primary,
         fontSize: 16,
     },
-    line:{
-        height:1,
-        width:'100%',
+    line: {
+        height: 1,
+        width: '100%',
         backgroundColor: '#9CA3AF', //darkLight,
         marginTop: 10,
     },
-    welcomeContainer:{
-        flex:1,
-        width:'100%',
+    welcomeContainer: {
+        flex: 1,
+        width: '100%',
         alignItems: 'center',
-        padding:25,
-        paddingTop:10,
+        padding: 25,
+        paddingTop: 10,
         justifyContent: 'center',
     },
-    welcomeImage:{
-        height:'50%',
-        minWidth:'100%',
+    welcomeImage: {
+        height: '50%',
+        minWidth: '100%',
     },
     //아바타 위치 수정 필요
-    avatar:{
-        width:190,
+    avatar: {
+        width: 190,
         height: 190,
         alignItems: 'center',
         justifyContent: 'center',
@@ -100,6 +99,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#E5E7EB',
         marginBottom: 10,
-        
+
     }
 })

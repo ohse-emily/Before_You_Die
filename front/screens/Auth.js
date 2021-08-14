@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, Image, Button} from 'react-native';
+import {View,  Image, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Text from './DefaultText';
 
 const storeData = async (value) => {
     try {
