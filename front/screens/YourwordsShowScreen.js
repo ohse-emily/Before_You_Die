@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationHelpersContext } from '@react-navigation/native';
 import Text from './DefaultText';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // 너의 이야기 click -> db (lastwords)에서 랜덤 1 개 FETCH  by 세연
 // axios 비동기 사용 -> return -> useEffect 
@@ -15,7 +16,9 @@ function YourwordsShowScreen({ navigation }) {
     useEffect(() => {
         setTimeout(() => {
             const fetchYourword = async () => {
-                let getYourword = await axios.get('http://192.168.0.22:3000/msg/yourwords')    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
+                const userEmail = await AsyncStorage.getItem('@email_key')
+                console.log(userEmail)
+                let getYourword = await axios.get(`http://192.168.200.112:3000/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 setYourword(getYourword.data)
                 setIsLoading(true)
             }

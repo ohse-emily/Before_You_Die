@@ -3,7 +3,6 @@ const { sequelize, Users, Lastwords, Messages } = require('../../models/index');
 const { createPW, email_verify_key, createToken, getUserid } = require('../../JWT');
 const nodemailer = require('nodemailer');
 // const sequelize = require('sequelize')
-const qs = require('qs')
 
 let join = async (req, res) => {
     let { fullName, email, password, user_image } = req.body
@@ -12,6 +11,7 @@ let join = async (req, res) => {
 
     // front 에서 받아온 정보 db Users 에 저장 by 성민
     let pwJWT = createPW(password)
+
     await Users.create({
         user_nickname: fullName,
         user_email: email,
@@ -220,8 +220,24 @@ let deleteAcc = async (req, res) => {
     res.json({ goBackMain: true })
 }
 
-let transformPw = async(req,res)=> {
+let transformPw = async(req,res)=> { // 비밀번호 변경 by 성민
+    let {email, beforePw, afterPw} = req.body
+    JWTbeforePw = createPW(beforePw)
+    let result = await Users.findOne({
+        where:{
+            user_email : email,
+            user_password : JWTbeforePw
+        }
+    })
     
+    if (result==null){
+        res.json({result: false , msg: '비밀번호를 잘못 입력했습니다'})
+    }else{
+        JWTafterPw = createPW(afterPw)
+        Users.update({ email_verify: 1 }, { where: {email_verify_key:req.query.key} })
+        await Users.update({user_password: JWTafterPw},{where:{user_email : email}})
+        res.json({result: true, msg: '비밀번호가 바뀌었습니다'})
+    }
 }
 
 

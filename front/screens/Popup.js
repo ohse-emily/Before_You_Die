@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import {
-  Text, View, Modal, TouchableOpacity, StyleSheet,
+  View, Modal, TouchableOpacity, StyleSheet,
   Dimensions,
 } from "react-native";
 import { CheckBox } from 'react-native-elements'
 import { ScrollView } from "react-native-gesture-handler";
+import Text from './DefaultText';
 
 const MainPopup = ({ handlePopup, value, which }) => {
   const [itemChecked, setItemChecked] = useState(false)

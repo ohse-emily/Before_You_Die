@@ -11,9 +11,6 @@ import AfterSendingScreen from './../screens/AfterSendingScreen';
 import VentingScreen from './../screens/VentingScreen';
 import YourwordsScreen from './../screens/YourwordsScreen';
 import ToSomeoneScreen from './../screens/ToSomeoneScreen';
-import MyInfoScreen from './../screens/MyInfoScreen';
-import SendingMSG from './../screens/SendingMSG'
-import SendingEmail from './../screens/SendingEmail'
 import YourwordsShowScreen from '../screens/YourwordsShowScreen';
 
 // screens by 신우
@@ -21,10 +18,12 @@ import MyMessages from './../screens/MyMessages'
 import Login from './../screens/Login'
 import Auth from './../screens/Auth'
 import MyWordsHistory from './../screens/MyWordsHistory'
+import SendingMSG from './../screens/SendingMSG'
+import SendingEmail from './../screens/SendingEmail'
 
 // screens by 성민
-
 import TransformPw from './../screens/TransformPw'
+import MyInfoScreen from './../screens/MyInfoScreen';
 
 // Home 위에 제목 styles 
 const HomeScreenOptions = {
@@ -74,8 +73,11 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
     <MyInfoStack.Screen name="TransformPw" component={TransformPw} />
     <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory} />
+    <MyInfoStack.Screen name="Login" component={Login} />
   </MyInfoStack.Navigator>
 )
+
+
 
 //MainApp로 이름 변경
 export default function MainApp({ navigation }) {

@@ -4,7 +4,7 @@
     "slug": "BYD",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/byd_icon.png",
     "splash": {
       "image": "./assets/byd_splash3x3.png",
       "resizeMode": "cover",

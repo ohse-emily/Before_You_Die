@@ -3,27 +3,40 @@ import React from 'react';
  import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from './DefaultText';
-
- TransformPw = () => {
+ 
+const TransformPw = ({navigation}) => { // 비밀번호 변경 by 성민
     return(
    <Formik
-     initialValues={{ beforePw: '' , beforePwCheck: '', afterPw: '', afterPwCheck: ''}}
+     initialValues={{ beforePw: '' , afterPw: '', afterPwCheck: ''}}
      onSubmit={values => {
-        if(values.beforePw != values.beforePw){
-            Alert.Alert('비밀번호가 일치하지 않습니다')
-        }else if(values.afterPw != values.afterPwCheck){
-            Alert.Alert('비밀번호가 일치하지 않습니다')
+        console.log(values)
+        if(values.afterPw != values.afterPwCheck){
+            Alert.alert('비밀번호가 일치하지 않습니다')
+            return
+        }
+        console.log(values)
+        if(values.afterPw.length < 6){
+          Alert.alert('비밀번호는 6자리 이상으로 해주세요') 
+            return
         }
 
         AsyncStorage.getItem('@email_key', async (err,result)=>{
             let data = {email: result, beforePw: values.beforePw, afterPw: values.afterPw}
-            let url = 'http://172.30.1.40:3000/user/transformPw'
+            let url = 'http://192.168.200.112:3000/user/transformPw'
             let options = {method: 'POST', 
                             body: JSON.stringify(data), 
                             headers:{'Content-Type': 'application/json'}
                         }
             let response = await fetch(url, options)
             let result2 = await response.json()
+
+            if(result2.result==false){
+              Alert.alert(result2.msg)
+              return
+            }else{
+              Alert.alert(result2.msg)
+              navigation.navigate('Login')
+            }
         })
 
      }}
@@ -35,12 +48,6 @@ import Text from './DefaultText';
            onBlur={handleBlur('beforePw')}
            value={values.beforePw}
            placeholder={'비밀번호'}
-         />
-        <TextInput
-           onChangeText={handleChange('beforePwCheck')}
-           onBlur={handleBlur('beforePwCheck')}
-           value={values.beforePwCheck}
-           placeholder={'비밀번호 확인'}
          />
         <TextInput
            onChangeText={handleChange('afterPw')}

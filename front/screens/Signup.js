@@ -130,17 +130,17 @@ const Signup = ({ navigation }) => {
                             }
 
 
-                            let url_email = 'http://192.168.0.22:3000/user/email_check'
+                            let url_email = 'http://192.168.200.112:3000/user/email_check'
                             let email_options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ email: email })
                             }
-                            console.log(email_options)
+                            
 
                             // let response_email = await fetch(url_email, email_options)
                             // console.log(response_email)
-                            if (password.length <= 6){
+                            if (password.length < 6){
                                 Alert.alert('비밀번호는 6자리 이상으로 해주세요')
                                 return
                             }
@@ -155,7 +155,7 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-                            let url = 'http://192.168.0.22:3000/user/join'
+                            let url = 'http://192.168.200.112:3000/user/join'
                             let options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
