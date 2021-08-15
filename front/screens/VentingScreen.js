@@ -13,9 +13,10 @@ const Venting = ({ navigation }) => {
 
     const [popupVenting, setPopupVenting] = useState(true)
     const popupVent = () => {
+        console.log('asdf')
         setPopupVenting(!popupVenting)
     }
-
+    console.log(popupVenting)
     return (
         <SafeAreaView style={styles.ventingContainer}>
             {popupVenting ?
