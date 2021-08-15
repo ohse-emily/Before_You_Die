@@ -49,30 +49,30 @@ const Login = ({ navigation }) => {
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values) => {
-                            navigation.navigate("MainApp")
-                            // let url = 'http://192.168.200.112:3000/user/login/'
-                            // let response = await fetch(url, {
-                            //     method: 'POST', // or 'PUT'
-                            //     body: JSON.stringify(values), // data can be `string` or {object}!
-                            //     headers: {
-                            //         'Content-Type': 'application/json'
-                            //     }
-                            // });
-                            // let getData = await response.json()
-                            // console.log(getData)
-                            // try {
-                            //     if (getData.proceed == true) {
-                            //         navigation.navigate("MainApp")
-                            //         storeData(getData.token, values.user_email)
-                            //     }
-                            //     else if (getData.proceed == false && getData.type == 'noverified') {
-                            //         alert('이메일 인증을 완료해주세요.')
-                            //     } else if (getData.proceed == false && getData.type == 'nouser') {
-                            //         alert('아이디와 비밀번호를 확인해주세요')
-                            //     }
-                            // } catch (e) {
-                            //     console.log(e)
-                            // }
+
+                            let url = 'http://192.168.200.112:3000/user/login/'
+                            let response = await fetch(url, {
+                                method: 'POST', // or 'PUT'
+                                body: JSON.stringify(values), // data can be `string` or {object}!
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                            let getData = await response.json()
+                            console.log(getData)
+                            try {
+                                if (getData.proceed == true) {
+                                    navigation.navigate("MainApp")
+                                    storeData(getData.token, values.user_email)
+                                }
+                                else if (getData.proceed == false && getData.type == 'noverified') {
+                                    alert('이메일 인증을 완료해주세요.')
+                                } else if (getData.proceed == false && getData.type == 'nouser') {
+                                    alert('아이디와 비밀번호를 확인해주세요')
+                                }
+                            } catch (e) {
+                                console.log(e)
+                            }
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (
