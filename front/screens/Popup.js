@@ -14,17 +14,16 @@ const MainPopup = ({ handlePopup, value, which }) => {
   if (which === "homescreen") {
     agree = "일주일동안 보지 않기"
     popupContent = "BYD에 오신 것을 환영합니다. / 여기에 개인정보수집 동의 ? 이런거 넣기?"
-  
-  } else if (which === "ToSomeoneScreen") {
 
+  } else if (which === "ToSomeoneScreen") {
     agree = "동의합니다."
     popupContent = " 내가 세상에 없다면? 누군가에게 남기고 싶은 말을 전해보세요. 저희 BYD 어플에 로그인을 2년동안 안하시면 해당 email 또는 핸드폰 번호로 대신 말씀을 전해드리겠습니다.  "
-  } else if (which == "ventingScreen") {
 
+  } else if (which == "ventingScreen") {
     agree = "네! 잘 알겠습니다."
     popupContent = "고해성사에 적는 어떤 말도 기록되거나 저장되지 않습니다. 데이터 베이스에 저장되지 않으며 개발자도 볼 수 없습니다. 철저한 익명과 비밀을 보장해드리므로써 그동안 어딘가에 말하고 싶었던 본인만의 이야기를 하늘로 훌훌 날려보내 보세요! "
-  } else if (which == "handlePermission") {
 
+  } else if (which == "handlePermission") {
     agree = "동의합니다"
     popupContent = "개인정보보호법에 따라 BYD 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적,\
     개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다\
@@ -84,9 +83,10 @@ const MainPopup = ({ handlePopup, value, which }) => {
             />
             <Text>  |  </Text>
             <TouchableOpacity
-            //   onPress={props.setModalVisible(false)}
+              //   onPress={props.setModalVisible(false)}
+              onPress={() => handlePopup(itemChecked)}
             >
-              <Text onPress={()=>handlePopup()} style={{ fontWeight: 'bold' }}>닫기</Text>
+              <Text style={{ fontWeight: 'bold' }}>닫기</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
   },
-  textScroll:{
+  textScroll: {
     marginBottom: 30,
   }
 });

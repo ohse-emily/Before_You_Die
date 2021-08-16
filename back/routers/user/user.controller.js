@@ -72,6 +72,8 @@ let login = async (req, res) => {
     let { user_email, user_password } = req.body
     let pwJWT = createPW(user_password)
     let token = createToken(user_email)
+    // result default value
+    let result = { proceed: false, type: 'nouser' }
 
     let getUser = await Users.findOne({
         where: {
@@ -79,23 +81,21 @@ let login = async (req, res) => {
             user_password: pwJWT
         } // 나중에 pwJWT로 바꾸기
     })
-    let result = { proceed: false, type: 'nouser' }
-    if (getUser !== null && getUser.email_verify == 1) {
-        // 진행
+
+    if (getUser !== null && getUser.email_verify === 1) {
+        // 로그인 정보와 DB가 일치할 경우 
         result.proceed=true;
         result.type='verifieduser'
         result.token=token
         let loggedInAt = new Date().toLocaleDateString()
-        console.log(loggedInAt,'로긴앳')
+        console.log(loggedInAt,'로긴시간')
         console.log(user_email,'유저이메일')
         await sequelize.query(`update users set login_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${user_email}'`)
 
-        
-    } else if(getUser !== null && getUser.email_verify == 0) {
-        // 인증안됨
+    } else if (getUser !== null && getUser.email_verify == 0){
+        //이메일 인증을 못받은 경우 
         result.type = 'noverified'
     }
-    // nouser 
     res.json(result)
 }
 
@@ -236,7 +236,7 @@ let transformPw = async(req,res)=> { // 비밀번호 변경 by 성민
         JWTafterPw = createPW(afterPw)
         Users.update({ email_verify: 1 }, { where: {email_verify_key:req.query.key} })
         await Users.update({user_password: JWTafterPw},{where:{user_email : email}})
-        res.json({result: true, msg: '비밀번호가 바뀌었습니다'})
+        res.json({result: true, msg: '비밀번호가 변경되었습니다. :) 재로그인 하러 가겠습니다!'})
     }
 }
 

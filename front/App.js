@@ -19,7 +19,7 @@ const App = () => {
   const [fontLoad, setFontLoad] = useState(false)
   const AppStack = createNativeStackNavigator();
 
-  // font 불러오기 by 세연 
+  // font 불러오기 - 다 불러와지면 fontLoad -> true -> render again  by 세연 
   useEffect(() => {
     const Load=async()=>{
       await Font.loadAsync({

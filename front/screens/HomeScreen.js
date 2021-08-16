@@ -84,7 +84,9 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.HomeTopLayout}>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
-                    onPress={() => navigation.navigate('ToSomeone')}
+                    onPress={()=>{alert('서비스 준비 중 입니다 :) ')}}
+                    // '너에게 쓰는 편지' (특정인 문자/이메일) 서비스 준비되면 아래 주석 해제 by세연
+                    //onPress={() => navigation.navigate('ToSomeone')}
                 >
                     <View style={styles.padding}>
                         <MaterialCommunityIcons name="message-text-lock-outline" size={80} color="lightpink" />
