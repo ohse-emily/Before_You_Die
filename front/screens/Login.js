@@ -44,7 +44,6 @@ const Login = ({ navigation }) => {
                         source={require('./../assets/sam.jpeg')}
                     />
                     <Text style={styles.pageTitle}>BYD</Text>
-                    <Text style={styles.subtitle}>로그인</Text>
 
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
@@ -59,16 +58,22 @@ const Login = ({ navigation }) => {
                                 }
                             });
                             let getData = await response.json()
-                            console.log(getData)
+                            console.log('ㅁㄴㅇㄻㄴㅇㄹ',getData)
+
                             try {
-                                if (getData.proceed == true) {
-                                    navigation.navigate("MainApp")
+
+                                if (getData === undefined) {
+                                    alert('아이디와 비밀번호를 확인해 주세요')
+                                } else if (getData.proceed === true) {
+                                    // 로그아웃 후 재로그인 시 오류 -> navigate('Login')으로 수정 by 세연 
+                                    navigation.navigate("Login")
                                     storeData(getData.token, values.user_email)
-                                }
-                                else if (getData.proceed == false && getData.type == 'noverified') {
+                                } else if (getData.proceed === false && getData.type === 'noverified') {
                                     alert('이메일 인증을 완료해주세요.')
-                                } else if (getData.proceed == false && getData.type == 'nouser') {
+                                } else if (getData.proceed === false && getData.type === 'nouser') {
                                     alert('아이디와 비밀번호를 확인해주세요')
+                                } else{  // 예외처리 추가 by 세연 
+                                    alert('아이디와 비밀번호를 다시 한 번 확인해 주세요')
                                 }
                             } catch (e) {
                                 console.log(e)
@@ -80,7 +85,7 @@ const Login = ({ navigation }) => {
                                 <MyTextInput
                                     label=""
                                     icon="mail"
-                                    placeholder="이메일 주소를 입력해 주세요."
+                                    placeholder="Email"
                                     placeholderTextColor='#9CA3AF' //darkLight
                                     onChangeText={handleChange('user_email')}
                                     onBlur={handleBlur('user_email')}
@@ -90,7 +95,7 @@ const Login = ({ navigation }) => {
                                 <MyTextInput
                                     label=""
                                     icon="lock"
-                                    placeholder="비밀번호를 입력해 주세요."
+                                    placeholder="Password"
                                     placeholderTextColor='#9CA3AF' //darkLight
                                     onChangeText={handleChange('user_password')}
                                     onBlur={handleBlur('user_password')}
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white', //primary,
-        fontSize: 16,
+        fontSize: 25,
     },
     msgBox: {
         textAlign: 'center',
@@ -255,7 +260,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         color: '#1F2937', //tertiary
-        fontSize: 15,
+        fontSize: 18,
     },
     textLink: {
         justifyContent: 'center',
@@ -263,6 +268,7 @@ const styles = StyleSheet.create({
     },
     textLinkContent: {
         color: '#6D28D9', //brand,
-        fontSize: 15,
+        fontSize: 18,
+        marginLeft: 7,
     },
 })

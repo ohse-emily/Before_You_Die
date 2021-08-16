@@ -137,11 +137,10 @@ const Signup = ({ navigation }) => {
                                 body: JSON.stringify({ email: email })
                             }
                             
-
                             // let response_email = await fetch(url_email, email_options)
                             // console.log(response_email)
                             if (password.length < 6){
-                                Alert.alert('비밀번호는 6자리 이상으로 해주세요')
+                                Alert.alert('비밀번호는 6자리 이상으로 설정해 주세요')
                                 return
                             }
 
@@ -149,7 +148,7 @@ const Signup = ({ navigation }) => {
                                 Alert.alert('비밀번호가 일치하지 않습니다')
                                 return
                             }
-                            if (fullName == '' || email == '' || password == '') {
+                            if (fullName === '' || email === '' || password === '') {
                                 Alert.alert('필수 항목을 입력해주세요')
                                 return
                             }
@@ -184,7 +183,7 @@ const Signup = ({ navigation }) => {
                                 <MyTextInput
                                     label="" // 별명인지 이름인지
                                     icon="person"
-                                    placeholder="별명을 입력해 주세요."
+                                    placeholder="별명을 입력해 주세요"
                                     placeholderTextColor='#9CA3AF'
                                     onChangeText={handleChange('fullName')}
                                     onBlur={handleBlur('fullName')}
@@ -193,7 +192,7 @@ const Signup = ({ navigation }) => {
                                 <MyTextInput
                                     label=""
                                     icon="mail"
-                                    placeholder="이메일 주소를 입력해 주세요."
+                                    placeholder="Email을 입력해 주세요"
                                     placeholderTextColor='#9CA3AF'
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
@@ -216,7 +215,7 @@ const Signup = ({ navigation }) => {
                                 <MyTextInput
                                     label=""
                                     icon="lock"
-                                    placeholder="비밀번호를 다시 입력해주세요."
+                                    placeholder="비밀번호를 재입력해주세요"
                                     placeholderTextColor='#9CA3AF'
                                     onChangeText={handleChange('password')}
                                     onBlur={handleBlur('password')}
@@ -367,7 +366,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#ffffff', //primary,
-        fontSize: 16,
+        fontSize: 25,
     },
     msgBox: {
         textAlign: 'center',

@@ -18,7 +18,7 @@ function YourwordsShowScreen({ navigation }) {
             const fetchYourword = async () => {
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 console.log(userEmail)
-                let getYourword = await axios.get(`http://192.168.200.112:3000/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
+                let getYourword = await axios.get(`http://192.168.0.29:3000/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 setYourword(getYourword.data)
                 setIsLoading(true)
             }

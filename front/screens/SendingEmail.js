@@ -22,7 +22,7 @@ const SendingEmail = ({ navigation }) => {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { msg_email: rec, msg_content: con, msg_user_email: user_email, msg_method: 0 }
-                let url = `http://192.168.200.112:3000/msg/mymessages`
+                let url = `http://192.168.0.29:3000/msg/mymessages`
                 try {
                     await fetch(url, {
                         method: 'POST',

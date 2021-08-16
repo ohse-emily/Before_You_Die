@@ -33,7 +33,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "탈퇴하기", onPress: async () => {
             console.log(" user 탈퇴하기 clicked")
 
-            let url = 'http://192.168.200.112:3000/user/deleteacc/'
+            let url = 'http://192.168.0.29:3000/user/deleteacc/'
             let response = await fetch(url, {
               method: 'POST', // or 'PUT'
               body: JSON.stringify({ userId }), // data can be `string` or {object}!
@@ -77,6 +77,7 @@ const MyInfoScreen = ({ navigation }) => {
     );
 
   const logout = () => // 로그아웃 여부 확인하는 부분
+    
     Alert.alert("로그아웃", "(. ❛ ᴗ ❛.) 로그아웃 하시겠습니까?  ",
       [
         {
@@ -126,7 +127,7 @@ const MyInfoScreen = ({ navigation }) => {
       })
 
     const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
-      let url = 'http://192.168.200.112:3000/user/userinfo/'
+      let url = 'http://192.168.0.29:3000/user/userinfo/'
       let value = { tokenValue: token }
       let response = await fetch(url, {
         method: 'POST', // or 'PUT'
@@ -149,7 +150,7 @@ const MyInfoScreen = ({ navigation }) => {
   // 교수님 도움받은 구간
   const deleteMsgHandler = async (id, msg_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.200.112:3000/user/deletepost/'
+    let url = 'http://192.168.0.29:3000/user/deletepost/'
     let data = { id, msg_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -164,7 +165,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   const deleteWordHandler = async (id, word_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.200.112:3000/user/deleteword/'
+    let url = 'http://192.168.0.29:3000/user/deleteword/'
     let data = { id, word_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -226,12 +227,11 @@ const MyInfoScreen = ({ navigation }) => {
             <Text style={styles.mypage_text}>개인정보 취급방침</Text>
           </TouchableOpacity>
         </View>
-          <View style={styles.mypage_out_container}>
-          <TouchableOpacity style={styles.mypage_out}  onPress={logout}>
-            <Text style={styles.mypage_out_text}>로그아웃</Text>
+        <View style={styles.mypage_out_container}>
+          <TouchableOpacity style={styles.mypage_out} onPress={logout}>
+            <Text style={styles.mypage_out_text} >로그아웃</Text>
           </TouchableOpacity>
-              
-          <TouchableOpacity style={styles.mypage_out } onPress={deleteAcc}>
+          <TouchableOpacity style={styles.mypage_out} onPress={deleteAcc}>
             <Text style={styles.mypage_out_text} >회원탈퇴</Text>
           </TouchableOpacity>
         </View>
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
   mypage_container: {
     width:  '100%',
-    height: 500,
+    height: 280,
     alignItems: 'center',
     // backgroundColor: 'red',
 
