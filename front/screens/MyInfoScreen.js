@@ -33,7 +33,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "탈퇴하기", onPress: async () => {
             console.log(" user 탈퇴하기 clicked")
 
-            let url = 'http://192.168.0.29:3000/user/deleteacc/'
+            let url = 'http://192.168.200.112:3000/user/deleteacc/'
             let response = await fetch(url, {
               method: 'POST', // or 'PUT'
               body: JSON.stringify({ userId }), // data can be `string` or {object}!
@@ -150,7 +150,7 @@ const MyInfoScreen = ({ navigation }) => {
   // 교수님 도움받은 구간
   const deleteMsgHandler = async (id, msg_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.0.29:3000/user/deletepost/'
+    let url = 'http://192.168.200.112:3000/user/deletepost/'
     let data = { id, msg_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -165,7 +165,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   const deleteWordHandler = async (id, word_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.0.29:3000/user/deleteword/'
+    let url = 'http://192.168.200.112:3000/user/deleteword/'
     let data = { id, word_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -269,8 +269,6 @@ const styles = StyleSheet.create({
     width:  '100%',
     height: 280,
     alignItems: 'center',
-    // backgroundColor: 'red',
-
   },
   mypage_menu: {
     borderColor: 'lavender',
@@ -295,7 +293,6 @@ const styles = StyleSheet.create({
     height: 30,
     flexDirection: "row",
     zIndex: 3,
-
     alignItems: 'flex-end',
     borderRadius: 1,
 

@@ -112,7 +112,6 @@ const Signup = ({ navigation }) => {
                 <StatusBar style="dark" />
                 <View style={styles.innerContainer}>
                     <Text style={styles.pageTitle}>BYD</Text>
-                    <Text style={styles.subtitle}>회원가입</Text>
                     {popupCheck ? (<MainPopup     // 회원가입 동의서 팝업창 띄우기 by 성민
                         value={popupCheck}
                         handlePopup={handlePopup}
@@ -126,46 +125,40 @@ const Signup = ({ navigation }) => {
                             let { ConfirmPassword, password, fullName, email, dateOfBirth } = values
                             if(email.match( /@/ )==true){
                                 Alert.alert('이메일 형식에 맞춰주세요')
-                                return
-                            }
-
-
-                            let url_email = 'http://192.168.0.32:3000/user/email_check'
-                            let email_options = {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ email: email })
+                                return;
                             }
                             
-                            // let response_email = await fetch(url_email, email_options)
-                            // console.log(response_email)
+                            // front 단에서 확인할 수 있는 부분 처리 
                             if (password.length < 6){
                                 Alert.alert('비밀번호는 6자리 이상으로 설정해 주세요')
-                                return
+                                return;
                             }
 
                             if (ConfirmPassword != password) {
                                 Alert.alert('비밀번호가 일치하지 않습니다')
-                                return
+                                return;
                             }
                             if (fullName === '' || email === '' || password === '') {
                                 Alert.alert('필수 항목을 입력해주세요')
-                                return
+                                return;
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-                            let url = 'http://192.168.0.32:3000/user/join'
+                            let url = 'http://192.168.200.112:3000/user/join'
                             let options = {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(values),
                             }
-                            // 비동기 처리
                             let response = await fetch(url, options)
-                            // let result = response.json()
-
-                            alert('입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)')
-                            navigation.navigate('Welcome', { name: values.email })
+                            let res_data = await response.json()
+                            console.log(res_data)
+                            
+                            // db로부터 받는 값 result & msg 추가 by 세연  - alert msg & result -> 성공여부 판별 
+                            alert(res_data.msg);
+                            if(res_data.result){
+                                navigation.navigate('Welcome', { name: values.email })
+                            }
                             //우선 이메일을 이름 대신해서 넘기도록 설정함 - 신우
                         }}
                     >
@@ -235,7 +228,7 @@ const Signup = ({ navigation }) => {
                                 </TouchableOpacity>
                                 <View style={styles.extraView}>
                                     <Text style={styles.extraText}>
-                                        아이디가 존재한다면 :) ? &nbsp;
+                                        아이디가 있으시다면 :) ? &nbsp;
                                     </Text>
                                     <TouchableOpacity style={styles.textLink}
                                         onPress={() => navigation.navigate('Login')}>

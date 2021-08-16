@@ -19,11 +19,12 @@ const MainPopup = ({ handlePopup, value, which }) => {
 
   } else if (which === "ToSomeoneScreen") {
     agree = "동의합니다."
-    popupContent = " 내가 세상에 없다면? 누군가에게 남기고 싶은 말을 전해보세요. 저희 BYD 어플에 로그인을 2년동안 안하시면 해당 email 또는 핸드폰 번호로 대신 말씀을 전해드리겠습니다.  "
+    popupContent = " 내가 세상에 없다면? \n 누군가에게 남기고 싶은 말을 전해보세요. 저희 BYD 어플에 로그인을 2년동안 안하시면 해당 email 또는 핸드폰 번호로 대신 말씀을 전해드리겠습니다.  "
 
   } else if (which == "ventingScreen") {
     agree = "네! 잘 알겠습니다."
-    popupContent = "고해성사에 적는 어떤 말도 기록되거나 저장되지 않습니다. 데이터 베이스에 저장되지 않으며 개발자도 볼 수 없습니다. 철저한 익명과 비밀을 보장해드리므로써 그동안 어딘가에 말하고 싶었던 본인만의 이야기를 하늘로 훌훌 날려보내 보세요! "
+    // 아래 STRING 값의 빈칸들도 값이므로 삭제하지 말아주세요! by 세연 
+    popupContent = "             < 안 내 문 > \n \n 고해성사에 적는 어떤 말도 기록되거나 저장되지 않습니다. \n \n 데이터 베이스에 내용이 도착하지도, 저장되지 않으며 심지어 개발자도 볼 수 없습니다.\n \n 철저한 익명과 비밀을 보장해드리므로써 그동안 어딘가에 털어 놓고 싶었던 나의 이야기를 적고 하늘로 훌훌 날려보내 보세요!"
 
   } else if (which == "handlePermission") {
     agree = "동의합니다"
@@ -97,6 +98,10 @@ const styles = StyleSheet.create({
   },
   textScroll: {
     marginBottom: 30,
+    
+  },
+  scrolltext:{
+    fontSize:18,
   }
 });
 

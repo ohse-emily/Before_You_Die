@@ -25,7 +25,7 @@ const Mywords = ({ navigation }) => {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-                let url = `http://192.168.0.29:3000/msg/mywords`
+                let url = `http://192.168.200.112:3000/msg/mywords`
 
                 try {
                     await fetch(url, {
@@ -57,7 +57,7 @@ const Mywords = ({ navigation }) => {
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <>
                             <Input
-                                placeholder="제목 : 제목을 입력해주세요"
+                                placeholder= " 제목을 입력해주세요"
                                 autoFocus
                                 type="text"
                                 name="mywordsSubject"
@@ -65,9 +65,9 @@ const Mywords = ({ navigation }) => {
                                 onChangeText={text => setMywordsSubject(text)}
                             />
                             <TextInput
-                                placeholder="누군가가 들어 주었으면 하는 말, 세상에 하고 싶은말, 어떤 이야기도 좋아요! "
-                                type="text"
-                                name="mywordsContent"
+                                placeholder="누군가가 들어 주었으면 하는, 세상에 하고 싶은 말! 어떤 이야기도 좋아요! "
+                                type="text" 
+                                name="mywordsContent" 
                                 value={mywordsContent}
                                 onChangeText={text => setMywordsContent(text)}
                                 style={styles.mywordsInput}
@@ -75,10 +75,10 @@ const Mywords = ({ navigation }) => {
                             />
                             <View style={styles.mysowrdsSenderView}>
                                 <Text>
-                                    보내는 사람:
+                                    보내는 사람 :
                                 </Text>
                                 <TextInput
-                                    placeholder="보내는 사람"
+                                    placeholder=" 보내는 사람"
                                     value={mywordsSender}
                                     onChangeText={(text) => setMywordsSender(text)}
                                     style={styles.mywordsSender}
@@ -93,7 +93,7 @@ const Mywords = ({ navigation }) => {
                                     }
                                 // onPress={() => navigation.navigate('AfterSending')}
                                 >
-                                    <Text>누군가에게 전하기</Text>
+                                    <Text style={styles.mywordsSending}>누군가에게 전하기</Text>
                                 </TouchableOpacity>
                             </View>
                         </>
@@ -137,4 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderBottomWidth: 1,
     },
+    mywordsSending:{
+        fontSize:17,
+    }
 })

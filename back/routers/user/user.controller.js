@@ -7,11 +7,29 @@ const nodemailer = require('nodemailer');
 let join = async (req, res) => {
     let { fullName, email, password, user_image } = req.body
     console.log(fullName, email, password, user_image)
+    
+    // 이메일 & 닉네임 중복 검사 by 세연 
+    let join_result = {result:true, msg:'입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)'};
+    let emailCheck = await Users.findAll({where:{ user_email:email}})
+    let nickNameCheck = await Users.findAll({where:{ user_nickname:fullName}})
+    console.log('emailCheck = ',emailCheck, 'nickName=', nickNameCheck)
+
+    if(emailCheck.length > 0){
+        join_result.result = false;
+        join_result.msg = '이미 존재하는 이메일입니다';
+        res.json(join_result)
+        return ; 
+    }else if(nickNameCheck.length > 0 ){
+        join_result.result = false;
+        join_result.msg = '이미 존재하는 닉네임입니다';
+        res.json(join_result)
+        return ; 
+    }
+    
     let email_key = email_verify_key();
-
-    // front 에서 받아온 정보 db Users 에 저장 by 성민
     let pwJWT = createPW(password)
-
+    
+    // front 에서 받아온 정보 db Users 에 저장 by 성민
     await Users.create({
         user_nickname: fullName,
         user_email: email,
@@ -49,7 +67,7 @@ let join = async (req, res) => {
         }
         transporter.close();
     })
-    res.json({ join: 'success' })
+    res.json(join_result)
 }
 
 // 고객이 email url 클릭 시 email_verify 0 -> 1로 변경 by세연 
@@ -74,7 +92,6 @@ let login = async (req, res) => {
     let token = createToken(user_email)
     // result default value
     let result = { proceed: false, type: 'nouser' }
-
     let getUser = await Users.findOne({
         where: {
             user_email,

@@ -43,13 +43,13 @@ const Login = ({ navigation }) => {
                         resizeMode="cover"
                         source={require('./../assets/sam.jpeg')}
                     />
-                    <Text style={styles.pageTitle}>BYD</Text>
+                    <Text style={styles.pageTitle}>Before You Die</Text>
 
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values) => {
                             
-                            let url = 'http://192.168.0.32:3000/user/login/'
+                            let url = 'http://192.168.200.112:3000/user/login/'
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!
@@ -58,7 +58,7 @@ const Login = ({ navigation }) => {
                                 }
                             });
                             let getData = await response.json()
-                            console.log('ㅁㄴㅇㄻㄴㅇㄹ',getData)
+                            console.log('getData=',getData)
 
                             try {
                                 if (getData === undefined) {

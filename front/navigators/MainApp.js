@@ -38,7 +38,6 @@ const Tabs = createBottomTabNavigator();
 const YourwordsStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const MyInfoStack = createStackNavigator();
-const LogoutStack = createStackNavigator();
 
 const YourwordsStackScreen = () => (
   <YourwordsStack.Navigator screenOptions={HomeScreenOptions}>
@@ -47,12 +46,9 @@ const YourwordsStackScreen = () => (
   </YourwordsStack.Navigator>
 )
 
-
 // Main Home -> 여기에 이동할 screens를 넣어야 해당 compo에서 navigate() 매서드 사용 가능  by 세연
 const HomeStackScreen = () => (
-  <HomeStack.Navigator
-    screenOptions={HomeScreenOptions}
-  >
+  <HomeStack.Navigator screenOptions={HomeScreenOptions}>
     {/* <HomeStack.Screen name="LogoutAuth" component={LogoutAuth}/> */}
     <HomeStack.Screen name="Home" component={HomeScreen} />
     <HomeStack.Screen name="Yourwords" component={YourwordsScreen} />
@@ -64,7 +60,6 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="Login" component={Login} />
     <HomeStack.Screen name="SendingEmail" component={SendingEmail} />
     <HomeStack.Screen name="SendingMSG" component={SendingMSG} />
-    
   </HomeStack.Navigator>
 )
 
@@ -90,7 +85,7 @@ export default function MainApp({ navigation }) {
         tabBarStyle: [
           {
             display: 'flex',
-            height:'10%',
+            height:'8%',
           },
           null
         ]
@@ -136,7 +131,7 @@ export default function MainApp({ navigation }) {
           tabBarIcon: ({focused}) => (
           focused
           ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)"/>
-          : <FontAwesome name="grav" size={25} color="rgb(160, 160, 160)"/>
+          : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)"/>
           )
 
         }}

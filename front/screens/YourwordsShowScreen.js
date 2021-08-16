@@ -12,18 +12,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 function YourwordsShowScreen({ navigation }) {
     const [yourword, setYourword] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [yourwordUndefined, setYourwordUndefined] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {
             const fetchYourword = async () => {
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 console.log(userEmail)
-                let getYourword = await axios.get(`http://192.168.0.29:3000/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
-                setYourword(getYourword.data)
-                setIsLoading(true)
+                let getYourword = await axios.get(`http://192.168.200.112:3000/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
+                console.log(getYourword.data)
+                if (getYourword.data.length > 0) {
+                    setYourword(getYourword.data)
+                    setIsLoading(true)
+                    console.log(1)
+                } else {
+                    setYourwordUndefined(true)
+                    console.log(2)
+                }
             }
             fetchYourword();
-        }, 3000)
+        }, 2000)
     }, [])
 
     return (
@@ -58,13 +66,19 @@ function YourwordsShowScreen({ navigation }) {
 
                 </SafeAreaView>
             ) : (
-                <View style={styles.isLoading}>
-                    <AntDesign style={styles.unlock} name="unlock" size={80} color="black" />
-                    <Text style={styles.loadingText}>수많은 메세지 중 {"\n"}
-                        인연이 닿는 분의 이야기를 {"\n"}
-                        찾고 있어요 (●'◡'●)
-                    </Text>
-                </View>
+                yourwordUndefined ? (
+                    <View style={styles.yourwordNothing}>
+                        <Text>아직 편지함에 다른 분의 편지가 없네요, {"\n"} 잠시 후에 다시 시도해 주세요 :) </Text>
+                    </View>
+                ) : (
+                    <View style={styles.isLoading}>
+                        <AntDesign style={styles.unlock} name="unlock" size={80} color="black" />
+                        <Text style={styles.loadingText}>수많은 메세지 중 {"\n"}
+                            인연이 닿는 분의 이야기를 {"\n"}
+                            찾고 있어요 (●'◡'●)
+                        </Text>
+                    </View>
+                )
             )}
         </ScrollView>
     )
@@ -105,7 +119,6 @@ const styles = StyleSheet.create({
     },
     loadingText: {
         fontSize: 15,
-
     },
     yourwordRow: {
         flexDirection: 'row',
@@ -144,7 +157,15 @@ const styles = StyleSheet.create({
     },
     anotherText: {
         color: 'black',
+    },
+    yourwordNothing: {
+        flex: 1,
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginTop: '70%',
     }
+
 
 })
 

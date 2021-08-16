@@ -24,6 +24,7 @@ const Venting = ({ navigation }) => {
                     value={popupVenting}
                     handlePopup={popupVent}
                     which={"ventingScreen"}
+                    style={styles.ventingPopup}
                 />
                 ) : (
                     <Text />
@@ -33,7 +34,7 @@ const Venting = ({ navigation }) => {
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <>
                             <TextInput
-                                placeholder="고해성사 하세요"
+                                placeholder="나의 고해성사를 시작해 보세요"
                                 type="text"
                                 name="ventingContent"
                                 value={ventingContent}
@@ -47,7 +48,7 @@ const Venting = ({ navigation }) => {
                         style={styles.ventingSending}
                         onPress={() => navigation.navigate('AfterSending')}
                     >
-                        <Text>날려 보내기</Text>
+                        <Text style={styles.ventingBtnText}> 저 멀리 날려 보내기</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             </ScrollView>
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     ventingSending: {
-        width: 120,
+        width: 200,
         height: 40,
         alignItems: 'center',
         padding: 10,
@@ -84,5 +85,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 7,
 
+    },
+    ventingPopup:{
+        fontSize:15,
+    },
+    ventingBtnText:{
+        fontSize:19,
     }
 })

@@ -6,7 +6,6 @@ import MainPopup from './Popup';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Text from './DefaultText';
 
-
 const HomeScreen = ({ navigation }) => {
 
     const [popupCheck, setPopcupCheck] = useState(false) // 기본값 창을 띄우지 않는다
@@ -21,7 +20,7 @@ const HomeScreen = ({ navigation }) => {
             let result2 = new Date(result)                      // 현재 시간 계산해서 AsyncStorage에 넣어주는 부분 by 성민
             AsyncStorage.setItem('@time_key', String(result2))
         }
-    } 
+    }
 
     useEffect(() => {
         AsyncStorage.getItem('@time_key', (err, result) => {
@@ -49,7 +48,8 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.HomeLayout}>
-            {popupCheck ?
+            {/* HOME MAIN SCREEN 에 POPUP 창 띄울 때 아래 주석 해제 by 세연 */}
+            {/* {popupCheck ?
                 (
                     <MainPopup
                         value={popupCheck}
@@ -59,7 +59,7 @@ const HomeScreen = ({ navigation }) => {
                 ) : (
                     <Text />
                 )
-            }
+            } */}
             <View style={styles.HomeTopLayout}>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
@@ -117,8 +117,10 @@ const styles = StyleSheet.create({
     },
     HomeTopLayout: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
-
+        justifyContent: 'space-between',
+        justifyContent:'center',
+        flex:1,
+        marginTop:30,
     },
     HomeBottomLayout: {
         flexDirection: 'column',
