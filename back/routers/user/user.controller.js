@@ -81,9 +81,10 @@ let login = async (req, res) => {
             user_password: pwJWT
         } // 나중에 pwJWT로 바꾸기
     })
-
-    if (getUser !== null && getUser.email_verify === 1) {
+    console.log('getUser=',getUser)
+    if (getUser != null && getUser.email_verify == 1) {
         // 로그인 정보와 DB가 일치할 경우 
+        console.log('ddd')
         result.proceed=true;
         result.type='verifieduser'
         result.token=token
@@ -92,10 +93,12 @@ let login = async (req, res) => {
         console.log(user_email,'유저이메일')
         await sequelize.query(`update users set login_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${user_email}'`)
 
-    } else if (getUser !== null && getUser.email_verify == 0){
+    } else if (getUser != null && getUser.email_verify == 0){
         //이메일 인증을 못받은 경우 
+        console.log('못받음')
         result.type = 'noverified'
     }
+    console.log(result)
     res.json(result)
 }
 

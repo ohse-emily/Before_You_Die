@@ -62,16 +62,18 @@ const Login = ({ navigation }) => {
                             console.log('ㅁㄴㅇㄻㄴㅇㄹ',getData)
 
                             try {
+
                                 if (getData === undefined) {
                                     alert('아이디와 비밀번호를 확인해 주세요')
                                 } else if (getData.proceed === true) {
-                                    navigation.navigate("MainApp")
+                                    // 로그아웃 후 재로그인 시 오류 -> navigate('Login')으로 수정 by 세연 
+                                    navigation.navigate("Login")
                                     storeData(getData.token, values.user_email)
                                 } else if (getData.proceed === false && getData.type === 'noverified') {
                                     alert('이메일 인증을 완료해주세요.')
                                 } else if (getData.proceed === false && getData.type === 'nouser') {
                                     alert('아이디와 비밀번호를 확인해주세요')
-                                } else{
+                                } else{  // 예외처리 추가 by 세연 
                                     alert('아이디와 비밀번호를 다시 한 번 확인해 주세요')
                                 }
                             } catch (e) {

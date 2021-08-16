@@ -147,7 +147,7 @@ const Signup = ({ navigation }) => {
                                 Alert.alert('비밀번호가 일치하지 않습니다')
                                 return
                             }
-                            if (fullName == '' || email == '' || password == '') {
+                            if (fullName === '' || email === '' || password === '') {
                                 Alert.alert('필수 항목을 입력해주세요')
                                 return
                             }
