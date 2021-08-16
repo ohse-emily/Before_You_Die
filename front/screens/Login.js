@@ -62,12 +62,12 @@ const Login = ({ navigation }) => {
                             console.log('ㅁㄴㅇㄻㄴㅇㄹ',getData)
 
                             try {
-
                                 if (getData === undefined) {
                                     alert('아이디와 비밀번호를 확인해 주세요')
                                 } else if (getData.proceed === true) {
                                     // 로그아웃 후 재로그인 시 오류 -> navigate('Login')으로 수정 by 세연 
-                                    navigation.navigate("Login")
+                                    console.log('getDate true')
+                                    navigation.navigate("MainApp")
                                     storeData(getData.token, values.user_email)
                                 } else if (getData.proceed === false && getData.type === 'noverified') {
                                     alert('이메일 인증을 완료해주세요.')
