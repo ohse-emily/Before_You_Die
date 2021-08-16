@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Image, TextInput, TouchableOpacity, ScrollView, Alert, CheckBox, } from 'react-native';
 import { Formik } from 'formik'; //formik
-import { RadioButton } from 'react-native-paper';
+import { RadioButton,  } from 'react-native-paper';
 import { Octicons, Ionicons } from '@expo/vector-icons' //icons
 //keyboardavoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
@@ -95,19 +95,31 @@ const Signup = ({ navigation }) => {
     // }
 
 
-    const [popupCheck, setPopcupCheck] = useState(true)
+    const [popupCheck, setPopcupCheck] = useState(false)
+    const [privacyCheck, setPrivacyCheck] = useState(false)
 
+
+    const handleCheck = ()=>{
+        if(privacyCheck===true){
+            setPrivacyCheck(!privacyCheck)
+            return
+        }
+        setPrivacyCheck(!privacyCheck)
+        setPopcupCheck(!popupCheck)
+    }
 
     const handlePopup = async (itemChecked) => {
         if (!itemChecked) {
-            Alert.alert('동의항목에 동의해주세요')
+            Alert.alert("",'동의항목에 동의해주세요')
             return
         }
         setPopcupCheck(!popupCheck)
     }
 
     return (
+        
         <KeyboardAvoidingWrapper>
+            
             <View style={styles.styledContainer}>
                 <StatusBar style="dark" />
                 <View style={styles.innerContainer}>
@@ -124,8 +136,10 @@ const Signup = ({ navigation }) => {
                         onSubmit={async (values) => {
                             values.user_image = image
                             let { ConfirmPassword, password, fullName, email, dateOfBirth } = values
+                            
+
                             if(email.match( /@/ )==true){
-                                Alert.alert('이메일 형식에 맞춰주세요')
+                                Alert.alert("",'이메일 형식에 맞춰주세요')
                                 return
                             }
 
@@ -139,17 +153,23 @@ const Signup = ({ navigation }) => {
                             
                             // let response_email = await fetch(url_email, email_options)
                             // console.log(response_email)
+                            if (privacyCheck===false){
+                                Alert.alert("",'약관에 동의해주세요')
+                                return
+                            }
+
+
                             if (password.length < 6){
-                                Alert.alert('비밀번호는 6자리 이상으로 설정해 주세요')
+                                Alert.alert("",'비밀번호는 6자리 이상으로 설정해 주세요')
                                 return
                             }
 
                             if (ConfirmPassword != password) {
-                                Alert.alert('비밀번호가 일치하지 않습니다')
+                                Alert.alert("",'비밀번호가 일치하지 않습니다')
                                 return
                             }
                             if (fullName === '' || email === '' || password === '') {
-                                Alert.alert('필수 항목을 입력해주세요')
+                                Alert.alert("",'필수 항목을 입력해주세요')
                                 return
                             }
 
@@ -225,8 +245,21 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                 />
+
                                 {/* <RadioButton value="first" /><Text style = {styles.radioBox}>동의합니다.</Text>
                                 <RadioButton value="second"/><Text style = {styles.radioBox}>동의하지 않습니다.</Text> */}
+                                
+                                <View  style={styles.privacyContainer}>
+                                    <CheckBox value = {privacyCheck}
+                                            onChange = {handleCheck}
+                                                />
+                                    <Text style={styles.privacyText}>
+                                        개인정보 취급방침 동의(필수)
+                                    </Text>
+                                </View>
+
+
+
                                 <TouchableOpacity style={styles.styledButton}
                                     onPress={handleSubmit}>
                                     <Text style={styles.buttonText}>
@@ -249,7 +282,6 @@ const Signup = ({ navigation }) => {
                     </Formik>
                 </View>
             </View>
-
         </KeyboardAvoidingWrapper>
     );
 }
@@ -401,6 +433,12 @@ const styles = StyleSheet.create({
     profile_img: {
         width: 70,
         height: 70,
+    },
+    privacyContainer:{
+        flexDirection: 'row'
+    },
+    privacyText:{
+        marginTop: 8,
     },
     radioBox: {
 
