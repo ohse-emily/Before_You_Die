@@ -221,19 +221,20 @@ const MyInfoScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.mypage_menu}>
             <Text style={styles.mypage_text}>서비스 이용약관</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.mypage_menu}>
+          <TouchableOpacity style={styles.mypage_menu}
+          onPress={()=>{navigation.navigate('Privacy')}}>
             <Text style={styles.mypage_text}>개인정보 취급방침</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.mypage_out_container}>
-          <View style={styles.mypage_out}>
-            <Text style={styles.mypage_out_text} onPress={logout}>로그아웃</Text>
-          </View>
-          <View style={styles.mypage_out}>
-            <Text style={styles.mypage_out_text} onPress={deleteAcc}>회원탈퇴</Text>
-          </View>
+          <View style={styles.mypage_out_container}>
+          <TouchableOpacity style={styles.mypage_out}  onPress={logout}>
+            <Text style={styles.mypage_out_text}>로그아웃</Text>
+          </TouchableOpacity>
+              
+          <TouchableOpacity style={styles.mypage_out } onPress={deleteAcc}>
+            <Text style={styles.mypage_out_text} >회원탈퇴</Text>
+          </TouchableOpacity>
         </View>
-
       </ScrollView>
     </View>
   );
@@ -291,15 +292,19 @@ const styles = StyleSheet.create({
   },
   mypage_out: {
     width: '18%',
+    height: 30,
     flexDirection: "row",
-    zIndex: 0,
-    alignItems: 'flex-end'
+    zIndex: 3,
+
+    alignItems: 'flex-end',
+    borderRadius: 1,
+
   },
   mypage_out_text: {
     flexDirection: 'row',
     padding: 5,
-    zIndex: 3,
-    alignSelf: 'flex-end'
+    zIndex: 0,
+    alignSelf: 'flex-end',
   },
 });
 

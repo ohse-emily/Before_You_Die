@@ -24,6 +24,7 @@ import SendingEmail from './../screens/SendingEmail'
 // screens by 성민
 import TransformPw from './../screens/TransformPw'
 import MyInfoScreen from './../screens/MyInfoScreen';
+import PrivacyCollect from './../screens/PrivacyCollect'
 
 // Home 위에 제목 styles 
 const HomeScreenOptions = {
@@ -63,6 +64,7 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="Login" component={Login} />
     <HomeStack.Screen name="SendingEmail" component={SendingEmail} />
     <HomeStack.Screen name="SendingMSG" component={SendingMSG} />
+    
   </HomeStack.Navigator>
 )
 
@@ -74,6 +76,7 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="TransformPw" component={TransformPw} />
     <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory} />
     <MyInfoStack.Screen name="Login" component={Login} />
+    <MyInfoStack.Screen name="Privacy" component={PrivacyCollect} />
   </MyInfoStack.Navigator>
 )
 
