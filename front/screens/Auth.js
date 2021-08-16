@@ -16,7 +16,7 @@ const Auth = ({navigation}) => {
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('@storage_Key')
-            console.log(value,'aboveIf')
+            console.log(value,'AsyncStorage에 storage_key가 있는 경우 ')
             // value previously stored
             return value;
 

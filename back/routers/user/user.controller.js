@@ -239,7 +239,7 @@ let transformPw = async(req,res)=> { // 비밀번호 변경 by 성민
         JWTafterPw = createPW(afterPw)
         Users.update({ email_verify: 1 }, { where: {email_verify_key:req.query.key} })
         await Users.update({user_password: JWTafterPw},{where:{user_email : email}})
-        res.json({result: true, msg: '비밀번호가 변경되었습니다. :) 재로그인 하러 가겠습니다!'})
+        res.json({result: true, msg: '비밀번호가 변경되었습니다. :)     재로그인을 부탁드립니다.'})
     }
 }
 

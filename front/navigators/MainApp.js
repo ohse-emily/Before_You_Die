@@ -75,14 +75,12 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
     <MyInfoStack.Screen name="TransformPw" component={TransformPw} />
     <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory} />
-    <MyInfoStack.Screen name="Login" component={Login} />
     <MyInfoStack.Screen name="Privacy" component={PrivacyCollect} />
+    {/* 여기에 Login을 넣으면 info tab 으로 로그아웃 시 -> info tab 안에서 login compo가 나옴. -> 로그인 안됨 ! by세연  */}
   </MyInfoStack.Navigator>
 )
 
 
-
-//MainApp로 이름 변경
 export default function MainApp({ navigation }) {
   return (
     <Tabs.Navigator
@@ -91,7 +89,8 @@ export default function MainApp({ navigation }) {
         tabBarHideOnKeyboard: true,
         tabBarStyle: [
           {
-            display: 'flex'
+            display: 'flex',
+            height:'10%',
           },
           null
         ]
@@ -102,7 +101,14 @@ export default function MainApp({ navigation }) {
         component={YourwordsStackScreen}
         options={{
           headerShown: false,
-          tabBarIcon: () => (<FontAwesome name="telegram" size={30} />)
+          tabBarActiveTintColor: 'purple',
+          tabBarInactiveTintColor: 'gray',
+          tabBarIcon: ({focused}) => (
+          focused
+          ? <FontAwesome name="telegram" size={40} color="rgb(165, 61, 179)"/>
+          : <FontAwesome name="telegram" size={30} color="rgb(160, 160, 160)"/>
+          )
+
         }}
       />
       <Tabs.Screen
@@ -110,7 +116,14 @@ export default function MainApp({ navigation }) {
         component={HomeStackScreen}
         options={{
           headerShown: false,
-          tabBarIcon: () => (<EvilIcons name="heart" size={40} color="black" />)
+          tabBarActiveTintColor: 'purple',
+          tabBarInactiveTintColor: 'gray',
+          tabBarIcon: ({focused}) => (
+            focused
+            ? <EvilIcons name="heart" size={60} color="rgb(165, 61, 179)" />
+            : <EvilIcons name="heart" size={50} color="rgb(160, 160, 160)" />
+          )
+
         }}
       />
       <Tabs.Screen
@@ -118,7 +131,14 @@ export default function MainApp({ navigation }) {
         component={MyInfoStackScreen}
         options={{
           headerShown: false,
-          tabBarIcon: () => (<FontAwesome name="grav" size={30} />)
+          tabBarActiveTintColor: 'purple',
+          tabBarInactiveTintColor: 'gray',
+          tabBarIcon: ({focused}) => (
+          focused
+          ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)"/>
+          : <FontAwesome name="grav" size={25} color="rgb(160, 160, 160)"/>
+          )
+
         }}
       />
     </Tabs.Navigator>

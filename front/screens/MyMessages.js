@@ -26,7 +26,7 @@ const MyMessages = ({ route, navigation } ) => {
         returnMessages = (// 나중에 내용 바꾸기
                 <View style={{margin: 'auto', marginTop: '60%'}}>
                     <Text>
-                        음슴
+                        서비스 준비 중입니다 (. ❛ ᴗ ❛.)
                     </Text>
                 </View>
         )

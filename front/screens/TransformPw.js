@@ -52,6 +52,7 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
             value={values.beforePw}
             placeholder={'현재 비밀번호'}
             style={styles.changePwTextInput}
+            secureTextEntry={true}
           />
           <TextInput
             onChangeText={handleChange('afterPw')}
@@ -59,6 +60,7 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
             value={values.afterPw}
             placeholder={'새로운 비밀번호'}
             style={styles.changePwTextInput}
+            secureTextEntry={true}
           />
           <TextInput
             onChangeText={handleChange('afterPwCheck')}
@@ -66,6 +68,7 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
             value={values.afterPwCheck}
             placeholder={'새로운 비밀번호 확인'}
             style={styles.changePwTextInput}
+            secureTextEntry={true}
           />
           <TouchableOpacity onPress={handleSubmit} style={styles.changePwBtn}>
             <Text style={styles.changPwBtnText}>비밀번호 변경하기</Text>
@@ -102,6 +105,9 @@ const styles = StyleSheet.create({
   },
   changePwTextInput:{
     height:50,
+    justifyContent:'center',
+    alignItems:'center',
+    alignContent:'center',
   },  
   changPwBtnText:{
     fontSize:17,

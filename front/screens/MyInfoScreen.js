@@ -119,7 +119,7 @@ const MyInfoScreen = ({ navigation }) => {
           // 토큰이 존재하지 않는데 회원정보 페이지를 보면 안되기 때문에 
           // 설정해놓음. 맨 처음 페이지로 가도록 해놔야 하는데 네비 수정 후 주석 해제하기. 
           alert('토큰이 만료되었습니다. 다시 로그인을 해주세요 :) ')
-          // navigation.navigate('RootStack')} 
+          navigation.navigate('Login') 
         }
       })
       .catch((e) => {

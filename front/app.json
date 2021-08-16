@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/byd_icon.png",
     "splash": {
-      "image": "./assets/byd_splash3x3.png",
+      "image": "./assets/byd_splash_modified.png",
       "resizeMode": "cover",
       "backgroundColor": "#000000"
     },
