@@ -4,13 +4,14 @@ const { Users, Lastwords, Messages } = require('../../models');
 const mysql = require('mysql')
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '5353',
-    database: 'byd',
-
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 })
 connection.connect();
+
+// byddothis
 
 // mylast words 나의 마지막 말 Lastwords DB에 insert  by 세연 
 const mywords = async (req, res) => {
