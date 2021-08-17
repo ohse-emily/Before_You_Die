@@ -162,22 +162,61 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
-                            let url = 'http://192.168.200.112:3000/user/join'
-                            let options = {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(values),
+                            let res_data;
+                            try {
+                                let url = 'http://192.168.0.29:3000/user/join'
+                                let options = {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(values),
+                                }
+                                let response = await fetch(url, options)
+                                res_data = await response.json()
+                                console.log(res_data)
+                                alert(res_data.msg);
+                            } catch (e) {
+                                alert('회원가입 중 문제가 발생하였습니다. 다시 회원가입을 진행해 주세요. ');
+                                console.log('backend 에 정보 보내기 ERROR=', e)
+                                return;
                             }
-                            let response = await fetch(url, options)
-                            let res_data = await response.json()
-                            console.log(res_data)
+
+                            if (res_data.result) {
+                                console.log(1231232)
+                                if (image) {
+                                    console.log(23423525)
+                                    let apiUrl = 'http://192.168.0.29:3000/user/pic_upload';
+                                    let uriParts = image.split('.');
+                                    let fileType = uriParts[uriParts.length - 1];
+                                    let formData = new FormData();
+                                    formData.append('file', {
+                                        uri: image,
+                                        name: `${email}photo.${fileType}`,
+                                        type: `image/${fileType}`,
+                                    });
+                                    let imgOptions = {
+                                        method: 'POST',
+                                        body: formData,
+                                        headers: {
+                                            'Accept': 'application/json',
+                                            'Content-Type': 'multipart/form-data',
+                                        }
+                                    }
+                                    try {
+                                        let sendImage = await fetch(apiUrl, imgOptions)
+                                        let imgResult = await sendImage.json();
+                                    } catch (e) {
+                                        console.log('inserting image DB ERROR=', e)
+                                        alert('이미지 업로드에 실패하였습니다.')
+                                        return;
+                                    }
+                                }
+                            }
 
                             // db로부터 받는 값 result & msg 추가 by 세연  - alert msg & result -> 성공여부 판별 
-                            alert(res_data.msg);
                             if (res_data.result) {
                                 navigation.navigate('Welcome', { name: values.email })
                             }
-                            //우선 이메일을 이름 대신해서 넘기도록 설정함 - 신우
+
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (

@@ -11,6 +11,7 @@ sequelize.sync({force: false,})
 .then(()=>{console.log('DB 연결 성공')})
 .catch(()=>{console.log('DB 연결 실패')})
 
+app.use('/uploads', express.static('./uploads'))
 app.use(bodyParser.urlencoded({extended:false,}));
 app.use(cors());
 app.use(bodyParser.json());

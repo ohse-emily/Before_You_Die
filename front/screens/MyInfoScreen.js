@@ -1,25 +1,75 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Image, StyleSheet, Alert, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Alert, ScrollView, Button, TouchableOpacity, Touchable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from './DefaultText';
+// for image upload
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 
 const MyInfoScreen = ({ navigation }) => {
   // 메시지를 담아놓는 state - 신우
   const [messagesList, setMessagesList] = useState([])
   const [wordsList, setWordsList] = useState([])
   const [userId, setUserId] = useState('')
-  const [userImg, setUserImg] = useState('../assets/icon.png')
   // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
   const [gotData, setGotData] = useState(false)
+  const [userImg, setUserImg] = useState(null)// userImg = user가 원래 가지고 있는 프로필 사진 (from DB)
+  const [changeImg, setChangeImg] = useState(null) // changeImg = user가 사진첩에서 가져온 사진 by  세연 
 
   useEffect(() => {
     // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
     sendToken()
-    
+
   }, [])
 
+  let userIMAGE;
+  if (userImg) {
+    userIMAGE = { uri: `http://192.168.0.29:3000/${userImg}` }
+  }else{
+    userIMAGE = { uri: changeImg}
+  }
 
+  const changeImage = async () => {
+    console.log(1)
+    const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    // user가 카메라접근을 허락하면 == granted 
+    if (cameraRollPerm === 'granted') {
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        base64: true,
+        aspect: [4, 4],
+      });
+      if (!pickerResult.cancelled) {
+        setChangeImg(pickerResult.uri);
+        setUserImg(null)
+
+        // back end 로 변경한 image file  보내기 
+        let apiUrl = 'http://192.168.0.29:3000/user/pic_upload';
+        let uriParts = pickerResult.uri.split('.');
+        let fileType = uriParts[uriParts.length-1];
+        let formData = new FormData();
+        formData.append('file',{
+            uri: pickerResult.uri,
+            name:`${userId}photo.${fileType}`,
+            type:`image/${fileType}`,
+        });
+        let imgOptions = {
+            method: 'POST',
+            body:formData,
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'multipart/form-data',
+            }
+        }
+        let sendImage = await fetch(apiUrl, imgOptions)
+        let res = await sendImage.json()
+        console.log('레스', res)
+      }
+      setChangeImg(pickerResult.uri)
+    }
+
+  }
 
   const deleteAcc = () => // 탈퇴 여부 확인하는 부분
     Alert.alert("잠깐만요! ", "정말로 탈퇴하시겠습니까? (。_。)...",
@@ -33,7 +83,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "탈퇴하기", onPress: async () => {
             console.log(" user 탈퇴하기 clicked")
 
-            let url = 'http://192.168.200.112:3000/user/deleteacc/'
+            let url = 'http://192.168.0.29:3000/user/deleteacc/'
             let response = await fetch(url, {
               method: 'POST', // or 'PUT'
               body: JSON.stringify({ userId }), // data can be `string` or {object}!
@@ -52,11 +102,11 @@ const MyInfoScreen = ({ navigation }) => {
               }
             } catch (e) {
               alert('서버와의 접속이 원활하지 않습니다. 잠시 후 다시 시도해주세요.')
-              console.log( 'deleteAccError = ', e)
+              console.log('deleteAccError = ', e)
             }
             console.log(goBackMain, '회원탈퇴시 나오는 goBackMain 값 ')
             // 회원 탈퇴 시 AsyncStorage 저장한 정보 삭제 by 세연 
-            AsyncStorage.clear(); 
+            AsyncStorage.clear();
             navigation.navigate('Auth')
             // try{
             //     if(getData.proceed==true){
@@ -77,7 +127,7 @@ const MyInfoScreen = ({ navigation }) => {
     );
 
   const logout = () => // 로그아웃 여부 확인하는 부분
-    
+
     Alert.alert("로그아웃", "(. ❛ ᴗ ❛.) 로그아웃 하시겠습니까?  ",
       [
         {
@@ -119,7 +169,7 @@ const MyInfoScreen = ({ navigation }) => {
           // 토큰이 존재하지 않는데 회원정보 페이지를 보면 안되기 때문에 
           // 설정해놓음. 맨 처음 페이지로 가도록 해놔야 하는데 네비 수정 후 주석 해제하기. 
           alert('토큰이 만료되었습니다. 다시 로그인을 해주세요 :) ')
-          navigation.navigate('Login') 
+          navigation.navigate('Login')
         }
       })
       .catch((e) => {
@@ -143,6 +193,7 @@ const MyInfoScreen = ({ navigation }) => {
       setGotData(true)
       setUserImg(getData[0].user_image)
       setUserId(getData[0].user_email)
+
     }
   }
 
@@ -150,7 +201,7 @@ const MyInfoScreen = ({ navigation }) => {
   // 교수님 도움받은 구간
   const deleteMsgHandler = async (id, msg_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.200.112:3000/user/deletepost/'
+    let url = 'http://192.168.0.29:3000/user/deletepost/'
     let data = { id, msg_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -165,7 +216,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   const deleteWordHandler = async (id, word_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.200.112:3000/user/deleteword/'
+    let url = 'http://192.168.0.29:3000/user/deleteword/'
     let data = { id, word_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -178,21 +229,16 @@ const MyInfoScreen = ({ navigation }) => {
     return getData
   }
 
-
   return (
-
     <View style={styles.mypage_wrap}>
       <ScrollView>
-        <View style={styles.profile_image_container}>
-          <Image source={ require('../assets/user_.png') } style={{ width: 100, height: 100 }} />
-          {/* <Text>hye1209cj@naver.com</Text>    
-        </View>
-        <View style={styles.mypage_menu}>
-          <Text>나의 마지막 말 </Text> */}
+        <TouchableOpacity style={styles.profile_image_container} onPress={changeImage}>
 
-          {/* 요 아래에 고객의 email 주소 보이도록 해야할것 같아욥 * + css */}
+          {userImg || changeImg ? <Image rounded source={userIMAGE} style={{ width: 100, height: 100 }} />
+            : <Image rounded source={require('../assets/user_.png')} style={{ width: 100, height: 100 }} />}
+
           <Text>{userId}</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.mypage_container}>
           <TouchableOpacity
             style={styles.mypage_menu}
@@ -216,14 +262,14 @@ const MyInfoScreen = ({ navigation }) => {
             <Text style={styles.mypage_text}>나의 예약 문자/이메일</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.mypage_menu}
-          onPress={()=>{navigation.navigate('TransformPw')}}>
+            onPress={() => { navigation.navigate('TransformPw') }}>
             <Text style={styles.mypage_text}>비밀번호 변경</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.mypage_menu}>
             <Text style={styles.mypage_text}>서비스 이용약관</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.mypage_menu}
-          onPress={()=>{navigation.navigate('Privacy')}}>
+            onPress={() => { navigation.navigate('Privacy') }}>
             <Text style={styles.mypage_text}>개인정보 취급방침</Text>
           </TouchableOpacity>
         </View>
@@ -266,22 +312,22 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   mypage_container: {
-    width:  '100%',
+    width: '100%',
     height: 280,
     alignItems: 'center',
   },
   mypage_menu: {
     borderColor: 'lavender',
-    borderWidth:2,
+    borderWidth: 2,
     width: '75%',
     height: 40,
     marginTop: 5,
     marginBottom: 5,
     backgroundColor: 'ghostwhite',
-    justifyContent:'center',
-    borderRadius:8,
+    justifyContent: 'center',
+    borderRadius: 8,
   },
-  mypage_text:{
+  mypage_text: {
     fontSize: 17,
     textAlign: 'center',
   },

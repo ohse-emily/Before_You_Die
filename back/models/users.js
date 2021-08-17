@@ -17,7 +17,7 @@ module.exports = class Users extends Sequelize.Model{
                 allowNull:false,
             },
             user_image:{
-                type:Sequelize.STRING(300),
+                type:Sequelize.STRING(1000),
                 allowNull:true,
             },
             user_score:{

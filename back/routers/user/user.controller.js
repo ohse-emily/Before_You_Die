@@ -7,28 +7,28 @@ const nodemailer = require('nodemailer');
 let join = async (req, res) => {
     let { fullName, email, password, user_image } = req.body
     console.log(fullName, email, password, user_image)
-    
-    // 이메일 & 닉네임 중복 검사 by 세연 
-    let join_result = {result:true, msg:'입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)'};
-    let emailCheck = await Users.findAll({where:{ user_email:email}})
-    let nickNameCheck = await Users.findAll({where:{ user_nickname:fullName}})
-    console.log('emailCheck = ',emailCheck, 'nickName=', nickNameCheck)
 
-    if(emailCheck.length > 0){
+    // 이메일 & 닉네임 중복 검사 by 세연 
+    let join_result = { result: true, msg: '입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)' };
+    let emailCheck = await Users.findAll({ where: { user_email: email } })
+    let nickNameCheck = await Users.findAll({ where: { user_nickname: fullName } })
+    console.log('emailCheck = ', emailCheck, 'nickName=', nickNameCheck)
+
+    if (emailCheck.length > 0) {
         join_result.result = false;
         join_result.msg = '이미 존재하는 이메일입니다';
         res.json(join_result)
-        return ; 
-    }else if(nickNameCheck.length > 0 ){
+        return;
+    } else if (nickNameCheck.length > 0) {
         join_result.result = false;
         join_result.msg = '이미 존재하는 닉네임입니다';
         res.json(join_result)
-        return ; 
+        return;
     }
-    
+
     let email_key = email_verify_key();
     let pwJWT = createPW(password)
-    
+
     // front 에서 받아온 정보 db Users 에 저장 by 성민
     await Users.create({
         user_nickname: fullName,
@@ -73,9 +73,10 @@ let join = async (req, res) => {
 // 고객이 email url 클릭 시 email_verify 0 -> 1로 변경 by세연 
 let confirmEmail = async (req, res) => {
     let email_verify_change = await Users.update(
-        { email_verify: 1 }, 
-        { where: { email_verify_key: req.query.key } 
-    })
+        { email_verify: 1 },
+        {
+            where: { email_verify_key: req.query.key }
+        })
 
     if (email_verify_change == undefined) {
         res.send('<script type="text/javascript">alert("Not verified"); window.location="/"; </script>');
@@ -83,6 +84,35 @@ let confirmEmail = async (req, res) => {
     } else {
         res.send('<script type="text/javascript"> alert("Successfully verified");  </script>');
     } //window.location="/user/login";
+}
+
+// signup image 저장 by 신우 
+let picUpload = async (req, res) => {
+    console.log('req.file=', req.file)
+    console.log('modpicccccccc-----------------cccccccccccccccccc')
+    let { originalname, path } = req.file
+    let user_email = originalname.split('photo')[0]
+    console.log('user_Email==',user_email, 'path===',path)
+    let pic_upload_result = {imgResult:false}
+    // replace() 매서드는 변수에 저장해야 값이 저장됨 
+    // path.replace(`\\`, `/`)
+    // console.log('path=',path)
+    let newPath = path.replace(`\\`, `/`)
+    console.log('newPath=',newPath)
+    try {
+        await Users.update({
+            user_image: newPath,
+        }, {
+            where: {
+                user_email
+            }
+        })
+        pic_upload_result.imgResult=true;
+        console.log('picture uploading success !!!! ')
+    } catch (e) {
+        console.log('picture uploading failed, ERROR=', e)
+    }
+    res.json(pic_upload_result)
 }
 
 
@@ -98,19 +128,19 @@ let login = async (req, res) => {
             user_password: pwJWT
         } // 나중에 pwJWT로 바꾸기
     })
-    console.log('getUser=',getUser)
+    console.log('getUser=', getUser)
     if (getUser != null && getUser.email_verify == 1) {
         // 로그인 정보와 DB가 일치할 경우 
         console.log('ddd')
-        result.proceed=true;
-        result.type='verifieduser'
-        result.token=token
+        result.proceed = true;
+        result.type = 'verifieduser'
+        result.token = token
         let loggedInAt = new Date().toLocaleDateString()
-        console.log(loggedInAt,'로긴시간')
-        console.log(user_email,'유저이메일')
+        console.log(loggedInAt, '로긴시간')
+        console.log(user_email, '유저이메일')
         await sequelize.query(`update users set login_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${user_email}'`)
 
-    } else if (getUser != null && getUser.email_verify == 0){
+    } else if (getUser != null && getUser.email_verify == 0) {
         //이메일 인증을 못받은 경우 
         console.log('못받음')
         result.type = 'noverified'
@@ -220,18 +250,18 @@ let deleteAcc = async (req, res) => {
     try {
         // 1. Users DB 에서 데이터 삭제 
         console.log('11')
-        await Users.destroy({  
+        await Users.destroy({
             where: { user_email }
         })
         console.log('22')
         // 2. Lastwords DB 에서 user_email 개인정보만 변경 
         await Lastwords.update(
-            { user_email:'withdrawn_user'}, {where:{user_email}}
+            { user_email: 'withdrawn_user' }, { where: { user_email } }
         )
         console.log('33')
         // 3. Messages DB 에서 데이터 삭제 (문자/이메일 서비스 중단)
-        await Messages.destroy({  
-            where: { msg_user_email:user_email}
+        await Messages.destroy({
+            where: { msg_user_email: user_email }
         })
         console.log('44')
     } catch (e) {
@@ -240,30 +270,30 @@ let deleteAcc = async (req, res) => {
     res.json({ goBackMain: true })
 }
 
-let transformPw = async(req,res)=> { // 비밀번호 변경 by 성민
-    let {email, beforePw, afterPw} = req.body
+let transformPw = async (req, res) => { // 비밀번호 변경 by 성민
+    let { email, beforePw, afterPw } = req.body
     JWTbeforePw = createPW(beforePw)
     let result = await Users.findOne({
-        where:{
-            user_email : email,
-            user_password : JWTbeforePw
+        where: {
+            user_email: email,
+            user_password: JWTbeforePw
         }
     })
-    
-    if (result==null){
-        res.json({result: false , msg: '비밀번호를 잘못 입력했습니다'})
-    }else{
+
+    if (result == null) {
+        res.json({ result: false, msg: '비밀번호를 잘못 입력했습니다' })
+    } else {
         JWTafterPw = createPW(afterPw)
-        Users.update({ email_verify: 1 }, { where: {email_verify_key:req.query.key} })
-        await Users.update({user_password: JWTafterPw},{where:{user_email : email}})
-        res.json({result: true, msg: '비밀번호가 변경되었습니다. :)     재로그인을 부탁드립니다.'})
+        Users.update({ email_verify: 1 }, { where: { email_verify_key: req.query.key } })
+        await Users.update({ user_password: JWTafterPw }, { where: { user_email: email } })
+        res.json({ result: true, msg: '비밀번호가 변경되었습니다. :)     재로그인을 부탁드립니다.' })
     }
 }
 
 
 
 module.exports = {
-    join, login, confirmEmail, 
-    getUserInfo, deletePost, deleteWord, 
+    join, login, confirmEmail, picUpload,
+    getUserInfo, deletePost, deleteWord,
     email_check, deleteAcc, transformPw
 }
