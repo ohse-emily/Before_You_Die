@@ -11,12 +11,12 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
       onSubmit={values => {
         console.log(values)
         if (values.afterPw != values.afterPwCheck) {
-          Alert.alert("",'비밀번호가 일치하지 않습니다 :(')
+          Alert.alert("", '비밀번호가 일치하지 않습니다 :(')
           return
         }
         console.log(values)
         if (values.afterPw.length < 6) {
-          Alert.alert("",'비밀번호는 6자리 이상으로 설정해주세요 :) ')
+          Alert.alert("", '비밀번호는 6자리 이상으로 설정해주세요 :) ')
           return
         }
 
@@ -32,10 +32,10 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
           let result2 = await response.json()
 
           if (result2.result == false) {
-            Alert.alert("",result2.msg)
+            Alert.alert("", result2.msg)
             return
           } else {
-            Alert.alert("",result2.msg)
+            Alert.alert("", result2.msg)
             navigation.navigate('Login')
           }
         })
@@ -44,7 +44,7 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View style={styles.changePwContainer}>
           <Text style={styles.changePwText}>
-            비밀번호 변경하기 
+            비밀번호 변경하기
           </Text>
           <TextInput
             onChangeText={handleChange('beforePw')}
@@ -82,34 +82,34 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
 export default TransformPw
 
 const styles = StyleSheet.create({
-  changePwContainer:{
-    alignContent:'center',
-    alignItems:'center',
-    flex:1,
-    justifyContent:'center',
+  changePwContainer: {
+    alignContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
   },
-  changePwText:{
-    fontSize:28,
-    marginBottom:20,
+  changePwText: {
+    fontSize: 28,
+    marginBottom: 20,
   },
   changePwBtn: {
     width: '50%',
-    height:40,
+    height: 40,
     marginTop: 30,
     backgroundColor: 'lavender',
     justifyContent: 'center',
     borderRadius: 8,
-    alignContent:'center',
-    alignItems:'center',
-    
+    alignContent: 'center',
+    alignItems: 'center',
+
   },
-  changePwTextInput:{
-    height:50,
-    justifyContent:'center',
-    alignItems:'center',
-    alignContent:'center',
-  },  
-  changPwBtnText:{
-    fontSize:17,
+  changePwTextInput: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  changPwBtnText: {
+    fontSize: 17,
   }
 })

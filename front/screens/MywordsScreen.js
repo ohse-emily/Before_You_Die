@@ -57,7 +57,7 @@ const Mywords = ({ navigation }) => {
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <>
                             <Input
-                                placeholder= " 제목을 입력해주세요"
+                                placeholder=" 제목을 입력해주세요"
                                 autoFocus
                                 type="text"
                                 name="mywordsSubject"
@@ -66,8 +66,8 @@ const Mywords = ({ navigation }) => {
                             />
                             <TextInput
                                 placeholder="누군가가 들어 주었으면 하는, 세상에 하고 싶은 말! 어떤 이야기도 좋아요! "
-                                type="text" 
-                                name="mywordsContent" 
+                                type="text"
+                                name="mywordsContent"
                                 value={mywordsContent}
                                 onChangeText={text => setMywordsContent(text)}
                                 style={styles.mywordsInput}
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderBottomWidth: 1,
     },
-    mywordsSending:{
-        fontSize:17,
+    mywordsSending: {
+        fontSize: 17,
     }
 })

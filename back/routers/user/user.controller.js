@@ -92,13 +92,13 @@ let picUpload = async (req, res) => {
     console.log('modpicccccccc-----------------cccccccccccccccccc')
     let { originalname, path } = req.file
     let user_email = originalname.split('photo')[0]
-    console.log('user_Email==',user_email, 'path===',path)
-    let pic_upload_result = {imgResult:false}
+    console.log('user_Email==', user_email, 'path===', path)
+    let pic_upload_result = { imgResult: false }
     // replace() 매서드는 변수에 저장해야 값이 저장됨 
     // path.replace(`\\`, `/`)
     // console.log('path=',path)
     let newPath = path.replace(`\\`, `/`)
-    console.log('newPath=',newPath)
+    console.log('newPath=', newPath)
     try {
         await Users.update({
             user_image: newPath,
@@ -107,7 +107,7 @@ let picUpload = async (req, res) => {
                 user_email
             }
         })
-        pic_upload_result.imgResult=true;
+        pic_upload_result.imgResult = true;
         console.log('picture uploading success !!!! ')
     } catch (e) {
         console.log('picture uploading failed, ERROR=', e)

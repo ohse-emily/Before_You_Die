@@ -26,8 +26,8 @@ const MyInfoScreen = ({ navigation }) => {
   let userIMAGE;
   if (userImg) {
     userIMAGE = { uri: `http://192.168.0.29:3000/${userImg}` }
-  }else{
-    userIMAGE = { uri: changeImg}
+  } else {
+    userIMAGE = { uri: changeImg }
   }
 
   const changeImage = async () => {
@@ -47,20 +47,20 @@ const MyInfoScreen = ({ navigation }) => {
         // back end 로 변경한 image file  보내기 
         let apiUrl = 'http://192.168.0.29:3000/user/pic_upload';
         let uriParts = pickerResult.uri.split('.');
-        let fileType = uriParts[uriParts.length-1];
+        let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
-        formData.append('file',{
-            uri: pickerResult.uri,
-            name:`${userId}photo.${fileType}`,
-            type:`image/${fileType}`,
+        formData.append('file', {
+          uri: pickerResult.uri,
+          name: `${userId}photo.${fileType}`,
+          type: `image/${fileType}`,
         });
         let imgOptions = {
-            method: 'POST',
-            body:formData,
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'multipart/form-data',
-            }
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }
         }
         let sendImage = await fetch(apiUrl, imgOptions)
         let res = await sendImage.json()

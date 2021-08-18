@@ -61,7 +61,7 @@ const Signup = ({ navigation }) => {
     // back end 
 
     // async function uploadImageAsync(uri){
-    //     let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
+    //     let apiUrl = 'http://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
 
     //     let uriParts = uri.split('.');
     //     let fileType = uriParts[uriParts.length-1];
