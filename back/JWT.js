@@ -13,7 +13,7 @@ function createPW(userpw){
 // user email 인증 키 암호화 by 세연 
 function email_verify_key(){
     let key1 = crypto.randomBytes(256).toString('hex').substr(100,5);
-    let key2 = crypto.randomBytes(256).toString('base64').substr(50,5);
+    let key2 = crypto.randomBytes(256).toString('hex').substr(50,5);
     let final_key = key1 + key2;
     console.log('final_key=',final_key)
     return final_key;

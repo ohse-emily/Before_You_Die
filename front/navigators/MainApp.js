@@ -26,6 +26,9 @@ import TransformPw from './../screens/TransformPw'
 import MyInfoScreen from './../screens/MyInfoScreen';
 import PrivacyCollect from './../screens/PrivacyCollect'
 
+// 공동 작업 
+import ServiceText from './../screens/text/ServiceText';
+
 // Home 위에 제목 styles 
 const HomeScreenOptions = {
   headerStyle: { backgroundColor: 'lavender' },
@@ -71,6 +74,7 @@ const MyInfoStackScreen = () => (
     <MyInfoStack.Screen name="TransformPw" component={TransformPw} />
     <MyInfoStack.Screen name="MyWordsHistory" component={MyWordsHistory} />
     <MyInfoStack.Screen name="Privacy" component={PrivacyCollect} />
+    <MyInfoStack.Screen name="Service" component={ServiceText} />
     {/* 여기에 Login을 넣으면 info tab 으로 로그아웃 시 -> info tab 안에서 login compo가 나옴. -> 로그인 안됨 ! by세연  */}
   </MyInfoStack.Navigator>
 )

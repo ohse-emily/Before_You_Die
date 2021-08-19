@@ -68,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
                     <View style={styles.padding}>
                         <MaterialCommunityIcons name="email-send-outline" size={80} color="paleturquoise" />
                     </View>
-                    <Text style={styles.mainFont}>내 이야기 보내기</Text>
+                    <Text style={styles.mainFont}>나의 이야기 보내기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}

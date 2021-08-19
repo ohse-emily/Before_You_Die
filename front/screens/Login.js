@@ -48,7 +48,7 @@ const Login = ({ navigation }) => {
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values) => {
-
+                            
                             let url = 'http://192.168.0.29:3000/user/login/'
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
@@ -58,7 +58,7 @@ const Login = ({ navigation }) => {
                                 }
                             });
                             let getData = await response.json()
-                            console.log('getData=', getData)
+                            console.log('getData=',getData)
 
                             try {
                                 if (getData === undefined) {
@@ -72,7 +72,7 @@ const Login = ({ navigation }) => {
                                     alert('이메일 인증을 완료해주세요.')
                                 } else if (getData.proceed === false && getData.type === 'nouser') {
                                     alert('아이디와 비밀번호를 확인해주세요')
-                                } else {  // 예외처리 추가 by 세연 
+                                } else{  // 예외처리 추가 by 세연 
                                     alert('아이디와 비밀번호를 다시 한 번 확인해 주세요')
                                 }
                             } catch (e) {

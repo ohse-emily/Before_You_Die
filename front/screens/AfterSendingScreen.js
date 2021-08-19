@@ -8,7 +8,7 @@ import Text from './DefaultText';
 
 const AfterSending = ( {navigation} ) => {
 
-      console.log(navigation.getState())
+//      console.log(navigation.getState())
 
     return (
         <SafeAreaView style={styles.afterSendingContainer}>
@@ -18,7 +18,7 @@ const AfterSending = ( {navigation} ) => {
                 onPress = {()=>{navigation.navigate('Home')}}>
                 
                 <View>
-                    <Text> 용기 내 줘서 고마워요 ! </Text>
+                    <Text style={styles.afterSendingText}> 용기 내줘서 고마워요 ! </Text>
                 </View>
             </TouchableOpacity>
         </SafeAreaView>
@@ -39,5 +39,8 @@ const styles = StyleSheet.create({
         height:'80%',
         justifyContent:'center',
         alignItems:'center'
+    },
+    afterSendingText:{
+        fontSize:20,
     }
 })

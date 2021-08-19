@@ -50,8 +50,8 @@ const mymessages = async (req, res) => {
 const yourwords = async (req, res) => {
     const { userEmail } = req.query;
     console.log(userEmail)
-
-    //let RandomLastword = await Lastwords.findAll({order:Sequelize.literal('rand()'), limit:1})
+    
+    //let RandomLastword = await Lastwords.findAll({order:Sequelize.literal('rarrnd()'), limit:1})
     connection.query(`select * from Lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, (error, results) => {
         if (results) {
             console.log('Getting yourwords List from db - success !! ', results)

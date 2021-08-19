@@ -53,7 +53,7 @@ let join = async (req, res) => {
     })
     let url = `http://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
     let options = {
-        from: '<BYD> byd.dothis@gmail.com',
+        from: '<BYD> byddothis@gmail.com',
         to: email,
         subject: ' BYD 회원가입을 완성해 주세요 :) !  ',
         html: `username 님 안녕하세요,  이메일인증을 위해 url을 클릭해주세요 -> ${url}`
@@ -72,13 +72,15 @@ let join = async (req, res) => {
 
 // 고객이 email url 클릭 시 email_verify 0 -> 1로 변경 by세연 
 let confirmEmail = async (req, res) => {
+    console.log(req.query)
     let email_verify_change = await Users.update(
         { email_verify: 1 },
         {
             where: { email_verify_key: req.query.key }
         })
-
-    if (email_verify_change == undefined) {
+        console.log('email_verify_change=,',email_verify_change)
+        console.log(email_verify_change[0])
+    if (email_verify_change[0] == 0 ) {
         res.send('<script type="text/javascript">alert("Not verified"); window.location="/"; </script>');
         return 0;
     } else {

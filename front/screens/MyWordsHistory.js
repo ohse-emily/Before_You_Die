@@ -50,11 +50,11 @@ const MyWordsHistory = ({ route, navigation }) => {
                     <Text>
                         보낸이 : {v.lastword_sender}
                     </Text>
-                    <View style={styles.deleteMywords}>
+                    {/* <View style={styles.deleteMywords}>
                         <TouchableOpacity onPress={() => deleteCard(id, user_email)} style={styles.MyWordsHistoryBtn}>
                             <Text>삭제하기</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </View>
             )
         })
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     ventingInput: {
-        borderWidth: 1,
+        borderWidth: 2,
+        borderColor:'mediumpurple',
         width: 300,
         height: 'auto',
         padding: 10,

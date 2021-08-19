@@ -248,7 +248,7 @@ const MyInfoScreen = ({ navigation }) => {
               })
             }}
           >
-            <Text style={styles.mypage_text}>나의 마지막 말</Text>
+            <Text style={styles.mypage_text}>내가 보낸 이야기</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.mypage_menu}
@@ -265,7 +265,9 @@ const MyInfoScreen = ({ navigation }) => {
             onPress={() => { navigation.navigate('TransformPw') }}>
             <Text style={styles.mypage_text}>비밀번호 변경</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.mypage_menu}>
+          <TouchableOpacity style={styles.mypage_menu}
+            onPress={() => { navigation.navigate('Service') }}
+          >
             <Text style={styles.mypage_text}>서비스 이용약관</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.mypage_menu}
