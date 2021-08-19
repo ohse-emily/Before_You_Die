@@ -40,11 +40,13 @@ const mymessages = async (req, res) => {
             msg_mobile, msg_email, msg_content, msg_user_email, msg_method
         })
         console.log("users' Lastwords inserted into DB successfully")
+        res.json({ result: true })
     } catch (e) {
         console.log("Inserting Users' Lastwords failed. ERROR = ", e)
+        res.json({ result: false })
     }
     // 전송시간 2년 넣기
-    res.json({ result: true })
+
 }
 
 
