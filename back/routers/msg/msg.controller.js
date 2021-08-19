@@ -58,18 +58,22 @@ const yourwords = async (req, res) => {
     if (userEmail == undefined) {
         let RandomLastword = await Lastwords.findAll({ order: Sequelize.literal('rand()'), limit: 1 })
         if (RandomLastword) {
+            console.log(111)
             console.log('(user_email_undefined) Getting yourwords List from db - success !! ', results)
             res.json(results)
         } else {
+            console.log(11111)
             console.log('(user_ email_undefined) Getting yourwords List from db Failed, ERROR =', error)
             res.json({ result: false })
         }
     } else {
         connection.query(`select * from Lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, (error, results) => {
             if (results) {
+                console.log(2)
                 console.log('Getting yourwords List from db - success !! ', results)
                 res.json(results)
             } else {
+                console.log(222)
                 console.log('Getting yourwords List from db Failed, ERROR =', error)
                 res.json({ result: false })
             }
