@@ -62,6 +62,7 @@ const yourwords = async (req, res) => {
             res.json(results)
         } else {
             console.log('Getting yourwords List from db Failed, ERROR =', error)
+            res.json({result:false})
         }
     })
 }
