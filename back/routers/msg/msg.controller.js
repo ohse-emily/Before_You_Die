@@ -22,10 +22,12 @@ const mywords = async (req, res) => {
             user_email, lastword_subject, lastword_content, lastword_sender
         })
         console.log("users' Lastwords inserted into DB successfully")
+        res.json({ result: true })
     } catch (e) {
         console.log("Inserting Users' Lastwords failed. ERROR = ", e)
+        res.json({ result: false })
     }
-    res.json({ result: true })
+
 }
 
 
