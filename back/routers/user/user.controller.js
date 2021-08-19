@@ -227,6 +227,7 @@ let deleteWord = async (req, res) => {
     res.json(afterDelete)
 }
 
+// emailcheck -> join 에 한번에 실행 아래 코드는 삭제 예정 
 let email_check = async (req, res) => {
     let { email } = req.body
     let result = await Users.findOne(

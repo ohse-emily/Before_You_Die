@@ -50,6 +50,7 @@ const mymessages = async (req, res) => {
 }
 
 
+// ubuntu 점검 실패 
 // Your last words 너의 마지막 말을 db에서 하나 랜덤(본인이 쓴 글 제외) 추출 by세연
 const yourwords = async (req, res) => {
     const { userEmail } = req.query;
@@ -57,10 +58,10 @@ const yourwords = async (req, res) => {
     if (userEmail == undefined) {
         let RandomLastword = await Lastwords.findAll({ order: Sequelize.literal('rand()'), limit: 1 })
         if (RandomLastword) {
-            console.log('Getting yourwords List from db - success !! ', results)
+            console.log('(user_email_undefined) Getting yourwords List from db - success !! ', results)
             res.json(results)
         } else {
-            console.log('Getting yourwords List from db Failed, ERROR =', error)
+            console.log('(user_ email_undefined) Getting yourwords List from db Failed, ERROR =', error)
             res.json({ result: false })
         }
     } else {
