@@ -11,6 +11,7 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import MainPopup from './Popup';
 import Text from './DefaultText';
+import myIp from '../indivisual_ip'
 
 const Signup = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
@@ -164,7 +165,7 @@ const Signup = ({ navigation }) => {
                             // 백앤드 가입 정보 보내기 by 성민 
                             let res_data;
                             try {
-                                let url = 'http://192.168.0.29:3000/user/join'
+                                let url = `http://${myIp}/user/join`
                                 let options = {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
@@ -184,7 +185,7 @@ const Signup = ({ navigation }) => {
                                 console.log(1231232)
                                 if (image) {
                                     console.log(23423525)
-                                    let apiUrl = 'http://192.168.0.29:3000/user/pic_upload';
+                                    let apiUrl = `http://${myIp}/user/pic_upload`
                                     let uriParts = image.split('.');
                                     let fileType = uriParts[uriParts.length - 1];
                                     let formData = new FormData();

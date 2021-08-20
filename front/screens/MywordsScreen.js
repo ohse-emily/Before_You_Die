@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {
     StyleSheet, View, ScrollView, SafeAreaView, TouchableOpacity,
-    KeyboardAvoidingView, TextInput, TouchableWithoutFeedback, Keyboard,
+    KeyboardAvoidingView, TextInput, TouchableWithoutFeedback, Keyboard,Dimensions
 } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from './DefaultText';
+import myIp from '../indivisual_ip'
 
 const Mywords = ({ navigation }) => {
     const [mywordsSubject, setMywordsSubject] = useState('')
@@ -25,7 +26,7 @@ const Mywords = ({ navigation }) => {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-                let url = `http://192.168.0.29:3000/msg/mywords`
+                let url = `http://${myIp}/msg/mywords/`
 
                 try {
                     await fetch(url, {
@@ -48,7 +49,7 @@ const Mywords = ({ navigation }) => {
     // }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white'}}>
             <ScrollView>
                 <KeyboardAvoidingView
                     style={styles.mywordsContainer}
@@ -109,7 +110,7 @@ export default Mywords
 const styles = StyleSheet.create({
     mywordsInput: {
         width: 300,
-        height: 300,
+        height: Dimensions.get('window').height*0.5,
         borderWidth: 1,
         padding: 10,
         borderRadius: 8,

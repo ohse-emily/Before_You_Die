@@ -55,6 +55,7 @@ const mymessages = async (req, res) => {
 const yourwords = async (req, res) => {
     const { userEmail } = req.query;
     console.log(userEmail)
+    // 혹시나 email 없을 경우 
     if (userEmail == undefined) {
         let RandomLastword = await Lastwords.findAll({ order: Sequelize.literal('rand()'), limit: 1 })
         if (RandomLastword) {
@@ -66,6 +67,8 @@ const yourwords = async (req, res) => {
             console.log('(user_ email_undefined) Getting yourwords List from db Failed, ERROR =', error)
             res.json({ result: false })
         }
+    // 일반적인 경우 (고객 디바이스에 login하면 email 있음)
+    // Sequelize 의 table 명은 -> 대문자 / mysql 의 테이블 (리눅스 server) 는 소문자! -> 리눅스 msg.controller.js 내용 변경  
     } else {
         connection.query(`select * from Lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, (error, results) => {
             if (results) {

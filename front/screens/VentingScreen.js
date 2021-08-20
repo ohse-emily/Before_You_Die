@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {
     StyleSheet, ScrollView, SafeAreaView,
-    KeyboardAvoidingView, TextInput,
+    KeyboardAvoidingView, TextInput, View,
     TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native'
 import MainPopup from './Popup'
 import Text from './DefaultText';
+import { Dimensions } from 'react-native';
 
 const Venting = ({ navigation }) => {
     console.log(navigation.getState())
@@ -28,11 +29,11 @@ const Venting = ({ navigation }) => {
                 />
                 ) : (
                     <Text />
-            )}
+                )}
             <ScrollView >
                 <KeyboardAvoidingView style={styles.ventingAvoidingView}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <>
+                        <View  style={styles.ventingVertical}>
                             <TextInput
                                 placeholder="나의 고해성사를 시작해 보세요"
                                 type="text"
@@ -42,7 +43,7 @@ const Venting = ({ navigation }) => {
                                 style={styles.ventingInput}
                                 multiline={true}
                             />
-                        </>
+                        </View>
                     </TouchableWithoutFeedback>
                     <TouchableOpacity
                         style={styles.ventingSending}
@@ -62,11 +63,18 @@ export default Venting
 const styles = StyleSheet.create({
     ventingContainer: {
         flex: 1,
+        width:'100%',
+        height:Dimensions.get('window').height,
+        justifyContent:'center',
+    },
+    ventingVertical: {
+        flex:1,
+        
     },
     ventingInput: {
         borderWidth: 1,
         width: 300,
-        height: 300,
+        height: Dimensions.get('window').height*0.55,
         padding: 10,
         borderRadius: 5,
         textAlignVertical: 'top',
@@ -74,7 +82,9 @@ const styles = StyleSheet.create({
     ventingAvoidingView: {
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20
+        padding: 20, 
+        flex:1,
+        justifyContent:'center',
     },
     ventingSending: {
         width: 200,
@@ -86,10 +96,10 @@ const styles = StyleSheet.create({
         borderRadius: 7,
 
     },
-    ventingPopup:{
-        fontSize:15,
+    ventingPopup: {
+        fontSize: 15,
     },
-    ventingBtnText:{
-        fontSize:19,
+    ventingBtnText: {
+        fontSize: 19,
     }
 })

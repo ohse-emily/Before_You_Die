@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity, Dimensions } from 'react-native'
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationHelpersContext } from '@react-navigation/native';
 import Text from './DefaultText';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import myIp from '../indivisual_ip'
+
 
 // 너의 이야기 click -> db (lastwords)에서 랜덤 1 개 FETCH  by 세연
 // axios 비동기 사용 -> return -> useEffect 
@@ -19,7 +21,7 @@ function YourwordsShowScreen({ navigation }) {
             const fetchYourword = async () => {
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 console.log(userEmail)
-                let getYourword = await axios.get(`http://192.168.0.29:3000/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
+                let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 console.log(getYourword.data)
                 if (getYourword.data.length > 0) {
                     setYourword(getYourword.data)
@@ -63,20 +65,39 @@ function YourwordsShowScreen({ navigation }) {
                     <TouchableOpacity style={styles.anotherYourword} onPress={() => navigation.navigate('Yourwords')}>
                         <Text style={styles.anotherText}> 또 다른 이야기 들어보기 </Text>
                     </TouchableOpacity>
+                    {/* 좋아요 & 신고 부분  */}
+                    <View style={styles.yourwordsShowContainer}>
+                        <View style={styles.yourwordsShowView}>
+                            <TouchableOpacity style={styles.yourwordsShowLike}>
+                                <AntDesign name="like2" size={20} color="black" />
+                            </TouchableOpacity>
+                            <Text>따봉</Text>
+                        </View>
+                        <View style={styles.yourwordsShowView}>
+                            <TouchableOpacity style={styles.yourwordsShowLike}>
+                                <AntDesign name="exclamationcircleo" size={20} color="red" />
+                            </TouchableOpacity>
+                            <Text>신고</Text>
+                        </View>
+                    </View>
 
                 </SafeAreaView>
             ) : (
                 yourwordUndefined ? (
-                    <View style={styles.yourwordNothing}>
-                        <Text>아직 편지함에 다른 분의 편지가 없네요, {"\n"} 잠시 후에 다시 시도해 주세요 :) </Text>
+                    <View style={styles.yourwordsShowVertical}>
+                        <View style={styles.isLoading}>
+                            <Text>아직 편지함에 다른 분의 편지가 없네요, {"\n"} 잠시 후에 다시 시도해 주세요 :) </Text>
+                        </View>
                     </View>
                 ) : (
-                    <View style={styles.isLoading}>
-                        <AntDesign style={styles.unlock} name="unlock" size={80} color="black" />
-                        <Text style={styles.loadingText}>수많은 메세지 중 {"\n"}
-                            인연이 닿는 분의 이야기를 {"\n"}
-                            찾고 있어요 (●'◡'●)
-                        </Text>
+                    <View style={styles.yourwordsShowVertical}>
+                        <View style={styles.isLoading}>
+                            <AntDesign style={styles.unlock} name="unlock" size={80} color="black" />
+                            <Text style={styles.loadingText}>수많은 메세지 중 {"\n"}
+                                인연이 닿는 분의 이야기를 {"\n"}
+                                찾고 있어요 (●'◡'●)
+                            </Text>
+                        </View>
                     </View>
                 )
             )}
@@ -87,31 +108,40 @@ function YourwordsShowScreen({ navigation }) {
 export default YourwordsShowScreen
 
 const styles = StyleSheet.create({
+    yourwordsShowVertical: {
+        flex: 1,
+        width: '100%',
+        height: Dimensions.get('window').height*0.9,
+        justifyContent: 'center',
+    },
     yourwordContainer: {
         justifyContent: 'center',
         flex: 1,
         alignItems: 'center',
         height: '100%',
         width: '100%',
+        paddingTop:30,
     },
     content: {
         backgroundColor: 'lavender',
         width: '83%',
-        height: 310,
-        justifyContent: 'center',
+        height: Dimensions.get('window').height * 0.5,  // 요게 다른 디바이스에서 똑같은지 확인 
+        flex: 1,
+        // justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 7,
         padding: 10,
+        paddingBottom: '15%',
+        position: 'relative',
+        borderColor:'mediumpurple',
+        borderWidth:1,
     },
     subjectText: {
 
     },
     isLoading: {
-        flex: 1,
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
-        marginTop: "40%",
     },
     unlock: {
         color: 'pink',
@@ -139,6 +169,8 @@ const styles = StyleSheet.create({
         marginTop: '13%',
         marginBottom: 20,
         borderRadius: 7,
+        borderWidth:1,
+        borderColor:'mediumpurple',
     },
     yourwordBottom: {
         width: '83%',
@@ -163,7 +195,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        marginTop: '70%',
+    },
+    yourwordsShowContainer: {
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 110,
+        right: 35,
+
+    },
+    yourwordsShowView: {
+        width: 35,
     }
 
 

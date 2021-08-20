@@ -2,21 +2,15 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Image, TextInput, TouchableOpacity, Dimensions, } from 'react-native';
 import Text from './DefaultText';
-// save login data
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-//formik
 import { Formik } from 'formik';
-
-//icons
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
-
-//statusbar
+import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 import Constants from 'expo-constants';
 const StatusBarHeight = Constants.statusBarHeight;
+// 각자의 ip import 
+import myIp from '../indivisual_ip';
 
-//keyboardavoiding view
-import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 
 const Login = ({ navigation }) => {
     // context 저장소 로그인 시 user 정보 저장  by 세연 
@@ -34,22 +28,16 @@ const Login = ({ navigation }) => {
     }
 
     return (
-        <KeyboardAvoidingWrapper>
+        <KeyboardAvoidingWrapper style={styles.loginContainer}>
             <View style={styles.styledContainer}>
                 <StatusBar style="dark" />
                 <View style={styles.innerContainer}>
-                    <Image
-                        style={styles.pageLogo}
-                        resizeMode="cover"
-                        source={require('./../assets/sam.jpeg')}
-                    />
                     <Text style={styles.pageTitle}>Before You Die</Text>
-
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values) => {
                             
-                            let url = 'http://192.168.0.29:3000/user/login/'
+                            let url = `http://${myIp}/user/login/`
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!
@@ -138,7 +126,7 @@ const Login = ({ navigation }) => {
 
 const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props }) => {
     return (
-        <View>
+        <View >
             <View style={styles.leftIcon}>
                 <Octicons name={icon} size={30} color='mediumpurple' />
             </View>
@@ -162,19 +150,20 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
 export default Login;
 
 const styles = StyleSheet.create({
+    loginContainer:{
+        // justifyContent:'center',
+    },
     styledContainer: {
-        flex: 1,
-        padding: 25,
-        paddingTop: 77,// if Android`${StatusBarHeight + 40}`,
         //${StatusBarHeight && `paddingTop:${StatusBarHeight}px`};
-        backgroundColor: '#ffffff', //primary
-        height: Dimensions.get('window').height
+        backgroundColor: 'white', //primary
+        height: Dimensions.get('window').height,
+        
     },
     innerContainer: {
         flex: 1,
         width: '100%',
         alignItems: 'center',
-
+        justifyContent:'center',
     },
     pageLogo: {
         width: 250,
@@ -187,6 +176,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'mediumpurple', //brand,
         padding: 10,
+        paddingBottom:50,
     },
     subTitle: {
         fontSize: 18,

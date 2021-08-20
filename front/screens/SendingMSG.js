@@ -7,6 +7,7 @@ import {
 import { Button, Input } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from './DefaultText';
+import myIp from '../indivisual_ip'
 
 const SendingMSG = ({ navigation }) => {
 
@@ -32,7 +33,7 @@ const SendingMSG = ({ navigation }) => {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { msg_mobile: rec, msg_content: con, msg_user_email: user_email, msg_method: 1 }
-                let url = `http://192.168.0.29:3000/msg/mymessages`
+                let url = `http://${myIp}/msg/mymessages`
                 try {
                     await fetch(url, {
                         method: 'POST',

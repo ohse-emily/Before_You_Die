@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import MainPopup from './Popup';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Text from './DefaultText';
+import { Dimensions } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -47,6 +48,7 @@ const HomeScreen = ({ navigation }) => {
     }, [navigation])
 
     return (
+        <View style={styles.homeScreenContainer}>
         <View style={styles.HomeLayout}>
             {/* HOME MAIN SCREEN 에 POPUP 창 띄울 때 아래 주석 해제 by 세연 */}
             {/* {popupCheck ?
@@ -68,7 +70,7 @@ const HomeScreen = ({ navigation }) => {
                     <View style={styles.padding}>
                         <MaterialCommunityIcons name="email-send-outline" size={80} color="paleturquoise" />
                     </View>
-                    <Text style={styles.mainFont}>나의 이야기 보내기</Text>
+                    <Text style={styles.mainFont}>나의 이야기 {"\n"}   보내기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
@@ -77,23 +79,22 @@ const HomeScreen = ({ navigation }) => {
                     <View style={styles.padding}>
                         <MaterialCommunityIcons name="email-receive-outline" size={80} color="skyblue" />
                     </View>
-                    <Text  style={styles.mainFont}>너의 이야기 듣기</Text>
+                    <Text style={styles.mainFont}>너의 이야기{"\n"}     듣기</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.HomePadding}></View>
             <View style={styles.HomeTopLayout}>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
-                    onPress={()=>{alert('서비스 준비 중 입니다 :) ')}}
-                    // '너에게 쓰는 편지' (특정인 문자/이메일) 서비스 준비되면 아래 주석 해제 by세연
-                    //onPress={() => navigation.navigate('ToSomeone')}
+                    onPress={() => { alert('서비스 준비 중 입니다 :) ') }}
+                // '너에게 쓰는 편지' (특정인 문자/이메일) 서비스 준비되면 아래 주석 해제 by세연
+                //onPress={() => navigation.navigate('ToSomeone')}
                 >
                     <View style={styles.padding}>
                         <MaterialCommunityIcons name="message-text-lock-outline" size={80} color="lightpink" />
                     </View>
                     <Text style={styles.mainFont}>너에게 쓰는 편지</Text>
                 </TouchableOpacity>
-                <View style={styles.HomePadding}></View>
                 <TouchableOpacity activeOpacity={0.5}
                     style={styles.homeBtn1}
                     onPress={() => navigation.navigate('Venting')}
@@ -105,22 +106,29 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
         </View>
+        </View>
     )
 }
 
 export default HomeScreen
 
 const styles = StyleSheet.create({
+    homeScreenContainer:{
+        flex:1,
+        justifyContent:'center',
+    },
     HomeLayout: {
-        paddingTop: 70,
+        paddingTop: 60,
         padding: 20,
+        width: '100%',
+        height: Dimensions.get('window').height*0.8,
     },
     HomeTopLayout: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        justifyContent:'center',
-        flex:1,
-        marginTop:30,
+        justifyContent: 'center',
+        flex: 1,
+        padding: 50,
     },
     HomeBottomLayout: {
         flexDirection: 'column',
@@ -135,7 +143,7 @@ const styles = StyleSheet.create({
 
     },
     HomePadding: {
-        paddingBottom: 150,
+        // paddingBottom: 150,
     },
     homeBtn2: {
         width: 230,
@@ -149,8 +157,8 @@ const styles = StyleSheet.create({
     padding: {
         padding: 23,
     },
-    mainFont:{
-        fontSize:20,
+    mainFont: {
+        fontSize: 20,
     }
 })
 

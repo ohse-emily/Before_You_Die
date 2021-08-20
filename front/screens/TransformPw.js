@@ -3,6 +3,7 @@ import { Alert, Button, TextInput, View, StyleSheet, TouchableOpacity } from 're
 import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from './DefaultText';
+import myIp from '../indivisual_ip'
 
 const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
   return (
@@ -22,7 +23,7 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
 
         AsyncStorage.getItem('@email_key', async (err, result) => {
           let data = { email: result, beforePw: values.beforePw, afterPw: values.afterPw }
-          let url = 'http://192.168.0.29:3000/user/transformPw'
+          let url = `http://${myIp}/user/transformPw`
           let options = {
             method: 'POST',
             body: JSON.stringify(data),

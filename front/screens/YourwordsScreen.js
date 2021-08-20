@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fadingContainer: {
         flex: 1,
         alignItems: 'center',
-        marginTop: '40%',
+        justifyContent:'center',
     },
     keyText:{
         marginTop:40,

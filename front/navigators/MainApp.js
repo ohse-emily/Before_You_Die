@@ -107,7 +107,20 @@ export default function MainApp({ navigation }) {
           ? <FontAwesome name="telegram" size={40} color="rgb(165, 61, 179)"/>
           : <FontAwesome name="telegram" size={30} color="rgb(160, 160, 160)"/>
           )
-
+        }}
+      />
+            <Tabs.Screen
+        name="피드"
+        component={MyInfoStackScreen}
+        options={{
+          headerShown: false,
+          tabBarActiveTintColor: 'purple',
+          tabBarInactiveTintColor: 'gray',
+          tabBarIcon: ({focused}) => (
+          focused
+          ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)"/>
+          : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)"/>
+          )
         }}
       />
       <Tabs.Screen
@@ -121,6 +134,20 @@ export default function MainApp({ navigation }) {
             focused
             ? <EvilIcons name="heart" size={60} color="rgb(165, 61, 179)" />
             : <EvilIcons name="heart" size={50} color="rgb(160, 160, 160)" />
+          )
+        }}
+      />
+            <Tabs.Screen
+        name="채팅"
+        component={MyInfoStackScreen}
+        options={{
+          headerShown: false,
+          tabBarActiveTintColor: 'purple',
+          tabBarInactiveTintColor: 'gray',
+          tabBarIcon: ({focused}) => (
+          focused
+          ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)"/>
+          : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)"/>
           )
 
         }}

@@ -6,6 +6,8 @@ import Text from './DefaultText';
 // for image upload
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import myIp from '../indivisual_ip'
+import { Dimensions } from 'react-native';
 
 const MyInfoScreen = ({ navigation }) => {
   // 메시지를 담아놓는 state - 신우
@@ -25,7 +27,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   let userIMAGE;
   if (userImg) {
-    userIMAGE = { uri: `http://192.168.0.29:3000/${userImg}` }
+    userIMAGE = { uri: `http://${myIp}/${userImg}` }
   } else {
     userIMAGE = { uri: changeImg }
   }
@@ -45,7 +47,7 @@ const MyInfoScreen = ({ navigation }) => {
         setUserImg(null)
 
         // back end 로 변경한 image file  보내기 
-        let apiUrl = 'http://192.168.0.29:3000/user/pic_upload';
+        let apiUrl = `http://${myIp}/user/pic_upload`;
         let uriParts = pickerResult.uri.split('.');
         let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
@@ -83,7 +85,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "탈퇴하기", onPress: async () => {
             console.log(" user 탈퇴하기 clicked")
 
-            let url = 'http://192.168.0.29:3000/user/deleteacc/'
+            let url = `http://${myIp}/user/deleteacc`
             let response = await fetch(url, {
               method: 'POST', // or 'PUT'
               body: JSON.stringify({ userId }), // data can be `string` or {object}!
@@ -177,7 +179,7 @@ const MyInfoScreen = ({ navigation }) => {
       })
 
     const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
-      let url = 'http://192.168.0.29:3000/user/userinfo/'
+      let url = `http://${myIp}/user/userinfo/`
       let value = { tokenValue: token }
       let response = await fetch(url, {
         method: 'POST', // or 'PUT'
@@ -201,7 +203,7 @@ const MyInfoScreen = ({ navigation }) => {
   // 교수님 도움받은 구간
   const deleteMsgHandler = async (id, msg_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.0.29:3000/user/deletepost/'
+    let url = `http://${myIp}/user/deletepost`
     let data = { id, msg_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -216,7 +218,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   const deleteWordHandler = async (id, word_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = 'http://192.168.0.29:3000/user/deleteword/'
+    let url = `http://${myIp}/user/deleteword/`
     let data = { id, word_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -232,56 +234,58 @@ const MyInfoScreen = ({ navigation }) => {
   return (
     <View style={styles.mypage_wrap}>
       <ScrollView>
-        <TouchableOpacity style={styles.profile_image_container} onPress={changeImage}>
+        <View style={styles.myinfoVertical}>
+          <TouchableOpacity style={styles.profile_image_container} onPress={changeImage}>
 
-          {userImg || changeImg ? <Image rounded source={userIMAGE} style={{ width: 100, height: 100 }} />
-            : <Image rounded source={require('../assets/user_.png')} style={{ width: 100, height: 100 }} />}
+            {userImg || changeImg ? <Image rounded source={userIMAGE} style={{ width: 100, height: 100 }} />
+              : <Image rounded source={require('../assets/user_.png')} style={{ width: 100, height: 100 }} />}
 
-          <Text>{userId}</Text>
-        </TouchableOpacity>
-        <View style={styles.mypage_container}>
-          <TouchableOpacity
-            style={styles.mypage_menu}
-            onPress={() => {
-              navigation.navigate('MyWordsHistory', {
-                list: wordsList, deleteWordHandler: deleteWordHandler
-              })
-            }}
-          >
-            <Text style={styles.mypage_text}>내가 보낸 이야기</Text>
+            <Text>{userId}</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.mypage_menu}
-            // 함수를 넘기는 것이 아니라 값 자체를 넘겨받음 - 신우
-            onPress={() => {
-              navigation.navigate('MyMessages', {
-                list: messagesList, deleteMsgHandler: deleteMsgHandler
-              })
-            }}
-          >
-            <Text style={styles.mypage_text}>나의 예약 문자/이메일</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.mypage_menu}
-            onPress={() => { navigation.navigate('TransformPw') }}>
-            <Text style={styles.mypage_text}>비밀번호 변경</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.mypage_menu}
-            onPress={() => { navigation.navigate('Service') }}
-          >
-            <Text style={styles.mypage_text}>서비스 이용약관</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.mypage_menu}
-            onPress={() => { navigation.navigate('Privacy') }}>
-            <Text style={styles.mypage_text}>개인정보 취급방침</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.mypage_out_container}>
-          <TouchableOpacity style={styles.mypage_out} onPress={logout}>
-            <Text style={styles.mypage_out_text} >로그아웃</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.mypage_out} onPress={deleteAcc}>
-            <Text style={styles.mypage_out_text} >회원탈퇴</Text>
-          </TouchableOpacity>
+          <View style={styles.mypage_container}>
+            <TouchableOpacity
+              style={styles.mypage_menu}
+              onPress={() => {
+                navigation.navigate('MyWordsHistory', {
+                  list: wordsList, deleteWordHandler: deleteWordHandler
+                })
+              }}
+            >
+              <Text style={styles.mypage_text}>내가 보낸 이야기</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.mypage_menu}
+              // 함수를 넘기는 것이 아니라 값 자체를 넘겨받음 - 신우
+              onPress={() => {
+                navigation.navigate('MyMessages', {
+                  list: messagesList, deleteMsgHandler: deleteMsgHandler
+                })
+              }}
+            >
+              <Text style={styles.mypage_text}>나의 예약 문자/이메일</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.mypage_menu}
+              onPress={() => { navigation.navigate('TransformPw') }}>
+              <Text style={styles.mypage_text}>비밀번호 변경</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.mypage_menu}
+              onPress={() => { navigation.navigate('Service') }}
+            >
+              <Text style={styles.mypage_text}>서비스 이용약관</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.mypage_menu}
+              onPress={() => { navigation.navigate('Privacy') }}>
+              <Text style={styles.mypage_text}>개인정보 취급방침</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.mypage_out_container}>
+            <TouchableOpacity style={styles.mypage_out} onPress={logout}>
+              <Text style={styles.mypage_out_text} >로그아웃</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.mypage_out} onPress={deleteAcc}>
+              <Text style={styles.mypage_out_text} >회원탈퇴</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -299,6 +303,11 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
+  myinfoVertical:{
+    justifyContent:'center',
+    flex:1,
+    
+  },
   mypage_header_text: {
     paddingTop: 20,
     textAlign: 'center',
@@ -310,8 +319,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   mypage_wrap: {
-
-    height: '100%'
+    flex: 1,
+    justifyContent: 'center',
+    height: Dimensions.get('window').height,
   },
   mypage_container: {
     width: '100%',
