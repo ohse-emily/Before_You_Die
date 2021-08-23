@@ -36,7 +36,7 @@ const Login = ({ navigation }) => {
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values) => {
-                            
+                            console.log(values)
                             let url = `http://${myIp}/user/login/`
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
