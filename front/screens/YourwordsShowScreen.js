@@ -6,6 +6,7 @@ import { NavigationHelpersContext } from '@react-navigation/native';
 import Text from './DefaultText';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import myIp from '../indivisual_ip'
+import { Alert } from 'react-native';
 
 
 // 너의 이야기 click -> db (lastwords)에서 랜덤 1 개 FETCH  by 세연
@@ -19,10 +20,9 @@ function YourwordsShowScreen({ navigation }) {
     useEffect(() => {
         setTimeout(() => {
             const fetchYourword = async () => {
+
                 const userEmail = await AsyncStorage.getItem('@email_key')
-                console.log(userEmail)
                 let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
-                console.log(getYourword.data)
                 if (getYourword.data.length > 0) {
                     setYourword(getYourword.data)
                     setIsLoading(true)
@@ -35,6 +35,27 @@ function YourwordsShowScreen({ navigation }) {
             fetchYourword();
         }, 2000)
     }, [])
+
+    const handleReport = async ()=>{
+
+        Alert.alert(
+        "",
+        "정말로 신고하시겠습니까?",
+        [
+            {
+            text: "Cancel",
+            style: "cancel"
+            },
+            { text: "OK", onPress: async () => {
+                const userEmail = await AsyncStorage.getItem('@email_key')
+                let id = yourword[0].id
+                let minus_user_score = await axios.get(`http://${myIp}/user/reportUser?user_email=${userEmail}&id=${id}`)
+                Alert.alert('',minus_user_score.data.msg)
+            } }
+        ],
+        { cancelable: false }
+        );
+    }
 
     return (
         <ScrollView>
@@ -73,8 +94,8 @@ function YourwordsShowScreen({ navigation }) {
                             </TouchableOpacity>
                             <Text>따봉</Text>
                         </View>
-                        <View style={styles.yourwordsShowView}>
-                            <TouchableOpacity style={styles.yourwordsShowLike}>
+                        <View style={styles.yourwordsShowView} >
+                            <TouchableOpacity style={styles.yourwordsShowLike} onPress={handleReport}>
                                 <AntDesign name="exclamationcircleo" size={20} color="red" />
                             </TouchableOpacity>
                             <Text>신고</Text>

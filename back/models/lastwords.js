@@ -23,6 +23,10 @@ module.exports = class Lastwords extends Sequelize.Model{
                 type:Sequelize.DATE,
                 allowNull:false,
                 defaultValue:Sequelize.NOW,
+            },
+            report_list:{
+                type: Sequelize.STRING(1000),
+                allowNull: true,
             }
         },{
             sequelize,
