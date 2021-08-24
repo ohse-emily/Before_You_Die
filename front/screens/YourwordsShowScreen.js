@@ -18,6 +18,7 @@ function YourwordsShowScreen({ navigation }) {
     const [yourwordUndefined, setYourwordUndefined] = useState(false)
     const [likes, setLikes] = useState(false)
     const [liked, setLiked] = useState(false)
+    const [reported, setReported] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {
@@ -79,7 +80,9 @@ function YourwordsShowScreen({ navigation }) {
             { text: "OK", onPress: async () => {
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 let id = yourword[0].id
-                let minus_user_score = await axios.get(`http://${myIp}/user/reportUser?user_email=${userEmail}&id=${id}`)
+                let userEmail2 = yourword[0].user_email
+                let minus_user_score = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
+                setReported(true)
                 Alert.alert('',minus_user_score.data.msg)
             } }
         ],
@@ -132,7 +135,10 @@ function YourwordsShowScreen({ navigation }) {
                             <TouchableOpacity style={styles.yourwordsShowLike} onPress={handleReport}>
                                 <AntDesign name="exclamationcircleo" size={20} color="red" />
                             </TouchableOpacity>
-                            <Text>신고</Text>
+                            {reported=== true
+                                ?<Text>신고완료</Text>
+                                :<Text>신고</Text>
+                            }
                         </View>
                     </View>
 
