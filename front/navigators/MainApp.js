@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome, EvilIcons } from '@expo/vector-icons';
+import { FontAwesome, EvilIcons, Ionicons } from '@expo/vector-icons';
 
 // screens by 세연
 import HomeScreen from './../screens/HomeScreen';
@@ -12,6 +12,11 @@ import VentingScreen from './../screens/VentingScreen';
 import YourwordsScreen from './../screens/YourwordsScreen';
 import ToSomeoneScreen from './../screens/ToSomeoneScreen';
 import YourwordsShowScreen from '../screens/YourwordsShowScreen';
+// Chatting 
+import ChatHomeScreen from '../screens/chat/ChatHomeScreen';
+import AddChatScreen from '../screens/chat/AddChatScreen';
+import ChatScreen from '../screens/chat/ChatScreen';
+
 
 // screens by 신우
 import MyMessages from './../screens/MyMessages'
@@ -42,6 +47,7 @@ const Tabs = createBottomTabNavigator();
 const YourwordsStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const MyInfoStack = createStackNavigator();
+const ChatStack = createStackNavigator();
 
 const YourwordsStackScreen = () => (
   <YourwordsStack.Navigator screenOptions={HomeScreenOptions}>
@@ -80,6 +86,14 @@ const MyInfoStackScreen = () => (
   </MyInfoStack.Navigator>
 )
 
+const ChattingScreen = () => (
+  <ChatStack.Navigator screenOptions={HomeScreenOptions}>
+    <ChatStack.Screen name="ChatHome" component={ChatHomeScreen} />
+    <ChatStack.Screen name="AddChat" component={AddChatScreen} />
+    <ChatStack.Screen name="Chat" component={ChatScreen} />
+  </ChatStack.Navigator>
+)
+
 
 export default function MainApp({ navigation }) {
   return (
@@ -90,7 +104,7 @@ export default function MainApp({ navigation }) {
         tabBarStyle: [
           {
             display: 'flex',
-            height:'8%',
+            height: '8%',
           },
           null
         ]
@@ -103,10 +117,10 @@ export default function MainApp({ navigation }) {
           headerShown: false,
           tabBarActiveTintColor: 'purple',
           tabBarInactiveTintColor: 'gray',
-          tabBarIcon: ({focused}) => (
-          focused
-          ? <FontAwesome name="telegram" size={40} color="rgb(165, 61, 179)"/>
-          : <FontAwesome name="telegram" size={30} color="rgb(160, 160, 160)"/>
+          tabBarIcon: ({ focused }) => (
+            focused
+              ? <FontAwesome name="telegram" size={40} color="rgb(165, 61, 179)" />
+              : <FontAwesome name="telegram" size={30} color="rgb(160, 160, 160)" />
           )
         }}
       />
@@ -117,10 +131,10 @@ export default function MainApp({ navigation }) {
           headerShown: true,
           tabBarActiveTintColor: 'purple',
           tabBarInactiveTintColor: 'gray',
-          tabBarIcon: ({focused}) => (
-          focused
-          ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)"/>
-          : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)"/>
+          tabBarIcon: ({ focused }) => (
+            focused
+              ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)" />
+              : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)" />
           )
         }}
       />
@@ -131,26 +145,25 @@ export default function MainApp({ navigation }) {
           headerShown: false,
           tabBarActiveTintColor: 'purple',
           tabBarInactiveTintColor: 'gray',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             focused
-            ? <EvilIcons name="heart" size={60} color="rgb(165, 61, 179)" />
-            : <EvilIcons name="heart" size={50} color="rgb(160, 160, 160)" />
+              ? <EvilIcons name="heart" size={60} color="rgb(165, 61, 179)" />
+              : <EvilIcons name="heart" size={50} color="rgb(160, 160, 160)" />
           )
         }}
       />
-            <Tabs.Screen
+      <Tabs.Screen
         name="채팅"
-        component={MyInfoStackScreen}
+        component={ChattingScreen}
         options={{
           headerShown: false,
           tabBarActiveTintColor: 'purple',
           tabBarInactiveTintColor: 'gray',
-          tabBarIcon: ({focused}) => (
-          focused
-          ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)"/>
-          : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)"/>
+          tabBarIcon: ({ focused }) => (
+            focused
+              ? <Ionicons name="chatbubbles-outline" size={35} color="rgb(165, 61, 179)" />
+              : <Ionicons name="chatbubbles-outline" size={30} color="rgb(160, 160, 160)" />
           )
-
         }}
       />
       <Tabs.Screen
@@ -160,12 +173,11 @@ export default function MainApp({ navigation }) {
           headerShown: false,
           tabBarActiveTintColor: 'purple',
           tabBarInactiveTintColor: 'gray',
-          tabBarIcon: ({focused}) => (
-          focused
-          ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)"/>
-          : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)"/>
+          tabBarIcon: ({ focused }) => (
+            focused
+              ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)" />
+              : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)" />
           )
-
         }}
       />
     </Tabs.Navigator>

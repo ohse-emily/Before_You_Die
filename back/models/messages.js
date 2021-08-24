@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const moment = require('moment');
-console.log(  )
+
 module.exports = class Messages extends Sequelize.Model{
     static init(sequelize){
         return super.init({
