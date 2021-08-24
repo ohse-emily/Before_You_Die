@@ -16,9 +16,8 @@ app.use('/uploads', express.static('./uploads'))
 app.use(bodyParser.urlencoded({extended:false,}));
 app.use(bodyParser.json());
 
-
-
 app.use('/', router)
+
 
 app.listen(port,()=>{
     console.log('server start : 3000')
