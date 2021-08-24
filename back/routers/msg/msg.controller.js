@@ -84,8 +84,59 @@ const yourwords = async (req, res) => {
     }
 }
 
+const lastwordLikes = async (req, res) => {
+    // 전체 엄신우 담당
+    console.log(req.query)
+    let {user_email, id} = req.query
+    //현재 게시물에 대한 정보 get
+    let result1 = await Lastwords.findOne({
+        where:{id}
+    })
+    //좋아요 리스트를 가져온다
+    let likeList = result1.dataValues.lastword_likes
+    // 좋아요 목록이 비었으면 누른 사람의 이메일을 추가함
+    if (likeList === null){
+        await Lastwords.update({
+            lastword_likes:`${user_email} `
+        } ,{
+            where:{
+                id :id
+            }
+        }
+        )
+        res.json({msg: 'done'})
+    }else{
+        //중복검사 식별자. boolean으로 했더니 값을 저장 못해서 배열로 처리함.
+        let flag = []
+        //좋아요 목록이 비지 않았으면 목록을 쪼개서 닉넴 일치여부 검사
+        likeListSplit = likeList.split(' ')
+        //좋아요 안에 이름이 있으면 true라는 아이템을 넣을 것
+        for(i=0; i<likeListSplit.length; i++){
+            if(likeListSplit[i] === user_email){
+                flag.push('true')
+            }
+        }
+        
+        //중복값이 있으면 리젝트 날림
+        if(flag[0] === 'true'){
+            res.json({msg: 'rejected'})
+        //중복값 없으면 진행
+        }else{
+            await Lastwords.update({lastword_likes:`${likeList}${user_email} `}, {where:{id : id}})
+            res.json({msg: 'done'})
+        }
+    }
+}
 
+const loadFeed = async (req, res) => {
+//     console.log('connected')
+//     let result = await Messages.findAll({
+//         order: [['postWriter', 'DESC']]
+//     })
+//     res.json({asd:'zxc'})
+}
 
 module.exports = {
-    mywords, mymessages, yourwords,
+    mywords, mymessages, yourwords, lastwordLikes,
+    loadFeed, 
 }
