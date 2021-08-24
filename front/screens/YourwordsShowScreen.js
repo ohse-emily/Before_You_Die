@@ -16,6 +16,8 @@ function YourwordsShowScreen({ navigation }) {
     const [yourword, setYourword] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [yourwordUndefined, setYourwordUndefined] = useState(false)
+    const [likes, setLikes] = useState(false)
+    const [liked, setLiked] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {
@@ -24,20 +26,64 @@ function YourwordsShowScreen({ navigation }) {
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 if (getYourword.data.length > 0) {
+                    //좋아요가 없는 글
+                    if(getYourword.data[0].lastword_likes===null || 
+                        getYourword.data[0].lastword_likes==='' 
+                        ){
+                        setLikes(0)
+                        setYourword(getYourword.data)
+                        setIsLoading(true)
+                    } else{
+                        //좋아요가 있는 경우
+                        let likeList = getYourword.data[0].lastword_likes
+                        let likeListNoBlank
+                        // console.log(likeList,'likeslist')
+                        let blankFinder = likeList.substring(likeList.length-1, likeList.length)
+                        // 끝이 빈칸일 경우와 아닐 경우 구분
+                        if(blankFinder == ' '){
+                            likeListNoBlank = likeList.substring(0, likeList.length-1)
+                        } else{ 
+                            likeListNoBlank = likeList
+                        }
+                        let splitLikeListNoBlank = likeListNoBlank.split(' ')
+                        //중복이면 좋아요 true
+                        for(let i=0; i<splitLikeListNoBlank.length; i++){
+                            console.log(likeListNoBlank[i])
+                            if(splitLikeListNoBlank[i]===userEmail){
+                                setLiked(true)
+                            }
+                        }
+                        setLikes(splitLikeListNoBlank.length)
+                        setYourword(getYourword.data)
+                        setIsLoading(true)
+                    }                    
                     setYourword(getYourword.data)
                     setIsLoading(true)
-                    console.log(1)
+                    // console.log('case 1')
                 } else {
                     setYourwordUndefined(true)
-                    console.log(2)
+                    // console.log('case 2')
                 }
             }
             fetchYourword();
         }, 2000)
     }, [])
 
-    const handleReport = async ()=>{
+    const handleLike = async () => {
+        const userEmail = await AsyncStorage.getItem('@email_key')
+        let id = yourword[0].id
+        let likeTest = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}`)
+        let likeIndicator = likeTest.data.msg
+        if(likeIndicator === 'done'){
+            setLikes(likes + 1)
+            setLiked(true)
+        } else if(likeIndicator === 'rejected'){
+            alert('이미 좋아요를 누른 게시물입니다.')
+            setLiked(true)
+        }
+    }
 
+    const handleReport = async ()=>{
         Alert.alert(
         "",
         "정말로 신고하시겠습니까?",
@@ -89,10 +135,14 @@ function YourwordsShowScreen({ navigation }) {
                     {/* 좋아요 & 신고 부분  */}
                     <View style={styles.yourwordsShowContainer}>
                         <View style={styles.yourwordsShowView}>
-                            <TouchableOpacity style={styles.yourwordsShowLike}>
-                                <AntDesign name="like2" size={20} color="black" />
+                            <TouchableOpacity style={styles.yourwordsShowLike} onPress = {handleLike}>
+                                {liked === true 
+                                    ? <AntDesign name="like2" size={20} color="blue" />
+                                    : <AntDesign name="like2" size={20} color="black" />
+                                }
+                                { likes === 0 ? <Text>따봉</Text> : <Text> {likes}</Text> }
                             </TouchableOpacity>
-                            <Text>따봉</Text>
+                            
                         </View>
                         <View style={styles.yourwordsShowView} >
                             <TouchableOpacity style={styles.yourwordsShowLike} onPress={handleReport}>

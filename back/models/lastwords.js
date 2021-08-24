@@ -24,6 +24,11 @@ module.exports = class Lastwords extends Sequelize.Model{
                 allowNull:false,
                 defaultValue:Sequelize.NOW,
             },
+            lastword_likes:{ //추가됨
+                type:Sequelize.TEXT,
+                allowNull: true,
+                defaultValue:null,
+            },
             report_list:{
                 type: Sequelize.STRING(1000),
                 allowNull: true,
