@@ -20,6 +20,7 @@ import Auth from './../screens/Auth'
 import MyWordsHistory from './../screens/MyWordsHistory'
 import SendingMSG from './../screens/SendingMSG'
 import SendingEmail from './../screens/SendingEmail'
+import Feed from './../screens/Feed'
 
 // screens by 성민
 import TransformPw from './../screens/TransformPw'
@@ -109,11 +110,11 @@ export default function MainApp({ navigation }) {
           )
         }}
       />
-            <Tabs.Screen
-        name="피드"
-        component={MyInfoStackScreen}
+      <Tabs.Screen
+        name="Feed"
+        component={Feed}
         options={{
-          headerShown: false,
+          headerShown: true,
           tabBarActiveTintColor: 'purple',
           tabBarInactiveTintColor: 'gray',
           tabBarIcon: ({focused}) => (
