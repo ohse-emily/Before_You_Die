@@ -76,7 +76,8 @@ const ChatScreen = ({ navigation, route }) => {
         console.log('asdf',sendingResult)
 
         if(sendingResult && sendingResult.status===200){
-
+            // db 에 다 넣기 부담 -> 특정 시간에 삭제 하기 or 
+         // fs textfile 로 log를 남기는 방법    
         }
     }
 
@@ -101,7 +102,8 @@ const ChatScreen = ({ navigation, route }) => {
                                 style={styles.chatTextInput}
                             />
                             <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
-                                <Ionicons name="send" size={24} color="#2B68E6" />
+                                <Ionicons name="send" si
+                                ze={24} color="#2B68E6" />
                             </TouchableOpacity>
                         </View>
                     </>
