@@ -23,7 +23,7 @@ function YourwordsShowScreen({ navigation }) {
     useEffect(() => {
         setTimeout(() => {
             const fetchYourword = async () => {
-
+                                                    
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 if (getYourword.data.length > 0) {

@@ -14,7 +14,7 @@ const Main = ({navigation}) => {
         <>
             <StatusBar style="dark"/>
             <View style={styles.InnerContainer}>
-                <Image style={styles.MainImage} resizeMode = "cover" source={require('./../assets/sam.jpeg')}/>
+                <Image style={styles.MainImage} resizeMode = "stretch" source={require('./../assets/waterfalls.jpg')}/>
                 <View style={styles.MainContainer}>
                     <Text style={styles.PageTitle} welcome={true}>BYD</Text>
                     <Text style={styles.SubTitle}>Before You Die</Text>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
     StyledButton:{
         padding: 15,
-        backgroundColor: '#6D28D9', //brand,
+        backgroundColor: 'mediumpurple', //brand,
         justifyContent: 'center',
         alignItems:'center',
         borderRadius: 5,

@@ -1,3 +1,3 @@
-const myIp = `172.30.1.40:3000`
+const myIp = `192.168.0.40:3000`
 
 export default myIp
