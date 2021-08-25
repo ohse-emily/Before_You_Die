@@ -21,11 +21,12 @@ function YourwordsShowScreen({ navigation }) {
 
     useEffect(() => {
         setTimeout(() => {
+            //로딩 시 랜덤으로 메시지를 받아옴 by 세연
             const fetchYourword = async () => {
-
+                // 로딩 시 좋아요와 신고 여부도 받아옴 by 신우
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
-                if (getYourword.data.length > 0) {
+                if (getYourword.data[0]!=='noResult') {
                     //좋아요가 없는 글
                     if(getYourword.data[0].lastword_likes===null || 
                         getYourword.data[0].lastword_likes==='' 
@@ -35,9 +36,11 @@ function YourwordsShowScreen({ navigation }) {
                         setIsLoading(true)
                     } else{
                         //data[1]은 msg controller의 yourwords에서 담았던 것
-                        console.log(getYourword.data[1], '좋아요정')
-                        setLiked(getYourword.data[1].likedCheck)
-                        setLikes(getYourword.data[1].numLikes)
+                        console.log(getYourword.data[2], '좋아요정')
+                        // 성민님거 push하시고 받아올 것
+                        // setReported(getYourword.data[2].reportCheck)
+                        setLiked(getYourword.data[2].likedCheck)
+                        setLikes(getYourword.data[2].numLikes)
                         setYourword(getYourword.data)
                         setIsLoading(true)
                     }                    
