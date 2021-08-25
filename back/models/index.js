@@ -10,6 +10,7 @@ const Lastwords = require('./lastwords');
 const Messages = require('./messages');
 const Chat = require('./chat')
 const Chatting = require('./chatting')
+const Reports = require('./reports')
 
 let sequelize;
 if (config.use_env_variable) {
@@ -25,11 +26,13 @@ db.Lastwords = Lastwords;
 db.Messages = Messages;
 db.Chat = Chat;
 db.Chatting = Chatting;
+db.Reports = Reports;
 
 Users.init(sequelize);
 Lastwords.init(sequelize);
 Messages.init(sequelize);
 Chat.init(sequelize);
 Chatting.init(sequelize);
+Reports.init(sequelize);
 
 module.exports = db;

@@ -284,9 +284,11 @@ const Signup = ({ navigation }) => {
                                     <CheckBox value={privacyCheck}
                                         onChange={handleCheck}
                                     />
-                                    <Text style={styles.privacyText}>
-                                        개인정보 취급방침 동의(필수)
-                                    </Text>
+                                    <TouchableOpacity onPress={handleCheck}>
+                                        <Text style={styles.privacyText}>
+                                            개인정보 취급방침 동의(필수)
+                                        </Text>
+                                    </TouchableOpacity>
                                 </View>
 
 

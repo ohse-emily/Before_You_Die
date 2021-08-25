@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Sequelize } = require('../../models')
-const { Users, Lastwords, Messages } = require('../../models');
+const { Users, Lastwords, Messages, Reports } = require('../../models');
 const mysql = require('mysql')
 
 const connection = mysql.createConnection({
@@ -70,9 +70,35 @@ const yourwords = async (req, res) => {
     // 일반적인 경우 (고객 디바이스에 login하면 email 있음)
     // Sequelize 의 table 명은 -> 대문자 / mysql 의 테이블 (리눅스 server) 는 소문자! -> 리눅스 msg.controller.js 내용 변경  
     } else {
-        connection.query(`select * from Lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, (error, results) => {
+        connection.query(`select * from Lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, async (error, results) => {
             if (results) {
-                console.log(2)
+                // 뽑힌 글 ID를 가져와서 해당 게시물의 좋아요 갯수만 가져오기
+                let {id} = results[0]
+                console.log(id)
+                let getLikes = await Reports.findAll({
+                    where: {
+                        post_id: id,
+                        type: 0,
+                    }
+                })
+                // 좋아요 갯수
+                let numLikes = getLikes.length
+                let likedCheck
+
+                // 해당 게시물에 현재 유저가 좋아요 한 글이 있는지 확인
+                let ifLiked = await Reports.findAll({
+                    where: {
+                        post_id: id,
+                        type: 0,
+                        user_email: userEmail
+                    }
+                })
+
+                ifLiked.length === 0 ? likedCheck = false : likedCheck = true
+                console
+                // 좋아요 갯수와 좋아요 여부를 results에 그냥 push 해서 한 번에 보내버린다.
+                results.push({numLikes, likedCheck})
+
                 console.log('Getting yourwords List from db - success !! ', results)
                 res.json(results)
             } else {
@@ -85,45 +111,44 @@ const yourwords = async (req, res) => {
 }
 
 const lastwordLikes = async (req, res) => {
-    // 전체 엄신우 담당
-    console.log(req.query)
-    let {user_email, id} = req.query
-    //현재 게시물에 대한 정보 get
-    let result1 = await Lastwords.findOne({
-        where:{id}
-    })
-    //좋아요 리스트를 가져온다
-    let likeList = result1.dataValues.lastword_likes
-    // 좋아요 목록이 비었으면 누른 사람의 이메일을 추가함
-    if (likeList === null){
-        await Lastwords.update({
-            lastword_likes:`${user_email} `
-        } ,{
-            where:{
-                id :id
+    let {user_email, id, type} = req.query
+    
+    if (type==0){
+        // 중복검사 실시, 해당 게시물에 대한 좋아요 또는 신고 기록이 있는지 받아온다.
+        let getLikes = await Reports.findAll({
+            where: {
+                user_email,
+                post_id: id,
             }
-        }
-        )
-        res.json({msg: 'done'})
-    }else{
-        //중복검사 식별자. boolean으로 했더니 값을 저장 못해서 배열로 처리함.
-        let flag = []
-        //좋아요 목록이 비지 않았으면 목록을 쪼개서 닉넴 일치여부 검사
-        likeListSplit = likeList.split(' ')
-        //좋아요 안에 이름이 있으면 true라는 아이템을 넣을 것
-        for(i=0; i<likeListSplit.length; i++){
-            if(likeListSplit[i] === user_email){
-                flag.push('true')
-            }
-        }
-        
-        //중복값이 있으면 리젝트 날림
-        if(flag[0] === 'true'){
-            res.json({msg: 'rejected'})
-        //중복값 없으면 진행
-        }else{
-            await Lastwords.update({lastword_likes:`${likeList}${user_email} `}, {where:{id : id}})
+        })
+
+        // 해당 유저의 좋아요가 없는 경우 등록
+        if(getLikes.length===0){
+            await Reports.create({
+                user_email, 
+                post_id: id,
+                type
+            })
             res.json({msg: 'done'})
+        } else{
+            // 좋아요가 있으면 거부
+            res.json({msg: 'rejected'})
+        }
+    } else if(type==1){
+        let {user_email2} = req.query
+        let result = await Reports.findAll({where:{user_email, post_id: id}})
+    
+        if (result.length===0){
+            await Reports.create({user_email: user_email, type: type, post_id: id})
+            
+            let Userdata = await Users.findOne({where:{user_email:user_email2}})
+
+            user_score = parseInt(Userdata.dataValues.user_score)+1
+
+            await Users.update({user_score: user_score},{where : {user_email: user_email2}})
+            res.json({msg: '신고가 완료되었습니다', flag: false})
+        }else{
+            res.json({msg: '이미 신고하셨습니다', flag: true})
         }
     }
 }

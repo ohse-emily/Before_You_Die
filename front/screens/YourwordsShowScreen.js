@@ -18,6 +18,7 @@ function YourwordsShowScreen({ navigation }) {
     const [yourwordUndefined, setYourwordUndefined] = useState(false)
     const [likes, setLikes] = useState(false)
     const [liked, setLiked] = useState(false)
+    const [reported, setReported] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {
@@ -34,26 +35,10 @@ function YourwordsShowScreen({ navigation }) {
                         setYourword(getYourword.data)
                         setIsLoading(true)
                     } else{
-                        //좋아요가 있는 경우
-                        let likeList = getYourword.data[0].lastword_likes
-                        let likeListNoBlank
-                        // console.log(likeList,'likeslist')
-                        let blankFinder = likeList.substring(likeList.length-1, likeList.length)
-                        // 끝이 빈칸일 경우와 아닐 경우 구분
-                        if(blankFinder == ' '){
-                            likeListNoBlank = likeList.substring(0, likeList.length-1)
-                        } else{ 
-                            likeListNoBlank = likeList
-                        }
-                        let splitLikeListNoBlank = likeListNoBlank.split(' ')
-                        //중복이면 좋아요 true
-                        for(let i=0; i<splitLikeListNoBlank.length; i++){
-                            console.log(likeListNoBlank[i])
-                            if(splitLikeListNoBlank[i]===userEmail){
-                                setLiked(true)
-                            }
-                        }
-                        setLikes(splitLikeListNoBlank.length)
+                        //data[1]은 msg controller의 yourwords에서 담았던 것
+                        console.log(getYourword.data[1], '좋아요정')
+                        setLiked(getYourword.data[1].likedCheck)
+                        setLikes(getYourword.data[1].numLikes)
                         setYourword(getYourword.data)
                         setIsLoading(true)
                     }                    
@@ -72,7 +57,7 @@ function YourwordsShowScreen({ navigation }) {
     const handleLike = async () => {
         const userEmail = await AsyncStorage.getItem('@email_key')
         let id = yourword[0].id
-        let likeTest = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}`)
+        let likeTest = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
         let likeIndicator = likeTest.data.msg
         if(likeIndicator === 'done'){
             setLikes(likes + 1)
@@ -95,7 +80,9 @@ function YourwordsShowScreen({ navigation }) {
             { text: "OK", onPress: async () => {
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 let id = yourword[0].id
-                let minus_user_score = await axios.get(`http://${myIp}/user/reportUser?user_email=${userEmail}&id=${id}`)
+                let userEmail2 = yourword[0].user_email
+                let minus_user_score = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
+                setReported(true)
                 Alert.alert('',minus_user_score.data.msg)
             } }
         ],
@@ -148,7 +135,10 @@ function YourwordsShowScreen({ navigation }) {
                             <TouchableOpacity style={styles.yourwordsShowLike} onPress={handleReport}>
                                 <AntDesign name="exclamationcircleo" size={20} color="red" />
                             </TouchableOpacity>
-                            <Text>신고</Text>
+                            {reported=== true
+                                ?<Text>신고완료</Text>
+                                :<Text>신고</Text>
+                            }
                         </View>
                     </View>
 

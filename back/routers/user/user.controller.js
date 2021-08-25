@@ -293,47 +293,6 @@ let transformPw = async (req, res) => { // 비밀번호 변경 by 성민
     }
 }
 
-let reportUser = async (req, res) =>{
-    let {user_email, id} = req.query
-    let result1 = await Lastwords.findOne({
-        where:{id}
-    })
-    let reportList = result1.dataValues.report_list
-    let flag = true
-    if (reportList === null){
-        await Lastwords.update({report_list:`${user_email},`} ,{where:{id :id}})
-
-        let result2 = await Users.findOne({
-            where:{user_email},
-            attributes:['user_score']
-        })
-        let updateScore = parseInt(result2.dataValues.user_score)+1
-
-        await Users.update({user_score: updateScore}, {where:{user_email}})
-
-        res.json({msg: '신고가 완료되었습니다.'})
-    }else{
-        reportListSplit = reportList.split(',')
-        for(i=0; i<reportListSplit.length; i++){
-            if(reportListSplit[i] === user_email){
-                flag = false
-            }
-        }
-        if(flag == true){
-
-            await Lastwords.update({report_list:`${reportList}${user_email},`}, {where:{id : id}})
-            let result2 = await Users.findOne({
-                where:{user_email},
-                attributes:['user_score']
-            })
-            res.json({msg: '신고가 완료되었습니다.'})
-
-        }else{
-
-            res.json({msg: '신고는 1회만 가능합니다'})
-        }
-    }
-}
 
 
     // let result = await Users.findOne({
@@ -352,5 +311,4 @@ module.exports = {
     join, login, confirmEmail, picUpload,
     getUserInfo, deletePost, deleteWord,
     email_check, deleteAcc, transformPw,
-    reportUser,
 }
