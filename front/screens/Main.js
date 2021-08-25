@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View, TouchableOpacity, Image,} from 'react-native';
 import Popup from './Popup';

@@ -33,28 +33,26 @@ const App = () => {
 
   // font Loading 여부에 따라 return 
   return (
-    <Main/>
-    // <Login>
-    // fontLoad ? 
-    // <NavigationContainer>
-    //   <AppStack.Navigator screenOptions={{ headerShown: false, }}>
-    //     {/* BottomTAB 없는 Screen   */}
-    //     <AppStack.Screen name="Auth" component={Auth} />
-    //     <AppStack.Screen name="Main" component={Main} />
-    //     <AppStack.Screen name="Login" component={Login} />
-    //     <AppStack.Screen name="Signup" component={Signup} />
-    //     <AppStack.Screen name="Welcome" component={Welcome} />
-    //     {/* BottomTAB 있는 Screen  */}
-    //     <AppStack.Screen name="MainApp" component={MainApp} />
-    //     {/* // options ={{headerTintColor: primary }} better not have for iOS or at least for the current pic */}
-    //   </AppStack.Navigator>
-    // </NavigationContainer>
-    // :
-    // <View style={styles.appLoading}>
-    //   <Text>
-    //     Loading...
-    //   </Text>
-    // </View>
+    fontLoad ? 
+    <NavigationContainer>
+      <AppStack.Navigator screenOptions={{ headerShown: false, }}>
+        {/* BottomTAB 없는 Screen   */}
+        <AppStack.Screen name="Auth" component={Auth} />
+        <AppStack.Screen name="Main" component={Main} />
+        <AppStack.Screen name="Login" component={Login} />
+        <AppStack.Screen name="Signup" component={Signup} />
+        <AppStack.Screen name="Welcome" component={Welcome} />
+        {/* BottomTAB 있는 Screen  */}
+        <AppStack.Screen name="MainApp" component={MainApp} />
+        {/* // options ={{headerTintColor: primary }} better not have for iOS or at least for the current pic */}
+      </AppStack.Navigator>
+    </NavigationContainer>
+    :
+    <View style={styles.appLoading}>
+      <Text>
+        Loading...
+      </Text>
+    </View>
   )
 }
 
