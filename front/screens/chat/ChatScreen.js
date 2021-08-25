@@ -1,85 +1,134 @@
 import React, { useLayoutEffect, useState, useEffect } from 'react'
-import {StyleSheet, Text, View, Platform, KeyboardAvoidingView,
+import {
+    StyleSheet, Text, View, Platform, KeyboardAvoidingView,
     TouchableOpacity, StatusBar, SafeAreaView, ScrollView, TextInput,
-    Keyboard, TouchableWithoutFeedback
+    Keyboard, TouchableWithoutFeedback,
 } from 'react-native'
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { useHeaderHeight } from '@react-navigation/elements';
 import axios from 'axios';
 import myIp from '../../indivisual_ip';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Avatar } from 'react-native-elements'
+// import Text from '../DefaultText';
 
-// chat 채팅창 screen by 세연 
+
+// 채팅을 주고 받는 Chat screen 전체 by 세연 
 const ChatScreen = ({ navigation, route }) => {
 
-    const [input, setInput] = useState('')
+    const [input, setInput] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [user_email, setUser_email] = useState('')
 
-    // useEffect(() => {
-    //     const sendmsg = async () => {
-    //         // let user_email = await AsyncStorage.getItem('@email_key')
-
-    //     }
-    //     sendmsg();
-    // }, [])
+    useEffect(() => {
+        const sendmsg = async () => {
+            let uEmail = await AsyncStorage.getItem('@email_key')
+            setUser_email(uEmail)
+        }
+        sendmsg();
+    }, [])
 
     useLayoutEffect(() => {
-        navigation.setOptions({
-            title: "채팅",
-            headerBackTitleVisible: false,
-            headerTitleAlign: 'center',
-            headerStyle: { backgroundColor: 'lightblue' },
-            headerTintColor: 'black',
-            headerTitle: () => (
-                <View>
-                    <Text style={styles.chatHeader} >{route.params.chatName}</Text>
-                </View>
-            ),
-            headerLeft: () => (
-                <TouchableOpacity style={{ marginLeft: 10 }}
-                    onPress={navigation.goBack}
-                >
-                    <AntDesign style={{ width: 26 }} name="arrowleft" size={24} color="black" />
-                </TouchableOpacity>
-            ),
-            headerRight: () => (
-                <View style={styles.chatHeaderRight}>
-                    <TouchableOpacity>
-                        <FontAwesome name="video-camera" size={24} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Ionicons name="call" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
-            )
-        })
 
-    }, [navigation])
+        // 채팅방 위에 가장 마지막으로 채팅보낸 사람의 프로필 사진 띄우기 by세연 
+        const chatProfile = messages[0] ?
+            { uri: `http://${myIp}/${messages[messages.length - 1].user_profile}` }
+            : require('../../assets/user_.png')
+
+        const settings = async () => {
+            navigation.setOptions({
+                title: "채팅",
+                headerBackTitleVisible: false,
+                headerTitleAlign: 'center',
+                headerStyle: { backgroundColor: 'white' },
+                headerTintColor: 'black',
+                headerTitle: () => (
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar
+                            rounded
+                            source={chatProfile}
+                        />
+                        <Text style={styles.chatHeader} >{route.params.chatName}</Text>
+                    </View>
+
+                ),
+                headerLeft: () => (
+                    <TouchableOpacity style={{ marginLeft: 10 }}
+                        onPress={navigation.goBack}
+                    >
+                        <AntDesign style={{ width: 26 }} name="arrowleft" size={24} color="black" />
+                    </TouchableOpacity>
+                ),
+                headerRight: () => (
+                    <View style={styles.chatHeaderRight}>
+                        <TouchableOpacity onPress={() => alert('서비스 준비 중입니다 :) ')}>
+                            <FontAwesome name="video-camera" size={24} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => alert('서비스 준비 중입니다 :) ')}>
+                            <Ionicons name="call" size={24} color="black" />
+                        </TouchableOpacity>
+                    </View>
+                )
+            })
+        }
+        settings();
+    }, [navigation, messages])
+
 
     // 메세지 보내면 keyboard dismiss & 보낸 사람의 정보, msg DB 입력 by 세연   
-    const sendMessage = async() => {
+    const sendMessage = async () => {
         Keyboard.dismiss();
-             
+
         let options = {
-            method:'POST',
-            url:`http://${myIp}/chat/sendmsg`,
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
+            method: 'POST',
+            url: `http://${myIp}/chat/sendmsg`,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            data:{
+            data: {
                 user_email: await AsyncStorage.getItem('@email_key'),
-                chat_name:route.params.chatName,
-                chatting_msg:input,
+                chat_name: route.params.chatName,
+                chatting_msg: input,
             }
         }
-        let sendingResult = await axios(options)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
-        console.log('asdf',sendingResult)
+        let sendingResult = await axios(options)
+        // 메세지가 local back db에 잘 입력되면 
+        console.log('sendingResult', sendingResult)
 
-        if(sendingResult && sendingResult.status===200){
-            // db 에 다 넣기 부담 -> 특정 시간에 삭제 하기 or 
-         // fs textfile 로 log를 남기는 방법    
+        if (sendingResult && sendingResult.status === 200) {
+            setMessages(sendingResult.data.data)
         }
+        setInput('')
     }
+
+
+    // db에서 지금까지의 채팅들 가져오기 by 세연 
+    useLayoutEffect(() => {
+        const getChattingHistory = async () => {
+
+            let options = {
+                method: 'POST',
+                url: `http://${myIp}/chat/chat_history`,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    chat_name: route.params.chatName
+                }
+            }
+            let sendingResult = await axios(options)
+            let gotresult = sendingResult.data;
+            setMessages(gotresult.data)
+        }
+        getChattingHistory();
+    }, [route])
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -91,19 +140,58 @@ const ChatScreen = ({ navigation, route }) => {
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <>
-                        <ScrollView>
-                            {/* Chat goes here */}
+                        <ScrollView contentContainerStyle={{ paddingTop: 15, }}>
+                            {/* 채팅들이 기록되는 곳 by 세연 */}
+                            {messages.map((data, i) =>
+                                data.user_email === user_email ?
+                                    (
+                                        <View key={i} style={styles.reciever}>
+                                            <Avatar
+                                                position="absolute"
+                                                rounded
+                                                bottom={-15}
+                                                right={-13}
+                                                size={30}
+                                                source={{
+                                                    uri: `http://${myIp}/${data.user_profile}`
+                                                }}
+                                            />
+                                            <Text style={styles.recieverText}>{data.chatting_msg}</Text>
+                                        </View>
+                                    ) : (
+                                        <View key={i}>
+                                            <View>
+                                                <Text style={styles.senderName}>{data.user_nickname}</Text>
+                                            </View>
+                                            <View style={styles.sender}>
+                                                <Avatar
+                                                    position="absolute"
+                                                    bottom={24}
+                                                    left={-5}
+                                                    // top={}
+                                                    rounded
+                                                    size={30}
+                                                    source={{
+                                                        uri: `http://${myIp}/${data.user_profile}`
+                                                    }}
+                                                />
+                                                <Text style={styles.senderText}>{data.chatting_msg}</Text>
+                                            </View>
+
+                                        </View>
+                                    )
+                            )}
                         </ScrollView>
                         <View style={styles.chatFooter}>
                             <TextInput
-                                placeholder="Singmal Message"
+                                placeholder="메세지를 입력해 주세요"
                                 value={input}
                                 onChangeText={(text) => setInput(text)}
                                 style={styles.chatTextInput}
+                                onSubmitEditing={sendMessage}  // enter로 입력해도 submit 되도록
                             />
                             <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
-                                <Ionicons name="send" si
-                                ze={24} color="#2B68E6" />
+                                <Ionicons name="send" size={24} color="#2B68E6" />
                             </TouchableOpacity>
                         </View>
                     </>
@@ -130,6 +218,44 @@ const styles = StyleSheet.create({
     chatContainer: {
         flex: 1,
     },
+    reciever: {
+        padding: 10,
+        backgroundColor: "#fdd835",
+        alignSelf: 'flex-end',   // 받는 메세지는 오른쪽 위치 
+        borderRadius: 17,
+        marginRight: 15,
+        marginBottom: 20,
+        maxWidth: "80%",
+        position: "relative",
+
+    },
+    recieverText: {
+        color: 'black',
+        fontWeight: '500',
+        marginLeft: 3,
+    },
+    sender: {
+        padding: 10,
+        backgroundColor: 'lightgrey',
+        alignSelf: 'flex-start',   // 보내는 메세지는 왼쪽 위치 
+        borderRadius: 17,
+        margin: 15,
+        maxWidth: '80%',
+        position: 'relative',
+    },
+    senderName: {
+        left: 45,
+        paddingRight: 10,
+        top: -3,
+        fontSize: 13,
+        color: 'black',
+        position: 'absolute'
+    },
+    senderText: {
+        color: 'black',
+        fontWeight: "500",
+        marginLeft: 8,
+    },
     chatFooter: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -146,4 +272,5 @@ const styles = StyleSheet.create({
         color: 'grey',
         borderRadius: 30,
     },
+
 })

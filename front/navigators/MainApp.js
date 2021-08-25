@@ -125,7 +125,7 @@ export default function MainApp({ navigation }) {
         }}
       />
       <Tabs.Screen
-        name="Feed"
+        name="피드"
         component={Feed}
         options={{
           headerShown: true,

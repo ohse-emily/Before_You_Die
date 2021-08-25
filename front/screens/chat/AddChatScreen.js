@@ -34,7 +34,14 @@ const ChatScreen = ({ navigation, route }) => {
             let addChat_result = await response.json()
             console.log('getData=', addChat_result)
             // route.chatAdded(addChat_result.gotchats)
-            navigation.goBack();
+            // navigation.goBack();
+            let gotchats = addChat_result.gotchats;
+            navigation.navigate('ChatHome',{
+                gotchats,
+            })
+            // navigation.navigate('Chat', {
+            //     id, chatName,
+            // })
         } catch (e) {
             console.log('createChat Fetch ERROR =', e)
         }

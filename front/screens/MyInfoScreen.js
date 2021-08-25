@@ -32,6 +32,7 @@ const MyInfoScreen = ({ navigation }) => {
     userIMAGE = { uri: changeImg }
   }
 
+  // 프로필 사진 변경 by 세연 
   const changeImage = async () => {
     console.log(1)
     const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -143,7 +144,7 @@ const MyInfoScreen = ({ navigation }) => {
             // 나중에 주석 해제해야 로그아웃 처리가 됨 - 신우
             AsyncStorage.removeItem('@storage_Key');  // asyncstorage clear를 안해야 일주일간 보지 않음이 작동이 됨 by 성민
             // 오류 수정 by 세연 멋졍
-            navigation.navigate('Auth')
+            navigation.navigate('Main')
           }
         }
       ]
