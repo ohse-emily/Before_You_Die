@@ -131,7 +131,7 @@ const yourwords = async (req, res) => {
 
 const lastwordLikes = async (req, res) => {
     let {user_email, id, type} = req.query
-
+    
     if (type==0){
         // 중복검사 실시, 해당 게시물에 대한 좋아요 또는 신고 기록이 있는지 받아온다.
         let getLikes = await Reports.findAll({
@@ -154,9 +154,21 @@ const lastwordLikes = async (req, res) => {
             res.json({msg: 'rejected'})
         }
     } else if(type==1){
-        // 신고에 대한 기록일 경우
+        let {user_email2} = req.query
+        let result = await Reports.findAll({where:{user_email, post_id: id}})
+    
+        if (result.length===0){
+            await Reports.create({user_email: user_email, type: type, post_id: id})
+            
+            let Userdata = await Users.findOne({where:{user_email:user_email2}})
 
+            user_score = parseInt(Userdata.dataValues.user_score)+1
 
+            await Users.update({user_score: user_score},{where : {user_email: user_email2}})
+            res.json({msg: '신고가 완료되었습니다', flag: false})
+        }else{
+            res.json({msg: '이미 신고하셨습니다', flag: true})
+        }
     }
 }
 
