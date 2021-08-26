@@ -50,7 +50,6 @@ const Login = ({ navigation }) => {
                             });
                             let getData = await response.json()
                             console.log('getData=',getData)
-
                             try {
                                 if (getData === undefined) {
                                     alert('아이디와 비밀번호를 확인해 주세요')
@@ -59,7 +58,10 @@ const Login = ({ navigation }) => {
                                     console.log('getDate true')
                                     navigation.navigate("MainApp")
                                     storeData(getData.token, values.user_email)
-                                    resetForm({values :''})
+                                    resetForm({values :{
+                                        user_email: values.user_email,
+                                        user_passwrod:''
+                                    }})
                                 } else if (getData.proceed === false && getData.type === 'noverified') {
                                     alert('이메일 인증을 완료해주세요.')
                                 } else if (getData.proceed === false && getData.type === 'nouser') {
