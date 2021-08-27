@@ -1,10 +1,18 @@
 {
     "development": {
       "username": "root",
-      "password": "root",
+      "password": "5353",
       "database": "byd",
       "host": "127.0.0.1",
-      "dialect": "mysql"
+      "dialect": "mysql", 
+      "timezone":"+09:00",
+      "dialectOptions":{
+        "dateStrings":true,
+        "typeCast":true
+      },
+      "define":{
+        "timestamps":true
+      }
     },
     "test": {
       "username": "root",

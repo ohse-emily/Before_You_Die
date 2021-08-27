@@ -55,7 +55,8 @@ const sendmsg = async (req, res) => {
         let chatroom_no = getChatroomNo.dataValues.id;
         await Chatting.create({
             chatroom_no, chat_name, user_email, user_nickname, chatting_msg, user_profile: user_image,
-        })
+        })     
+
         result.insert = true;
     } catch (e) {
         console.log('Chatting inserting info failed , ERROR=', e)
@@ -91,7 +92,17 @@ const chat_history = async (req, res) => {
     }
 }
 
+// PENDING - 1차 업뎃 이후 ㄱㄱ ! 
+// chatHome에 미리 chatting 내용 로드해서 마지막에 말한 채팅 내용 & 프로필 사진을 보이도록 by세연 
+const chat_athome = async(req,res)=>{
+    console.log('도착햇숴요')
+    let result = await Chatting.findAll({
+        limit:1,
+        order:[['chatting_time', 'DESC']]
+    })
+    console.log(result)
+}
 
 module.exports = {
-    addchat, getchat, sendmsg, chat_history
+    addchat, getchat, sendmsg, chat_history,chat_athome, 
 }

@@ -38,7 +38,7 @@ let join = async (req, res) => {
         email_verify_key: email_key,
     })
 
-    await sequelize.query(`update users set join_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${email}'`)
+    // await sequelize.query(`update users set join_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${email}'`)
 
     // email 인증 메일 보내기 by 세연 
     let transporter = nodemailer.createTransport({

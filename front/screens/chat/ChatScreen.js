@@ -4,7 +4,7 @@ import {
     TouchableOpacity, StatusBar, SafeAreaView, ScrollView, TextInput,
     Keyboard, TouchableWithoutFeedback,
 } from 'react-native'
-import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useHeaderHeight } from '@react-navigation/elements';
 import axios from 'axios';
 import myIp from '../../indivisual_ip';
@@ -31,9 +31,12 @@ const ChatScreen = ({ navigation, route }) => {
     useLayoutEffect(() => {
 
         // 채팅방 위에 가장 마지막으로 채팅보낸 사람의 프로필 사진 띄우기 by세연 
-        const chatProfile = messages[0] ?
-            { uri: `http://${myIp}/${messages[messages.length - 1].user_profile}` }
-            : require('../../assets/user_.png')
+        let chatProfile;
+        if (messages[0]) {
+            chatProfile = messages[0].user_profile ?
+                { uri: `http://${myIp}/${messages[messages.length - 1].user_profile}` }
+                : require('../../assets/user_.png')
+        }
 
         const settings = async () => {
             navigation.setOptions({
@@ -66,11 +69,14 @@ const ChatScreen = ({ navigation, route }) => {
                 ),
                 headerRight: () => (
                     <View style={styles.chatHeaderRight}>
-                        <TouchableOpacity onPress={() => alert('서비스 준비 중입니다 :) ')}>
+                        <TouchableOpacity style={{ width: 30 }} onPress={() => alert('서비스 준비 중입니다 :) ')}>
                             <FontAwesome name="video-camera" size={24} color="black" />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => alert('서비스 준비 중입니다 :) ')}>
+                        <TouchableOpacity style={{ width: 22 }} onPress={() => alert('서비스 준비 중입니다 :) ')}>
                             <Ionicons name="call" size={24} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: 20 }} >
+                            <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
                         </TouchableOpacity>
                     </View>
                 )
@@ -83,7 +89,7 @@ const ChatScreen = ({ navigation, route }) => {
     // 메세지 보내면 keyboard dismiss & 보낸 사람의 정보, msg DB 입력 by 세연   
     const sendMessage = async () => {
         Keyboard.dismiss();
-
+        console.log(222222)
         let options = {
             method: 'POST',
             url: `http://${myIp}/chat/sendmsg`,
@@ -145,39 +151,43 @@ const ChatScreen = ({ navigation, route }) => {
                             {messages.map((data, i) =>
                                 data.user_email === user_email ?
                                     (
-                                        <View key={i} style={styles.reciever}>
-                                            <Avatar
-                                                position="absolute"
-                                                rounded
-                                                bottom={-15}
-                                                right={-13}
-                                                size={30}
-                                                source={{
-                                                    uri: `http://${myIp}/${data.user_profile}`
-                                                }}
-                                            />
-                                            <Text style={styles.recieverText}>{data.chatting_msg}</Text>
+                                        <View key={i} >
+                                            <View style={styles.reciever}>
+                                                <Avatar
+                                                    position="absolute"
+                                                    rounded
+                                                    bottom={-15}
+                                                    right={-13}
+                                                    size={30}
+                                                    source={data.user_profile ?
+                                                        { uri: `http://${myIp}/${data.user_profile}` }
+                                                        : require('../../assets/user_.png')}
+                                                />
+                                                <Text style={styles.recieverText}>{data.chatting_msg}</Text>
+                                            </View>
+                                            <Text style={styles.recieverTime}>{data.chatting_time.slice(11, 16)}</Text>
                                         </View>
                                     ) : (
                                         <View key={i}>
-                                            <View>
-                                                <Text style={styles.senderName}>{data.user_nickname}</Text>
-                                            </View>
+
                                             <View style={styles.sender}>
                                                 <Avatar
                                                     position="absolute"
-                                                    bottom={24}
-                                                    left={-5}
+                                                    bottom={-19}
+                                                    left={-13}
                                                     // top={}
                                                     rounded
                                                     size={30}
-                                                    source={{
-                                                        uri: `http://${myIp}/${data.user_profile}`
-                                                    }}
+                                                    source={data.user_profile ?
+                                                        { uri: `http://${myIp}/${data.user_profile}` }
+                                                        : require('../../assets/user_.png')}
                                                 />
                                                 <Text style={styles.senderText}>{data.chatting_msg}</Text>
                                             </View>
-
+                                            <View style={styles.senderNameAndTime}>
+                                                <Text style={styles.senderName}>{data.user_nickname}</Text>
+                                                <Text style={styles.senderTime}>{data.chatting_time.slice(11, 16)}</Text>
+                                            </View>
                                         </View>
                                     )
                             )}
@@ -207,7 +217,7 @@ const styles = StyleSheet.create({
     chatHeaderRight: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: 65,
+        width: 80,
         marginRight: 10,
     },
     chatHeader: {
@@ -221,7 +231,7 @@ const styles = StyleSheet.create({
     reciever: {
         padding: 10,
         backgroundColor: "#fdd835",
-        alignSelf: 'flex-end',   // 받는 메세지는 오른쪽 위치 
+        alignSelf: 'flex-end',   // 받는 메세지는 오른쪽 위치
         borderRadius: 17,
         marginRight: 15,
         marginBottom: 20,
@@ -237,16 +247,16 @@ const styles = StyleSheet.create({
     sender: {
         padding: 10,
         backgroundColor: 'lightgrey',
-        alignSelf: 'flex-start',   // 보내는 메세지는 왼쪽 위치 
+        alignSelf: 'flex-start',   // 보내는 메세지는 왼쪽 위치
         borderRadius: 17,
         margin: 15,
         maxWidth: '80%',
         position: 'relative',
     },
     senderName: {
-        left: 45,
+        left:66,
         paddingRight: 10,
-        top: -3,
+        bottom: 14,
         fontSize: 13,
         color: 'black',
         position: 'absolute'
@@ -254,7 +264,7 @@ const styles = StyleSheet.create({
     senderText: {
         color: 'black',
         fontWeight: "500",
-        marginLeft: 8,
+        marginLeft: 3,
     },
     chatFooter: {
         flexDirection: 'row',
@@ -272,5 +282,23 @@ const styles = StyleSheet.create({
         color: 'grey',
         borderRadius: 30,
     },
-
+    senderTime:{
+        color: "grey",
+        fontSize:12,
+        left:33,
+        bottom:15,
+    },
+    recieverTime:{
+        color: "grey",
+        fontSize:12,
+        position:"absolute",
+        right:0,
+        bottom:7,
+        right:33,
+    },
+    senderNameAndTime:{
+        // flexDirection:'row',
+        // flexWrap:'wrap'
+        // position:"absolute",
+    }
 })
