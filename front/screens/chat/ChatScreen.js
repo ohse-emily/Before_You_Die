@@ -55,6 +55,7 @@ const ChatScreen = ({ navigation, route }) => {
                         <Avatar
                             rounded
                             source={chatProfile}
+                            // style={{marginRight:10}}
                         />
                         <Text style={styles.chatHeader} >{route.params.chatName}</Text>
                     </View>

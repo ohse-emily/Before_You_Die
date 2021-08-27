@@ -124,7 +124,7 @@ export default function MainApp({ navigation }) {
           )
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="피드"
         component={Feed}
         options={{
@@ -137,7 +137,7 @@ export default function MainApp({ navigation }) {
               : <FontAwesome name="th-list" size={30} color="rgb(160, 160, 160)" />
           )
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="메인 화면"
         component={HomeStackScreen}

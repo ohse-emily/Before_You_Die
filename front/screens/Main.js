@@ -14,11 +14,11 @@ const Main = ({navigation}) => {
         <>
             <StatusBar style="dark"/>
             <View style={styles.InnerContainer}>
-                <Image style={styles.MainImage} resizeMode = "stretch" source={require('./../assets/waterfalls.jpg')}/>
+                <Image style={styles.MainImage}  resizeMode = "stretch" source={require('./../assets/yahow.png')}/>
                 <View style={styles.MainContainer}>
                     <Text style={styles.PageTitle} welcome={true}>BYD</Text>
                     <Text style={styles.SubTitle}>Before You Die</Text>
-                    <Text style={styles.SubTitle}></Text>
+                    {/* <Text style={styles.SubTitle}></Text> */}
                     <View style={styles.StyledFormArea}>
                         <View style={styles.Line}/>
                         <TouchableOpacity
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     ButtonText:{
         color: '#ffffff', //primary,
-        fontSize: 16,
+        fontSize: 20,
     },
     Line:{
         height:1,

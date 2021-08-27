@@ -186,8 +186,7 @@ const loadFeed = async (req, res) => {
             FROM reports AS A 
             LEFT JOIN lastwords AS B 
             ON A.post_id = B.id 
-            WHERE A.type = 0 
-            AND B.id IS NOT NULL 
+            WHERE B.id IS NOT NULL 
             group BY post_id
             ORDER BY howMany DESC LIMIT 20
         ;`
