@@ -70,7 +70,7 @@ const yourwords = async (req, res) => {
     // 일반적인 경우 (고객 디바이스에 login하면 email 있음)
     // Sequelize 의 table 명은 -> 대문자 / mysql 의 테이블 (리눅스 server) 는 소문자! -> 리눅스 msg.controller.js 내용 변경  
     } else {
-        connection.query(`select * from Lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, async (error, results) => {
+        connection.query(`select * from lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, async (error, results) => {
             if (results) {
                 console.log(results)
                 console.log(results[0])
@@ -138,6 +138,7 @@ const lastwordLikes = async (req, res) => {
             where: {
                 user_email,
                 post_id: id,
+                type: 0
             }
         })
 
@@ -155,7 +156,7 @@ const lastwordLikes = async (req, res) => {
         }
     } else if(type==1){
         let {user_email2} = req.query
-        let result = await Reports.findAll({where:{user_email, post_id: id}})
+        let result = await Reports.findAll({where:{user_email, post_id: id, type:1}})
     
         if (result.length===0){
             await Reports.create({user_email: user_email, type: type, post_id: id})
