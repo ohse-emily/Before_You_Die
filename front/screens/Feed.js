@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {
     StyleSheet, View, ScrollView, SafeAreaView,
-    KeyboardAvoidingView, Button, TouchableOpacity, Dimensions,
+    KeyboardAvoidingView, Button, TouchableOpacity, 
+    Dimensions, Alert
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Text from './DefaultText';
 import myIp from '../indivisual_ip'
@@ -11,86 +13,107 @@ import { AntDesign } from '@expo/vector-icons';
 const Feed =  ({ navigation }) => {
     const [list, setList] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const [likes, setLikes] = useState(false)
+    const [liked, setLiked] = useState(false)
+    const [reported, setReported] = useState(false)
 
     const loadFeed = async() => {
         // setLoaded(false)
-        let feedList =  await axios.get(`http://${myIp}/msg/loadfeed`) 
+        const userEmail = await AsyncStorage.getItem('@email_key')
+        let feedList =  await axios.get(`http://${myIp}/msg/loadfeed?user_email=${userEmail}`) 
         let result = feedList.data
         console.log(result)
         setList(result)
         setLoaded(true)
     }
-    //1안
-    // let renderList = list.map((v,k)=>{
-    //     let newDate = v.lastword_date.substr(0,10)
-    //     return(
-    //         <View style={styles.ventingInput} key={k}>
-    //         <Text>
-    //             No. {k + 1}
-    //         </Text>
-    //         <Text>
-    //             제목 : {v.lastword_subject}
-    //         </Text>
-    //         <Text>
-    //             내용 : {v.lastword_content}
-    //         </Text>
-    //         <Text>
-    //             전송일 {newDate}
-    //         </Text>
-    //         <Text>
-    //             보낸이 : {v.lastword_sender}
-    //         </Text>
-    //         <Text>
-    //             좋아요 : {v.howMany}
-    //         </Text>
-    //     </View>
-    //     )
-    // })
 
-    //2안
     let renderList = list.map((v,k)=>{
+
+
+    const handleLike = async () => {
+        const userEmail = await AsyncStorage.getItem('@email_key')
+        let id = v.id
+        let likeTest = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
+        // let likeIndicator = likeTest.data.msg
+        // if(likeIndicator === 'done'){
+        //     setLikes(likes + 1)
+        //     setLiked(true)
+        // } else if(likeIndicator === 'rejected'){
+        //     alert('이미 좋아요를 누른 게시물입니다.')
+        //     setLiked(true)
+        // }
+        console.log(likeTest.data)
+    }
+
+    const handleReport = async ()=>{
+        Alert.alert(
+        "",
+        "정말로 신고하시겠습니까?",
+        [
+            {
+            text: "Cancel",
+            style: "cancel"
+            },
+            { text: "OK", onPress: async () => {
+                const userEmail = await AsyncStorage.getItem('@email_key')
+                let id = v.id
+                let userEmail2 = v.user_email
+                let minus_user_score = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
+                setReported(true)
+                Alert.alert('',minus_user_score.data.msg)
+            } }
+        ],
+        { cancelable: false }
+        );
+    }
+
         return(
-            <SafeAreaView style={styles.yourwordContainer}>
-                <View style={styles.subject}>
-                    <View style={[styles.subjectText,]}>
-                        <Text>{v.lastword_subject}</Text>
-                    </View>
-                </View>
-                <View style={styles.content}>
-                    <ScrollView>
-                        <View style={styles.yourwordRow}>
-                            <Text>{v.lastword_content}</Text>
+                <View style={styles.itemFrame}>
+                    <View style={styles.subject}>
+                        <View>
+                            <Text>{v.lastword_subject}</Text>
                         </View>
-                    </ScrollView>
-                </View>
-                <View style={styles.yourwordBottom}>
-                    <Text>
-                        {v.lastword_date.slice(0, 10)}
-                    </Text>
-                    <Text>
-                        by <Text style={styles.sender}> {v.lastword_sender}</Text>
-                    </Text>
-                </View>
-                {/* 좋아요 & 신고 부분  */}
-                <View style={styles.yourwordsShowContainer}>
-                    <View style={styles.yourwordsShowView}>
-                        <TouchableOpacity style={styles.yourwordsShowLike} 
-                        // onPress = {handleLike}
-                        >
-                                <AntDesign name="like2" size={20} color="black" />
-                                <Text> {v.howMany} </Text>
-                        </TouchableOpacity>
                     </View>
-                    <View style={styles.yourwordsShowView} >
-                        <TouchableOpacity style={styles.yourwordsShowLike} 
-                        // onPress={handleReport}
-                        >
-                            <AntDesign name="exclamationcircleo" size={20} color="red" />
-                        </TouchableOpacity>
-                        <Text>신고</Text>
+                    <View style={styles.content}>
+                        <ScrollView style={styles.contentScroll} 
+                        nestedScrollEnabled = {true}>
+                            <View style={styles.yourwordRow}>
+                                <Text>{v.lastword_content}</Text>
+                            </View>
+                        </ScrollView>
+                        <View style ={{position: 'relative',}}>
+                            <View style={styles.yourwordBottom}>
+                                <Text>
+                                    {v.lastword_date.slice(0, 10)}
+                                </Text>
+                                <Text>
+                                    by <Text style={styles.sender}> {v.lastword_sender}</Text>
+                                </Text>
+                            </View>
+                                                {/* 좋아요 & 신고 부분  */}
+                            {/* <View style={styles.yourwordsShowContainer}>
+                                <View style={styles.yourwordsShowView}>
+                                    <TouchableOpacity style={styles.yourwordsShowLike} 
+                                    onPress = {handleLike}
+                                    >
+                                            <AntDesign name="like2" size={20} color="black" />
+                                            <Text> {v.howMany} </Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.yourwordsShowView} >
+                                    <TouchableOpacity style={styles.yourwordsShowLike} 
+                                    onPress={handleReport}
+                                    >
+                                        <AntDesign name="exclamationcircleo" size={20} color="red" />
+                                    </TouchableOpacity>
+                                    <Text>신고</Text>
+                                </View>
+                            </View> */}
+                        </View>
                     </View>
+      
                 </View>
-            </SafeAreaView>
+
         )
     })
 
@@ -104,7 +127,9 @@ const Feed =  ({ navigation }) => {
         <SafeAreaView style={styles.ventingContainer}>
             <ScrollView >
                 <KeyboardAvoidingView style={styles.ventingAvoidingView}>
-                    {renderList}
+                    <SafeAreaView style={styles.yourwordContainer}>
+                        {renderList}
+                    </SafeAreaView>
                 </KeyboardAvoidingView>
             </ScrollView>
         </SafeAreaView>
@@ -118,62 +143,14 @@ export default Feed
 const styles = StyleSheet.create({
     ventingContainer: {
         flex: 1,
-    },
-    ventingInput: {
-        borderWidth: 2,
-        borderColor:'mediumpurple',
-        width: 300,
-        height: 'auto',
-        padding: 10,
-        borderRadius: 5,
-        textAlignVertical: 'top',
-        marginTop: 20,
-        marginBottom: 20,
+        backgroundColor: 'white',
     },
     ventingAvoidingView: {
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20
+        padding: 20,
     },
-    ventingSending: {
-        width: 120,
-        height: 40,
-        alignItems: 'center',
-        padding: 10,
-        backgroundColor: 'lightblue',
-        marginTop: 20,
-        borderRadius: 7,
-    },
-    MyWordsHistoryBtn: {
-        borderColor: 'mediumpurple',
-        borderWidth: 2,
-        width: '24%',
-        height: 30,
-        marginTop: 5,
-        backgroundColor: 'palevioletred',
-        justifyContent: 'center',
-        borderRadius: 8,
-        alignContent:'center',
-        justifyContent:'center',
-        flex:1,
-        alignItems:'center',
-    },
-    deleteMywords:{
-        alignContent:'center',
-        justifyContent:'center',
-        flex:1,
-        alignItems:'center',
-    },
-
-    ////
-
-    yourwordsShowVertical: {
-        flex: 1,
-        width: '100%',
-        height: Dimensions.get('window').height*0.9,
-        justifyContent: 'center',
-    },
-    yourwordContainer: {
+    yourwordContainer: { //
         justifyContent: 'center',
         flex: 1,
         alignItems: 'center',
@@ -181,89 +158,74 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingTop:30,
     },
-    content: {
-        backgroundColor: 'lavender',
+    content: { //
+        backgroundColor: 'lightcyan',
         width: '83%',
-        height: Dimensions.get('window').height * 0.5,  // 요게 다른 디바이스에서 똑같은지 확인 
-        flex: 1,
+        // height: '100%',
+        // flex: 1,
         // justifyContent: 'center',
-        alignItems: 'center',
+        // alignItems: 'center',
         borderRadius: 7,
         padding: 10,
         paddingBottom: '15%',
-        position: 'relative',
-        borderColor:'mediumpurple',
+        borderColor:'turquoise',
         borderWidth:1,
     },
-    subjectText: {
-
+    contentScroll: {
+        maxHeight: 200,
+        marginBottom: 40,
     },
-    isLoading: {
-        flexDirection: "column",
-        alignItems: "center",
-    },
-    unlock: {
-        color: 'pink',
-        padding: 30
-    },
-    loadingText: {
-        fontSize: 15,
-    },
-    yourwordRow: {
+    yourwordRow: { //
         flexDirection: 'row',
         flexWrap: 'wrap',
+
     },
-    sender: {
+    sender: { //
         fontWeight: 'bold',
-        color: 'purple'
+        color: 'darkcyan'
     },
-    subject: {
+    subject: { //
         justifyContent: 'center',
         flex: 1,
         alignItems: 'center',
-        padding: 10,
-        backgroundColor: 'lavender',
+        height:20,
+        // padding: 10,
+        backgroundColor: 'lightcyan',
         width: '83%',
-        height: 30,
-        marginTop: '13%',
+        // height: 30,
         marginBottom: 20,
         borderRadius: 7,
         borderWidth:1,
-        borderColor:'mediumpurple',
+        borderColor:'turquoise',
     },
-    yourwordBottom: {
-        width: '83%',
-        height: '80%',
-        padding: 7,
-        flex: 1,
-        alignItems: 'flex-end',
-        marginBottom: 10,
-    },
-    anotherYourword: {
-        borderWidth: 2,
-        borderColor: 'pink',
-        backgroundColor: 'lavenderblush',
-        padding: 9,
-        borderRadius: 7,
-    },
-    anotherText: {
-        color: 'black',
-    },
-    yourwordNothing: {
-        flex: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-    },
-    yourwordsShowContainer: {
-        flexDirection: 'row',
+    yourwordBottom: { //
         position: 'absolute',
-        bottom: 110,
-        right: 35,
+        alignItems: 'flex-end',
+        right: 15,
+    },
+    yourwordsShowContainer: { //
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        position: 'absolute',
+        left: 15,
 
     },
-    yourwordsShowView: {
-        width: 35,
+    yourwordsShowView: { //
+        // width: 35,
+        alignItems: 'flex-end',
+    },
+    itemFrame:{
+        // height:'100%',
+        width:Dimensions.get('window').width*0.8,
+        alignItems:'center',
+        justifyContent: 'center',
+        borderColor:'darkcyan',
+        borderWidth:1,
+        paddingTop: 20,
+        paddingBottom: 20,
+        marginTop:10,
+        marginBottom:10,
+        borderRadius:5,
     }
 
 })

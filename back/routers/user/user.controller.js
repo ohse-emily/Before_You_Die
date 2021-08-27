@@ -140,7 +140,7 @@ let login = async (req, res) => {
         let loggedInAt = new Date().toLocaleDateString()
         console.log(loggedInAt, '로긴시간')
         console.log(user_email, '유저이메일')
-        await sequelize.query(`update users set login_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${user_email}'`)
+        await sequelize.query(`update users set login_date = now() where user_email = '${user_email}'`)
 
     } else if (getUser != null && getUser.email_verify == 0) {
         //이메일 인증을 못받은 경우 

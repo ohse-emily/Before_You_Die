@@ -173,10 +173,14 @@ const lastwordLikes = async (req, res) => {
 }
 
 const loadFeed = async (req, res) => {
+    console.log(req.query)
+    let {user_email} = req.query
     //라이크에서 DB를 가져오는데 좋아요 순서대로 가져온다
-    let result = await sequelize.query(
+    let result = await sequelize.query( 
+
+        //각 게시물마다 좋아요 게시물을 가져온다
         `SELECT 
-            A.post_id, B.id, B.user_email, B.lastword_subject, 
+            A.post_id, A.type, B.id, B.user_email as writer, B.lastword_subject, 
             B.lastword_content, B.lastword_sender, B.lastword_date, 
             count(*) AS howMany 
             FROM reports AS A 
@@ -188,8 +192,13 @@ const loadFeed = async (req, res) => {
             ORDER BY howMany DESC LIMIT 20
         ;`
     )
-        console.log(result[0])
-    res.json(result[0])
+    let newResult = result[0]
+
+    // for(let i=0; i<newResult.length; i++){
+    //     let ifLiked = await 
+    // }
+    //     // console.log(result[0])
+    // res.json(result[0])
 
 
 }
