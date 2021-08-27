@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Image, TextInput, TouchableOpacity, Dimensions, } from 'react-native';
 import Text from './DefaultText';
@@ -18,6 +18,7 @@ const Login = ({ navigation }) => {
     // const [state, dispatch]  = useReducer(reducer,globalStore)
     const [hidePassword, setHidePassword] = useState(true)
 
+
     const storeData = async (value, user_email) => {
         try {
             await AsyncStorage.setItem('@storage_Key', value)
@@ -26,6 +27,8 @@ const Login = ({ navigation }) => {
         } catch (e) {
         }
     }
+    
+
 
     return (
         <KeyboardAvoidingWrapper style={styles.loginContainer}>
@@ -35,8 +38,8 @@ const Login = ({ navigation }) => {
                     <Text style={styles.pageTitle}>Before You Die</Text>
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
-                        onSubmit={async (values) => {
-                            console.log(values)
+                        onSubmit={async (values, {resetForm}) => {
+                            console.log(values,'----------------------------------------------------')
                             let url = `http://${myIp}/user/login/`
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
@@ -47,7 +50,6 @@ const Login = ({ navigation }) => {
                             });
                             let getData = await response.json()
                             console.log('getData=',getData)
-
                             try {
                                 if (getData === undefined) {
                                     alert('아이디와 비밀번호를 확인해 주세요')
@@ -56,6 +58,10 @@ const Login = ({ navigation }) => {
                                     console.log('getDate true')
                                     navigation.navigate("MainApp")
                                     storeData(getData.token, values.user_email)
+                                    resetForm({values :{
+                                        user_email: values.user_email,
+                                        user_passwrod:''
+                                    }})
                                 } else if (getData.proceed === false && getData.type === 'noverified') {
                                     alert('이메일 인증을 완료해주세요.')
                                 } else if (getData.proceed === false && getData.type === 'nouser') {

@@ -125,7 +125,7 @@ const Signup = ({ navigation }) => {
                 <StatusBar style="dark" />
                 <View style={styles.innerContainer}>
                     <Text style={styles.pageTitle}>BYD</Text>
-                    {popupCheck ? (<MainPopup     // 회원가입 동의서 팝업창 띄우기 by 성민
+                    {popupCheck ? (<MainPopup     // 회원가입 동의시 팝업창 띄우기 by 성민
                         value={popupCheck}
                         handlePopup={handlePopup}
                         which={"handlePermission"}
@@ -217,7 +217,6 @@ const Signup = ({ navigation }) => {
                             if (res_data.result) {
                                 navigation.navigate('Welcome', { name: values.email })
                             }
-
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (

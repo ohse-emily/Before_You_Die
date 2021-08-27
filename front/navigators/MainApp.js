@@ -133,8 +133,8 @@ export default function MainApp({ navigation }) {
           tabBarInactiveTintColor: 'gray',
           tabBarIcon: ({ focused }) => (
             focused
-              ? <FontAwesome name="grav" size={35} color="rgb(165, 61, 179)" />
-              : <FontAwesome name="grav" size={30} color="rgb(160, 160, 160)" />
+              ? <FontAwesome name="th-list" size={35} color="rgb(165, 61, 179)" />
+              : <FontAwesome name="th-list" size={30} color="rgb(160, 160, 160)" />
           )
         }}
       />

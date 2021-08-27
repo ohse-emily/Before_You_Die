@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Sequelize } = require('../../models')
+const { Sequelize, sequelize } = require('../../models')
 const { Users, Lastwords, Messages, Reports } = require('../../models');
 const mysql = require('mysql')
 
@@ -72,8 +72,11 @@ const yourwords = async (req, res) => {
     } else {
         connection.query(`select * from Lastwords where user_email != '${userEmail}' order by rand() limit 1 ;`, async (error, results) => {
             if (results) {
+                console.log(results)
+                console.log(results[0])
                 // 뽑힌 글 ID를 가져와서 해당 게시물의 좋아요 갯수만 가져오기
-                let {id} = results[0]
+                let id
+                results.length == 0 ? id = -1 : id = results[0].id
                 console.log(id)
                 let getLikes = await Reports.findAll({
                     where: {
@@ -85,6 +88,9 @@ const yourwords = async (req, res) => {
                 let numLikes = getLikes.length
                 let likedCheck
 
+                //신고 여부를 담을 것
+                let reportCheck
+
                 // 해당 게시물에 현재 유저가 좋아요 한 글이 있는지 확인
                 let ifLiked = await Reports.findAll({
                     where: {
@@ -94,10 +100,23 @@ const yourwords = async (req, res) => {
                     }
                 })
 
-                ifLiked.length === 0 ? likedCheck = false : likedCheck = true
-                console
+                //신고 여부도 확인
+                let ifReported = await Reports.findAll({
+                    where: {
+                        post_id: id,
+                        type: 1,
+                        user_email: userEmail
+                    }
+                })
+
+                ifLiked.length == 0 ? likedCheck = false : likedCheck = true
+                ifReported.length == 0 ? reportCheck = false : reportCheck = true
+                // 결과가 없음을 프론트 쪽에서 식별하기 위함
+                results.push('noResult')
+
+
                 // 좋아요 갯수와 좋아요 여부를 results에 그냥 push 해서 한 번에 보내버린다.
-                results.push({numLikes, likedCheck})
+                results.push({numLikes, likedCheck, reportCheck})
 
                 console.log('Getting yourwords List from db - success !! ', results)
                 res.json(results)
@@ -154,11 +173,34 @@ const lastwordLikes = async (req, res) => {
 }
 
 const loadFeed = async (req, res) => {
-//     console.log('connected')
-//     let result = await Messages.findAll({
-//         order: [['postWriter', 'DESC']]
-//     })
-//     res.json({asd:'zxc'})
+    console.log(req.query)
+    let {user_email} = req.query
+    //라이크에서 DB를 가져오는데 좋아요 순서대로 가져온다
+    let result = await sequelize.query( 
+
+        //각 게시물마다 좋아요 게시물을 가져온다
+        `SELECT 
+            A.post_id, A.type, B.id, B.user_email as writer, B.lastword_subject, 
+            B.lastword_content, B.lastword_sender, B.lastword_date, 
+            count(*) AS howMany 
+            FROM reports AS A 
+            LEFT JOIN lastwords AS B 
+            ON A.post_id = B.id 
+            WHERE A.type = 0 
+            AND B.id IS NOT NULL 
+            group BY post_id
+            ORDER BY howMany DESC LIMIT 20
+        ;`
+    )
+    let newResult = result[0]
+
+    // for(let i=0; i<newResult.length; i++){
+    //     let ifLiked = await 
+    // }
+    //     // console.log(result[0])
+    // res.json(result[0])
+
+
 }
 
 module.exports = {

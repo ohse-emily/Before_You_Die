@@ -48,6 +48,11 @@ module.exports = class Users extends Sequelize.Model{
             login_date:{
                 type:Sequelize.DATE,
                 allowNull:true,
+            },
+            privacy_agree:{
+                type:Sequelize.STRING(3),
+                allowNull: false,
+                defaultValue : 'Y'
             }
         },{
             sequelize,

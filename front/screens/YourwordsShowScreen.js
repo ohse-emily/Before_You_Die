@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity, Dimensions } from 'react-native'
+import { Alert, View, ScrollView, StyleSheet, 
+    SafeAreaView, TouchableOpacity, Dimensions } from 'react-native'
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationHelpersContext } from '@react-navigation/native';
 import Text from './DefaultText';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import myIp from '../indivisual_ip'
-import { Alert } from 'react-native';
 
 
 // 너의 이야기 click -> db (lastwords)에서 랜덤 1 개 FETCH  by 세연
@@ -20,25 +20,40 @@ function YourwordsShowScreen({ navigation }) {
     const [liked, setLiked] = useState(false)
     const [reported, setReported] = useState(false)
 
+    //네비게이션 시 props 리셋(불필요할 수도 있음)
+    const nvgHandle = () => {
+        setYourword([])
+        setIsLoading(false)
+        setYourwordUndefined(false)
+        setLikes(false)
+        setLiked(false)
+        setReported(false)
+    }
+
     useEffect(() => {
         setTimeout(() => {
+            //로딩 시 랜덤으로 메시지를 받아옴 by 세연
             const fetchYourword = async () => {
-
+                // 로딩 시 좋아요와 신고 여부도 받아옴 by 신우
                 const userEmail = await AsyncStorage.getItem('@email_key')
                 let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
-                if (getYourword.data.length > 0) {
+                console.log(getYourword.data)
+                if (getYourword.data[0]!=='noResult') {
                     //좋아요가 없는 글
-                    if(getYourword.data[0].lastword_likes===null || 
-                        getYourword.data[0].lastword_likes==='' 
-                        ){
+                    if(getYourword.data[2].numLikes===null || 
+                        getYourword.data[2].numLikes===''){
                         setLikes(0)
                         setYourword(getYourword.data)
+                        setIsLoading(false)
                         setIsLoading(true)
                     } else{
                         //data[1]은 msg controller의 yourwords에서 담았던 것
-                        console.log(getYourword.data[1], '좋아요정')
-                        setLiked(getYourword.data[1].likedCheck)
-                        setLikes(getYourword.data[1].numLikes)
+                        console.log(getYourword.data[2], '좋아요정')
+                        // 성민님거 push하시고 받아올 것
+                        console.log(getYourword.data[2].likedCheck)
+                        setReported(getYourword.data[2].reportCheck)
+                        setLiked(getYourword.data[2].likedCheck)
+                        setLikes(getYourword.data[2].numLikes)
                         setYourword(getYourword.data)
                         setIsLoading(true)
                     }                    
@@ -116,7 +131,7 @@ function YourwordsShowScreen({ navigation }) {
                     </View>
                     {/* homebutton을 여기에 만들려고 하다가 homebutton tab이 있어서
                     다른  메세지 보기를 누르는 버튼이 더 좋을 것 같아서 버튼추가함!  by 세연 */}
-                    <TouchableOpacity style={styles.anotherYourword} onPress={() => navigation.navigate('Yourwords')}>
+                    <TouchableOpacity style={styles.anotherYourword} onPress={() => {navigation.navigate('Yourwords'), nvgHandle}}>
                         <Text style={styles.anotherText}> 또 다른 이야기 들어보기 </Text>
                     </TouchableOpacity>
                     {/* 좋아요 & 신고 부분  */}
