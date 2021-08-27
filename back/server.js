@@ -22,8 +22,8 @@ app.use(bodyParser.json());
 app.use('/', router)
 
 
-app.listen(port,()=>{
-    console.log('server start : 3000')
+app.listen(3001,()=>{
+    console.log('server start : 3001')
 })
 
 
