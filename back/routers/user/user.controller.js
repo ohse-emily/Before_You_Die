@@ -56,7 +56,7 @@ let join = async (req, res) => {
         from: '<BYD> byddothis@gmail.com',
         to: email,
         subject: ' BYD 회원가입을 완성해 주세요 :) !  ',
-        html: `username 님 안녕하세요,  이메일인증을 위해 url을 클릭해주세요 -> ${url}`
+        html: `<span>username 님 안녕하세요,  이메일인증을 위해 url을 클릭해주세요</span> <a href=${url}>${url}<a>`
     }
 
     transporter.sendMail(options, function (err, res) {
