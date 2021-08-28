@@ -11,7 +11,22 @@
 ![byd_4pics_1](https://user-images.githubusercontent.com/82620945/131205965-3ac23a4d-51b1-4e94-8c90-3953535fada8.jpg)
 ![byd_4pic_2](https://user-images.githubusercontent.com/82620945/131205967-5dd60db5-45cd-4a12-8f5e-a19eeda5f547.jpg)
 
-# 3. Dependency Module 
+
+# 3. What we used 
+![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=round-square&logo=javascript)
+![Nodejs](https://img.shields.io/badge/-Nodejs-black?style=round-square&logo=Node.js)
+![Express.js](https://img.shields.io/badge/-Express-black?style=round-square&logo=expressjs)
+<br/>
+![React](https://img.shields.io/badge/-React-black?style=round-square&logo=react)
+![ReactNative](https://img.shields.io/badge/-ReactNative-black?style=round-square&logo=react)
+![ReactNativeExpo](https://img.shields.io/badge/-ReactNativeExpo-black?style=round-square&logo=expo)
+<br/>
+![Mysql](https://img.shields.io/badge/-Mysql-black?style=round-square&logo=Mysql)
+![Git](https://img.shields.io/badge/-Git-black?style=round-square&logo=git)
+![GitHub](https://img.shields.io/badge/-GitHub-black?style=round-square&logo=github)
+![Ubuntu](https://img.shields.io/badge/-Ubuntu-black?style=round-square&logo=ubuntu)
+
+# 4. Dependency Module 
 ```
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -33,10 +48,9 @@
   }
 ```
 
-# 사용한 stack
 
 
-# Main Function 
+# 5. Main Function 
 * 회원가입 / 로그인 
 * 나의 기본 정보 / 프로필 사진 변경 
 * 나의 이야기 남기기 
@@ -45,7 +59,7 @@
 * 익명 채팅방 개설 및 채팅 기능 
 * "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
 
-# Team Role 
+# 6. Team Role 
 #### 🥑 오세연
 * Front-end & Back-end 
 * 채팅 기능 / 이메일 인증 기능 구현 
@@ -76,7 +90,7 @@
 * 테스트 및 배포 
 
 
-# App development Timeline 
+# 7. App development Timeline 
 https://blckchainetc.tistory.com/300
 
 
