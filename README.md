@@ -60,21 +60,21 @@
 * "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
 
 # 6. Team Role 
-#### 🥑 오세연
+#### 🥑 오세연(<a href="https://github.com/ohse-emily">seyeonGithub</a>)
 * Front-end & Back-end 
 * 채팅 기능 / 이메일 인증 기능 구현 
 * 나의 이야기 보내기, 너의 이야기 듣기 기능 구현 
 * 어플 기획 / 작업 스케쥴 관리  
 
 
-#### 🥝 엄신우
+#### 🥝 엄신우(<a href="https://github.com/ohse-emily">Sinwoo</a>)
 * Front-end & Back-end 
 * 회원가입 / 로그인
 * 인기 게시글 피드 구현
 * 좋아요 기능 구현 
 
 
-#### 🍏 나성민(<a href="#">Naseongmin07</a>)
+#### 🍏 나성민(<a href="https://github.com/Naseongmin07">Naseongmin07</a>)
 * Front-end & Back-end 
 * 회원가입 / 정보수정 
 * Popup 기능 구현 및 담당
