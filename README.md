@@ -28,6 +28,7 @@
 
 # 4. Dependency Module 
 ```
+BackEnd
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -46,11 +47,52 @@
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0"
   }
+FrontEnd
+  "dependencies": {
+    "@expo-google-fonts/inter": "^0.2.0",
+    "@expo/vector-icons": "^12.0.5",
+    "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-native-community/hooks": "^2.6.0",
+    "@react-navigation/bottom-tabs": "^6.0.1",
+    "@react-navigation/native": "^6.0.1",
+    "@react-navigation/native-stack": "^6.0.1",
+    "@react-navigation/stack": "^6.0.1",
+    "axios": "^0.21.1",
+    "expo": "~42.0.1",
+    "expo-camera": "^11.2.2",
+    "expo-constants": "~11.0.1",
+    "expo-font": "~9.2.1",
+    "expo-image-picker": "^10.2.2",
+    "expo-permissions": "^12.1.1",
+    "expo-splash-screen": "~0.11.2",
+    "expo-status-bar": "~1.0.4",
+    "expo-updates": "~0.8.1",
+    "formik": "^2.2.9",
+    "fs": "*",
+    "qs": "^6.10.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "~0.63.4",
+    "react-native-elements": "^3.4.2",
+    "react-native-form-component": "^0.1.17",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-global-props": "^1.1.5",
+    "react-native-image-crop-picker": "^0.36.2",
+    "react-native-paper": "^4.9.2",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-safe-area-context": "3.2.0",
+    "react-native-screens": "~3.4.0",
+    "react-native-web": "~0.13.12",
+    "react-navigation-stack": "^2.10.4",
+    "styled-components": "^5.3.0"
+  },
 ```
 
+# 5. App development Timeline 
+https://blckchainetc.tistory.com/300
 
 
-# 5. Main Function 
+# 6. Main Function 
 * 회원가입 / 로그인 
 * 나의 기본 정보 / 프로필 사진 변경 
 * 나의 이야기 남기기 
@@ -59,7 +101,7 @@
 * 익명 채팅방 개설 및 채팅 기능 
 * "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
 
-# 6. Team Role 
+# 7. Team Role 
 #### 🥑 오세연(<a href="https://github.com/ohse-emily">seyeonGithub</a>)
 * Front-end & Back-end 
 * 채팅 기능 / 이메일 인증 기능 구현 
@@ -90,8 +132,6 @@
 * 테스트 및 배포 
 
 
-# 7. App development Timeline 
-https://blckchainetc.tistory.com/300
 
 
 
