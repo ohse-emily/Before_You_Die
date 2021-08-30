@@ -74,7 +74,7 @@
 * 좋아요 기능 구현 
 
 
-#### 🍏 나성민
+#### 🍏 나성민(<a href="#">Naseongmin07</a>)
 * Front-end & Back-end 
 * 회원가입 / 정보수정 
 * Popup 기능 구현 및 담당
