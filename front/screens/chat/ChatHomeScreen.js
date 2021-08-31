@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState,  } from 'react';
+import React, { useEffect, useLayoutEffect, useState, } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -16,7 +16,7 @@ const ChatScreen = ({ navigation, route }) => {
     useEffect(() => {
         console.log('나야나')
         const fetchchats = async () => {
-            let getchat = await axios.get(`http://${myIp}/chat/getchat`)
+            let getchat = await axios.get(`https://${myIp}/chat/getchat`)
             if (getchat.data.result) {
                 console.log('axios getchat result = true')
                 setChats(getchat.data.gotchats)

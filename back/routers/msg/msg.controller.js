@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
 })
 connection.connect();
 
-// byddothis
+
 
 // mylast words 나의 마지막 말 Lastwords DB에 insert  by 세연 
 const mywords = async (req, res) => {
@@ -50,7 +50,7 @@ const mymessages = async (req, res) => {
 }
 
 
-// ubuntu 점검 실패 
+
 // Your last words 너의 마지막 말을 db에서 하나 랜덤(본인이 쓴 글 제외) 추출 by세연
 const yourwords = async (req, res) => {
     const { userEmail } = req.query;
@@ -147,7 +147,7 @@ const lastwordLikes = async (req, res) => {
             await Reports.create({
                 user_email, 
                 post_id: id,
-                type
+                type 
             })
             res.json({msg: 'done'})
         } else{

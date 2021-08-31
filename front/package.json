@@ -27,6 +27,7 @@
     "expo-updates": "~0.8.1",
     "formik": "^2.2.9",
     "fs": "*",
+    "qs": "^6.10.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, View, ScrollView, StyleSheet, 
-    SafeAreaView, TouchableOpacity, Dimensions } from 'react-native'
+import {
+    Alert, View, ScrollView, StyleSheet,
+    SafeAreaView, TouchableOpacity, Dimensions
+} from 'react-native'
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationHelpersContext } from '@react-navigation/native';
@@ -36,17 +38,17 @@ function YourwordsShowScreen({ navigation }) {
             const fetchYourword = async () => {
                 // 로딩 시 좋아요와 신고 여부도 받아옴 by 신우
                 const userEmail = await AsyncStorage.getItem('@email_key')
-                let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
+                let getYourword = await axios.get(`https://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 console.log(getYourword.data)
-                if (getYourword.data[0]!=='noResult') {
+                if (getYourword.data[0] !== 'noResult') {
                     //좋아요가 없는 글
-                    if(getYourword.data[2].numLikes===null || 
-                        getYourword.data[2].numLikes===''){
+                    if (getYourword.data[2].numLikes === null ||
+                        getYourword.data[2].numLikes === '') {
                         setLikes(0)
                         setYourword(getYourword.data)
                         setIsLoading(false)
                         setIsLoading(true)
-                    } else{
+                    } else {
                         //data[1]은 msg controller의 yourwords에서 담았던 것
                         console.log(getYourword.data[2], '좋아요정')
                         // 성민님거 push하시고 받아올 것
@@ -56,7 +58,7 @@ function YourwordsShowScreen({ navigation }) {
                         setLikes(getYourword.data[2].numLikes)
                         setYourword(getYourword.data)
                         setIsLoading(true)
-                    }                    
+                    }
                     setYourword(getYourword.data)
                     setIsLoading(true)
                     // console.log('case 1')
@@ -72,36 +74,38 @@ function YourwordsShowScreen({ navigation }) {
     const handleLike = async () => {
         const userEmail = await AsyncStorage.getItem('@email_key')
         let id = yourword[0].id
-        let likeTest = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
+        let likeTest = await axios.get(`https://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
         let likeIndicator = likeTest.data.msg
-        if(likeIndicator === 'done'){
+        if (likeIndicator === 'done') {
             setLikes(likes + 1)
             setLiked(true)
-        } else if(likeIndicator === 'rejected'){
+        } else if (likeIndicator === 'rejected') {
             alert('이미 좋아요를 누른 게시물입니다.')
             setLiked(true)
         }
     }
 
-    const handleReport = async ()=>{
+    const handleReport = async () => {
         Alert.alert(
-        "",
-        "정말로 신고하시겠습니까?",
-        [
-            {
-            text: "Cancel",
-            style: "cancel"
-            },
-            { text: "OK", onPress: async () => {
-                const userEmail = await AsyncStorage.getItem('@email_key')
-                let id = yourword[0].id
-                let userEmail2 = yourword[0].user_email
-                let minus_user_score = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
-                setReported(true)
-                Alert.alert('',minus_user_score.data.msg)
-            } }
-        ],
-        { cancelable: false }
+            "",
+            "정말로 신고하시겠습니까?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "OK", onPress: async () => {
+                        const userEmail = await AsyncStorage.getItem('@email_key')
+                        let id = yourword[0].id
+                        let userEmail2 = yourword[0].user_email
+                        let minus_user_score = await axios.get(`https://${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
+                        setReported(true)
+                        Alert.alert('', minus_user_score.data.msg)
+                    }
+                }
+            ],
+            { cancelable: false }
         );
     }
 
@@ -131,28 +135,28 @@ function YourwordsShowScreen({ navigation }) {
                     </View>
                     {/* homebutton을 여기에 만들려고 하다가 homebutton tab이 있어서
                     다른  메세지 보기를 누르는 버튼이 더 좋을 것 같아서 버튼추가함!  by 세연 */}
-                    <TouchableOpacity style={styles.anotherYourword} onPress={() => {navigation.navigate('Yourwords'), nvgHandle}}>
+                    <TouchableOpacity style={styles.anotherYourword} onPress={() => { navigation.navigate('Yourwords'), nvgHandle }}>
                         <Text style={styles.anotherText}> 또 다른 이야기 들어보기 </Text>
                     </TouchableOpacity>
                     {/* 좋아요 & 신고 부분  */}
                     <View style={styles.yourwordsShowContainer}>
                         <View style={styles.yourwordsShowView}>
-                            <TouchableOpacity style={styles.yourwordsShowLike} onPress = {handleLike}>
-                                {liked === true 
+                            <TouchableOpacity style={styles.yourwordsShowLike} onPress={handleLike}>
+                                {liked === true
                                     ? <AntDesign name="like2" size={20} color="blue" />
                                     : <AntDesign name="like2" size={20} color="black" />
                                 }
-                                { likes === 0 ? <Text>따봉</Text> : <Text> {likes}</Text> }
+                                {likes === 0 ? <Text>따봉</Text> : <Text> {likes}</Text>}
                             </TouchableOpacity>
-                            
+
                         </View>
                         <View style={styles.yourwordsShowView} >
                             <TouchableOpacity style={styles.yourwordsShowLike} onPress={handleReport}>
                                 <AntDesign name="exclamationcircleo" size={20} color="red" />
                             </TouchableOpacity>
-                            {reported=== true
-                                ?<Text>신고완료</Text>
-                                :<Text>신고</Text>
+                            {reported === true
+                                ? <Text>신고완료</Text>
+                                : <Text>신고</Text>
                             }
                         </View>
                     </View>
@@ -187,7 +191,7 @@ const styles = StyleSheet.create({
     yourwordsShowVertical: {
         flex: 1,
         width: '100%',
-        height: Dimensions.get('window').height*0.9,
+        height: Dimensions.get('window').height * 0.9,
         justifyContent: 'center',
     },
     yourwordContainer: {
@@ -196,7 +200,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '100%',
         width: '100%',
-        paddingTop:30,
+        paddingTop: 30,
     },
     content: {
         backgroundColor: 'lavender',
@@ -209,8 +213,8 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingBottom: '15%',
         position: 'relative',
-        borderColor:'mediumpurple',
-        borderWidth:1,
+        borderColor: 'mediumpurple',
+        borderWidth: 1,
     },
     subjectText: {
 
@@ -245,8 +249,8 @@ const styles = StyleSheet.create({
         marginTop: '13%',
         marginBottom: 20,
         borderRadius: 7,
-        borderWidth:1,
-        borderColor:'mediumpurple',
+        borderWidth: 1,
+        borderColor: 'mediumpurple',
     },
     yourwordBottom: {
         width: '83%',

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react'
+import React, { useLayoutEffect, useState, useEffect, useRef } from 'react'
 import {
     StyleSheet, Text, View, Platform, KeyboardAvoidingView,
     TouchableOpacity, StatusBar, SafeAreaView, ScrollView, TextInput,
@@ -11,7 +11,8 @@ import myIp from '../../indivisual_ip';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-elements'
 // import Text from '../DefaultText';
-
+import { Dimensions} from 'react-native';
+import Constants from 'expo-constants';
 
 // 채팅을 주고 받는 Chat screen 전체 by 세연 
 const ChatScreen = ({ navigation, route }) => {
@@ -34,9 +35,14 @@ const ChatScreen = ({ navigation, route }) => {
         let chatProfile;
         if (messages[0]) {
             chatProfile = messages[0].user_profile ?
-                { uri: `http://${myIp}/${messages[messages.length - 1].user_profile}` }
+                { uri: `https://${myIp}/${messages[messages.length - 1].user_profile}` }
                 : require('../../assets/user_.png')
         }
+
+        // const windowWidth = Dimensions.get('window').width;
+        const screen = Dimensions.get('screen');
+        const windowHeight = Dimensions.get('window').height;
+        console.log('aaaaaaa',screen.height, windowHeight)
 
         const settings = async () => {
             navigation.setOptions({
@@ -55,7 +61,7 @@ const ChatScreen = ({ navigation, route }) => {
                         <Avatar
                             rounded
                             source={chatProfile}
-                            // style={{marginRight:10}}
+                        // style={{marginRight:10}}
                         />
                         <Text style={styles.chatHeader} >{route.params.chatName}</Text>
                     </View>
@@ -90,10 +96,10 @@ const ChatScreen = ({ navigation, route }) => {
     // 메세지 보내면 keyboard dismiss & 보낸 사람의 정보, msg DB 입력 by 세연   
     const sendMessage = async () => {
         Keyboard.dismiss();
-        console.log(222222)
+
         let options = {
             method: 'POST',
-            url: `http://${myIp}/chat/sendmsg`,
+            url: `https://${myIp}/chat/sendmsg`,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -106,7 +112,7 @@ const ChatScreen = ({ navigation, route }) => {
         }
         let sendingResult = await axios(options)
         // 메세지가 local back db에 잘 입력되면 
-        console.log('sendingResult', sendingResult)
+       // console.log('sendingResult', sendingResult)
 
         if (sendingResult && sendingResult.status === 200) {
             setMessages(sendingResult.data.data)
@@ -121,7 +127,7 @@ const ChatScreen = ({ navigation, route }) => {
 
             let options = {
                 method: 'POST',
-                url: `http://${myIp}/chat/chat_history`,
+                url: `https://${myIp}/chat/chat_history`,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -137,6 +143,8 @@ const ChatScreen = ({ navigation, route }) => {
         getChattingHistory();
     }, [route])
 
+    const scrollViewRef = useRef();
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar style="light" />
@@ -145,9 +153,13 @@ const ChatScreen = ({ navigation, route }) => {
                 style={styles.chatContainer}
                 keyboardVerticalOffset={useHeaderHeight() + 20}
             >
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
                     <>
-                        <ScrollView contentContainerStyle={{ paddingTop: 15, }}>
+                        <ScrollView 
+                            contentContainerStyle={{ paddingTop: 15, paddingBottom:10, }} 
+                            ref={scrollViewRef} 
+                            onContentSizeChange={()=>scrollViewRef.current.scrollToEnd({animated:true})}>
+                        
                             {/* 채팅들이 기록되는 곳 by 세연 */}
                             {messages.map((data, i) =>
                                 data.user_email === user_email ?
@@ -161,7 +173,7 @@ const ChatScreen = ({ navigation, route }) => {
                                                     right={-13}
                                                     size={30}
                                                     source={data.user_profile ?
-                                                        { uri: `http://${myIp}/${data.user_profile}` }
+                                                        { uri: `https://${myIp}/${data.user_profile}` }
                                                         : require('../../assets/user_.png')}
                                                 />
                                                 <Text style={styles.recieverText}>{data.chatting_msg}</Text>
@@ -180,7 +192,7 @@ const ChatScreen = ({ navigation, route }) => {
                                                     rounded
                                                     size={30}
                                                     source={data.user_profile ?
-                                                        { uri: `http://${myIp}/${data.user_profile}` }
+                                                        { uri: `https://${myIp}/${data.user_profile}` }
                                                         : require('../../assets/user_.png')}
                                                 />
                                                 <Text style={styles.senderText}>{data.chatting_msg}</Text>
@@ -255,7 +267,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     senderName: {
-        left:66,
+        left: 66,
         paddingRight: 10,
         bottom: 14,
         fontSize: 13,
@@ -271,7 +283,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        padding: 15,
+        padding: 5,
     },
     chatTextInput: {
         bottom: 0,
@@ -283,21 +295,21 @@ const styles = StyleSheet.create({
         color: 'grey',
         borderRadius: 30,
     },
-    senderTime:{
+    senderTime: {
         color: "grey",
-        fontSize:12,
-        left:33,
-        bottom:15,
+        fontSize: 12,
+        left: 33,
+        bottom: 15,
     },
-    recieverTime:{
+    recieverTime: {
         color: "grey",
-        fontSize:12,
-        position:"absolute",
-        right:0,
-        bottom:7,
-        right:33,
+        fontSize: 12,
+        position: "absolute",
+        right: 0,
+        bottom: 7,
+        right: 33,
     },
-    senderNameAndTime:{
+    senderNameAndTime: {
         // flexDirection:'row',
         // flexWrap:'wrap'
         // position:"absolute",

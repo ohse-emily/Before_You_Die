@@ -27,7 +27,7 @@ const Login = ({ navigation }) => {
         } catch (e) {
         }
     }
-    
+
 
 
     return (
@@ -38,9 +38,9 @@ const Login = ({ navigation }) => {
                     <Text style={styles.pageTitle}>Before You Die</Text>
                     <Formik
                         initialValues={{ user_email: '', user_password: '' }}
-                        onSubmit={async (values, {resetForm}) => {
-                            console.log(values,'----------------------------------------------------')
-                            let url = `http://${myIp}/user/login/`
+                        onSubmit={async (values, { resetForm }) => {
+                            console.log(values, '----------------------------------------------------')
+                            let url = `https://${myIp}/user/login/`
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!
@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
                                 }
                             });
                             let getData = await response.json()
-                            console.log('getData=',getData)
+                            console.log('getData=', getData)
                             try {
                                 if (getData === undefined) {
                                     alert('아이디와 비밀번호를 확인해 주세요')
@@ -58,15 +58,17 @@ const Login = ({ navigation }) => {
                                     console.log('getDate true')
                                     navigation.navigate("MainApp")
                                     storeData(getData.token, values.user_email)
-                                    resetForm({values :{
-                                        user_email: values.user_email,
-                                        user_passwrod:''
-                                    }})
+                                    resetForm({
+                                        values: {
+                                            user_email: values.user_email,
+                                            user_passwrod: ''
+                                        }
+                                    })
                                 } else if (getData.proceed === false && getData.type === 'noverified') {
                                     alert('이메일 인증을 완료해주세요.')
                                 } else if (getData.proceed === false && getData.type === 'nouser') {
                                     alert('아이디와 비밀번호를 확인해주세요')
-                                } else{  // 예외처리 추가 by 세연 
+                                } else {  // 예외처리 추가 by 세연 
                                     alert('아이디와 비밀번호를 다시 한 번 확인해 주세요')
                                 }
                             } catch (e) {
@@ -156,20 +158,20 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
 export default Login;
 
 const styles = StyleSheet.create({
-    loginContainer:{
+    loginContainer: {
         // justifyContent:'center',
     },
     styledContainer: {
         //${StatusBarHeight && `paddingTop:${StatusBarHeight}px`};
         backgroundColor: 'white', //primary
         height: Dimensions.get('window').height,
-        
+
     },
     innerContainer: {
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     pageLogo: {
         width: 250,
@@ -182,7 +184,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'mediumpurple', //brand,
         padding: 10,
-        paddingBottom:50,
+        paddingBottom: 50,
     },
     subTitle: {
         fontSize: 18,

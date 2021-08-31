@@ -13,14 +13,13 @@ const addchat = async (req, res) => {
             user_email, chat_name,
         })
         let getChats = await Chat.findAll({})
-        console.log(getChats)
+        console.log('getchats =',getChats)
         result.gotchats = getChats;
     } catch (e) {
         console.log('chat DB insert failed , ERROR=', e)
         result.result = false;
     }
-    console.log(result)
-
+    console.log('result=',result)
     res.json(result)
 }
 
@@ -69,14 +68,14 @@ const sendmsg = async (req, res) => {
             order: [['chatting_time', 'ASC']],
         })
         result.select = true;
-        result.data = getChatHistory
+        result.data = getChatHistory;
     } catch (e) {
         console.log('Getting chat history failed, Error=', e)
     }
     res.json(result)
 }
 
-// chat 채팅 내용 history 가져오기 (user_email join해서 가져오기) by 세연 
+// chat 채팅 내용 history 가져오기 (user_email join해서 가져오기) - 위 sendmsg에 합침, 이후 삭제 예정! by 세연 
 const chat_history = async (req, res) => {
     console.log(req.body)
     let { chat_name } = req.body;
@@ -92,7 +91,7 @@ const chat_history = async (req, res) => {
     }
 }
 
-// PENDING - 1차 업뎃 이후 ㄱㄱ ! 
+// PENDING - 1차 업뎃 이후 진행 예정  
 // chatHome에 미리 chatting 내용 로드해서 마지막에 말한 채팅 내용 & 프로필 사진을 보이도록 by세연 
 const chat_athome = async(req,res)=>{
     console.log('도착햇숴요')

@@ -62,7 +62,7 @@ const Signup = ({ navigation }) => {
     // back end 
 
     // async function uploadImageAsync(uri){
-    //     let apiUrl = 'http://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
+    //     let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
 
     //     let uriParts = uri.split('.');
     //     let fileType = uriParts[uriParts.length-1];
@@ -163,15 +163,20 @@ const Signup = ({ navigation }) => {
                             }
 
                             // 백앤드 가입 정보 보내기 by 성민 
+
+
+
                             let res_data;
                             try {
-                                let url = `http://${myIp}/user/join`
+                                let url = `https://${myIp}/user/join`
                                 let options = {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(values),
                                 }
                                 let response = await fetch(url, options)
+                                //console.log('text : ', await response.text())
+
                                 res_data = await response.json()
                                 console.log(res_data)
                                 alert(res_data.msg);
@@ -185,7 +190,9 @@ const Signup = ({ navigation }) => {
                                 console.log(1231232)
                                 if (image) {
                                     console.log(23423525)
-                                    let apiUrl = `http://${myIp}/user/pic_upload`
+                                    console.log('asdfsdf:', ConvertToBase64(image))
+
+                                    let apiUrl = `https://${myIp}/user/pic_upload`
                                     let uriParts = image.split('.');
                                     let fileType = uriParts[uriParts.length - 1];
                                     let formData = new FormData();
@@ -194,20 +201,38 @@ const Signup = ({ navigation }) => {
                                         name: `${email}photo.${fileType}`,
                                         type: `image/${fileType}`,
                                     });
+                                    // 추가함 
+
+                                    let object = {
+                                        uri: image,
+                                        name: `${email}photo.${fileType}`,
+                                        type: `image/${fileType}`,
+                                    };
+                                    //formData.forEach(function(v,k){
+                                    //                 object[JSON.stringify(formData._parts[0][0])]=JSON.stringify(formData._parts[0][1]);
+                                    //})
+                                    //let json = JSON.stringify(object)
+
+                                    //     console.log('[0][0]',JSON.stringify(formData._parts[0][0]))
+                                    //      console.log('[0][1]',JSON.stringify(formData._parts[0][1]))
+                                    console.log('json(object_', JSON.stringify(object))
                                     let imgOptions = {
                                         method: 'POST',
-                                        body: formData,
+                                        body: JSON.stringify(object),
                                         headers: {
-                                            'Accept': 'application/json',
-                                            'Content-Type': 'multipart/form-data',
+                                            //'Accept': 'application/json',
+                                            //'Content-Disposition': 'form-data',
+                                            'Content-Type': 'application/json',
+                                            //'Content-Type': 'multipart/form-data',
                                         }
                                     }
                                     try {
                                         let sendImage = await fetch(apiUrl, imgOptions)
+                                        console.log('sendImage=', sendImage)
                                         let imgResult = await sendImage.json();
                                     } catch (e) {
                                         console.log('inserting image DB ERROR=', e)
-                                        alert('이미지 업로드에 실패하였습니다.')
+                                        alert('이미지 업로드에 실패하였습니다.', e)
                                         return;
                                     }
                                 }
@@ -224,7 +249,8 @@ const Signup = ({ navigation }) => {
                                 <View style={styles.avatarArea}>
                                     <TouchableOpacity
                                         style={styles.avatar}
-                                        onPress={pickImage}
+                                        // multipart 오류로 일단 여기 막음 !!!! 3번째 업데이트 시 꼭 주석 풀기 ** by 세연 
+                                        //onPress={pickImage}
                                     >
                                         {/* {image ? <Image source ={{uri:image}} style={styles.profile_img}/> : <Ionicons name="person-add" size={99} color="gray" />}*/}
                                         {image ? <Image rounded source={{ uri: image }} style={styles.profile_img} /> : <Image source={require('../assets/user_.png')} style={styles.profile_img} />}

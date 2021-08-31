@@ -27,7 +27,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   let userIMAGE;
   if (userImg) {
-    userIMAGE = { uri: `http://${myIp}/${userImg}` }
+    userIMAGE = { uri: `https://${myIp}/${userImg}` }
   } else {
     userIMAGE = { uri: changeImg }
   }
@@ -48,7 +48,7 @@ const MyInfoScreen = ({ navigation }) => {
         setUserImg(null)
 
         // back end 로 변경한 image file  보내기 
-        let apiUrl = `http://${myIp}/user/pic_upload`;
+        let apiUrl = `https://${myIp}/user/pic_upload`;
         let uriParts = pickerResult.uri.split('.');
         let fileType = uriParts[uriParts.length - 1];
         let formData = new FormData();
@@ -86,7 +86,7 @@ const MyInfoScreen = ({ navigation }) => {
           text: "탈퇴하기", onPress: async () => {
             console.log(" user 탈퇴하기 clicked")
 
-            let url = `http://${myIp}/user/deleteacc`
+            let url = `https://${myIp}/user/deleteacc`
             let response = await fetch(url, {
               method: 'POST', // or 'PUT'
               body: JSON.stringify({ userId }), // data can be `string` or {object}!
@@ -180,7 +180,7 @@ const MyInfoScreen = ({ navigation }) => {
       })
 
     const getInfo = async (token) => {  // 토큰값으로 디비를 조회하는 부분
-      let url = `http://${myIp}/user/userinfo/`
+      let url = `https://${myIp}/user/userinfo/`
       let value = { tokenValue: token }
       let response = await fetch(url, {
         method: 'POST', // or 'PUT'
@@ -204,7 +204,7 @@ const MyInfoScreen = ({ navigation }) => {
   // 교수님 도움받은 구간
   const deleteMsgHandler = async (id, msg_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = `http://${myIp}/user/deletepost`
+    let url = `https://${myIp}/user/deletepost`
     let data = { id, msg_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -219,7 +219,7 @@ const MyInfoScreen = ({ navigation }) => {
 
   const deleteWordHandler = async (id, word_user_email) => {
     // 선택한 id에 해당하는 값과 작성자(이용자 본인 유저아이디)를 넘겨 서버쪽에서 처리 - 신우
-    let url = `http://${myIp}/user/deleteword/`
+    let url = `https://${myIp}/user/deleteword/`
     let data = { id, word_user_email }
     let response = await fetch(url, {
       method: 'POST',
@@ -304,10 +304,10 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
-  myinfoVertical:{
-    justifyContent:'center',
-    flex:1,
-    
+  myinfoVertical: {
+    justifyContent: 'center',
+    flex: 1,
+
   },
   mypage_header_text: {
     paddingTop: 20,

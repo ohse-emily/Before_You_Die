@@ -6,7 +6,9 @@ const nodemailer = require('nodemailer');
 
 let join = async (req, res) => {
     let { fullName, email, password, user_image } = req.body
-    console.log(fullName, email, password, user_image)
+    // console.log(fullName, email, password, user_image)
+    console.log(req)
+
 
     // 이메일 & 닉네임 중복 검사 by 세연 
     let join_result = { result: true, msg: '입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)' };
@@ -38,6 +40,7 @@ let join = async (req, res) => {
         email_verify_key: email_key,
     })
 
+    // sequelize config 에서 date +09:00 timezone 설정완료 - 아래 코드 나중에 삭제예정 ! by 세연 
     // await sequelize.query(`update users set join_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${email}'`)
 
     // email 인증 메일 보내기 by 세연 
@@ -51,7 +54,7 @@ let join = async (req, res) => {
             pass: process.env.GooglePW
         }
     })
-    let url = `http://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
+    let url = `https://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
     let options = {
         from: '<BYD> byddothis@gmail.com',
         to: email,
@@ -76,11 +79,14 @@ let confirmEmail = async (req, res) => {
     let email_verify_change = await Users.update(
         { email_verify: 1 },
         {
-            where: { email_verify_key: req.query.key }
-        })
-        console.log('email_verify_change=,',email_verify_change)
-        console.log(email_verify_change[0])
-    if (email_verify_change[0] == 0 ) {
+            where: {
+                email_verify_key: req.query.key
+            }
+        }
+    )
+    console.log('email_verify_change=,', email_verify_change)
+
+    if (email_verify_change[0] == 0) {
         res.send('<script type="text/javascript">alert("Not verified"); window.location="/"; </script>');
         return 0;
     } else {
@@ -91,7 +97,7 @@ let confirmEmail = async (req, res) => {
 // signup image 저장 by 신우 
 let picUpload = async (req, res) => {
     console.log('req.file=', req.file)
-    console.log('modpicccccccc-----------------cccccccccccccccccc')
+    console.log('req.body=', req.body)
     let { originalname, path } = req.file
     let user_email = originalname.split('photo')[0]
     console.log('user_Email==', user_email, 'path===', path)
@@ -133,7 +139,6 @@ let login = async (req, res) => {
     console.log('getUser=', getUser)
     if (getUser != null && getUser.email_verify == 1) {
         // 로그인 정보와 DB가 일치할 경우 
-        console.log('ddd')
         result.proceed = true;
         result.type = 'verifieduser'
         result.token = token
@@ -227,7 +232,7 @@ let deleteWord = async (req, res) => {
     res.json(afterDelete)
 }
 
-// emailcheck -> join 에 한번에 실행 아래 코드는 삭제 예정 
+// emailcheck -> join 에 한번에 실행 아래 코드는 삭제 예정 by 세연 
 let email_check = async (req, res) => {
     let { email } = req.body
     let result = await Users.findOne(
@@ -249,31 +254,28 @@ let email_check = async (req, res) => {
 // user 탈퇴 시 절차 by 세연 
 let deleteAcc = async (req, res) => {
     let user_email = req.body.userId;
-    console.log(user_email)
+    console.log('deleteAcc - user_email = ', user_email)
     try {
         // 1. Users DB 에서 데이터 삭제 
-        console.log('11')
         await Users.destroy({
             where: { user_email }
         })
-        console.log('22')
         // 2. Lastwords DB 에서 user_email 개인정보만 변경 
         await Lastwords.update(
             { user_email: 'withdrawn_user' }, { where: { user_email } }
         )
-        console.log('33')
         // 3. Messages DB 에서 데이터 삭제 (문자/이메일 서비스 중단)
         await Messages.destroy({
             where: { msg_user_email: user_email }
         })
-        console.log('44')
     } catch (e) {
         console.log(`deleting user failed , user_email= ${user_email}`)
     }
     res.json({ goBackMain: true })
 }
 
-let transformPw = async (req, res) => { // 비밀번호 변경 by 성민
+// 비밀번호 변경 by 성민
+let transformPw = async (req, res) => {
     let { email, beforePw, afterPw } = req.body
     JWTbeforePw = createPW(beforePw)
     let result = await Users.findOne({
@@ -295,14 +297,14 @@ let transformPw = async (req, res) => { // 비밀번호 변경 by 성민
 
 
 
-    // let result = await Users.findOne({
-    //     where:{
-    //         user_email
-    //     },
-    //     attributes:['user_score']
-    // })
-    // let newScore = parseInt(result.dataValues.user_score)+1
-    // await Users.update({user_score: newScore},{where:{user_email}})
+// let result = await Users.findOne({
+//     where:{
+//         user_email
+//     },
+//     attributes:['user_score']
+// })
+// let newScore = parseInt(result.dataValues.user_score)+1
+// await Users.update({user_score: newScore},{where:{user_email}})
 // }
 
 
