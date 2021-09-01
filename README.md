@@ -97,7 +97,8 @@ FrontEnd
 * 익명 채팅방 개설 및 채팅 기능 
 * "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
 
-# 6. App development Timeline 
+# 6. App development Timeline
+<BYD>앱 성장 기록 
 https://blckchainetc.tistory.com/300
 
 # 7. Team Role 
