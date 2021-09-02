@@ -34,7 +34,7 @@ const ChatScreen = ({ navigation, route }) => {
         let chatProfile;
         if (messages[0]) {
             chatProfile = messages[0].user_profile ?
-                { uri: `http://${myIp}/${messages[messages.length - 1].user_profile}` }
+                { uri: `${myIp}/${messages[messages.length - 1].user_profile}` }
                 : require('../../assets/user_.png')
         }
 
@@ -98,7 +98,7 @@ const ChatScreen = ({ navigation, route }) => {
 
         let options = {
             method: 'POST',
-            url: `http://${myIp}/chat/sendmsg`,
+            url: `${myIp}/chat/sendmsg`,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -126,7 +126,7 @@ const ChatScreen = ({ navigation, route }) => {
 
             let options = {
                 method: 'POST',
-                url: `http://${myIp}/chat/chat_history`,
+                url: `${myIp}/chat/chat_history`,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -172,7 +172,7 @@ const ChatScreen = ({ navigation, route }) => {
                                                     right={-13}
                                                     size={30}
                                                     source={data.user_profile ?
-                                                        { uri: `http://${myIp}/${data.user_profile}` }
+                                                        { uri: `${myIp}/${data.user_profile}` }
                                                         : require('../../assets/user_.png')}
                                                 />
                                                 <Text style={styles.recieverText}>{data.chatting_msg}</Text>
@@ -191,7 +191,7 @@ const ChatScreen = ({ navigation, route }) => {
                                                     rounded
                                                     size={30}
                                                     source={data.user_profile ?
-                                                        { uri: `http://${myIp}/${data.user_profile}` }
+                                                        { uri: `${myIp}/${data.user_profile}` }
                                                         : require('../../assets/user_.png')}
                                                 />
                                                 <Text style={styles.senderText}>{data.chatting_msg}</Text>

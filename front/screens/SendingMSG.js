@@ -33,7 +33,7 @@ const SendingMSG = ({ navigation }) => {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { msg_mobile: rec, msg_content: con, msg_user_email: user_email, msg_method: 1 }
-                let url = `http://${myIp}/msg/mymessages`
+                let url = `${myIp}/msg/mymessages`
                 try {
                     await fetch(url, {
                         method: 'POST',

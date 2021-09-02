@@ -54,7 +54,7 @@ let join = async (req, res) => {
             pass: process.env.GooglePW
         }
     })
-    let url = `http://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
+    let url = `https://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
     let options = {
         from: '<BYD> byddothis@gmail.com',
         to: email,

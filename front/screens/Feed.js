@@ -20,7 +20,7 @@ const Feed = ({ navigation }) => {
     const loadFeed = async () => {
         // setLoaded(false)
         const userEmail = await AsyncStorage.getItem('@email_key')
-        let feedList = await axios.get(`http://${myIp}/msg/loadfeed?user_email=${userEmail}`)
+        let feedList = await axios.get(`${myIp}/msg/loadfeed?user_email=${userEmail}`)
         let result = feedList.data
         console.log(result)
         setList(result)
@@ -33,7 +33,7 @@ const Feed = ({ navigation }) => {
         const handleLike = async () => {
             const userEmail = await AsyncStorage.getItem('@email_key')
             let id = v.id
-            let likeTest = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
+            let likeTest = await axios.get(`${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
             // let likeIndicator = likeTest.data.msg
             // if(likeIndicator === 'done'){
             //     setLikes(likes + 1)
@@ -59,7 +59,7 @@ const Feed = ({ navigation }) => {
                             const userEmail = await AsyncStorage.getItem('@email_key')
                             let id = v.id
                             let userEmail2 = v.user_email
-                            let minus_user_score = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
+                            let minus_user_score = await axios.get(`${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
                             setReported(true)
                             Alert.alert('', minus_user_score.data.msg)
                         }

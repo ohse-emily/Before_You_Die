@@ -38,7 +38,7 @@ function YourwordsShowScreen({ navigation }) {
             const fetchYourword = async () => {
                 // 로딩 시 좋아요와 신고 여부도 받아옴 by 신우
                 const userEmail = await AsyncStorage.getItem('@email_key')
-                let getYourword = await axios.get(`http://${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
+                let getYourword = await axios.get(`${myIp}/msg/yourwords?userEmail=${userEmail}`)    //user의 email 보내서 해당 eamil 사람의 메세지만 가져오기 
                 console.log(getYourword.data)
                 if (getYourword.data[0] !== 'noResult') {
                     //좋아요가 없는 글
@@ -74,7 +74,7 @@ function YourwordsShowScreen({ navigation }) {
     const handleLike = async () => {
         const userEmail = await AsyncStorage.getItem('@email_key')
         let id = yourword[0].id
-        let likeTest = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
+        let likeTest = await axios.get(`${myIp}/msg/lastwordlikes?user_email=${userEmail}&id=${id}&type=0`)
         let likeIndicator = likeTest.data.msg
         if (likeIndicator === 'done') {
             setLikes(likes + 1)
@@ -99,7 +99,7 @@ function YourwordsShowScreen({ navigation }) {
                         const userEmail = await AsyncStorage.getItem('@email_key')
                         let id = yourword[0].id
                         let userEmail2 = yourword[0].user_email
-                        let minus_user_score = await axios.get(`http://${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
+                        let minus_user_score = await axios.get(`${myIp}/msg/lastwordlikes?user_email=${userEmail}&user_email2=${userEmail2}&id=${id}&type=1`)
                         setReported(true)
                         Alert.alert('', minus_user_score.data.msg)
                     }

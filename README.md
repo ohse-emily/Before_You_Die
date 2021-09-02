@@ -1,4 +1,4 @@
-<img src="http://user-images.githubusercontent.com/82620945/131205045-7427ca57-fc84-4454-a4e3-7d7ba539a959.jpg" width="500">
+<img src="https://user-images.githubusercontent.com/82620945/131205045-7427ca57-fc84-4454-a4e3-7d7ba539a959.jpg" width="500">
 
 # 1. Our Purpose and Values
 
@@ -6,23 +6,23 @@
 
 # 2. Quick View
 
-![byd_4pics_1](http://user-images.githubusercontent.com/82620945/131205965-3ac23a4d-51b1-4e94-8c90-3953535fada8.jpg)
-![byd_4pic_2](http://user-images.githubusercontent.com/82620945/131205967-5dd60db5-45cd-4a12-8f5e-a19eeda5f547.jpg)
+![byd_4pics_1](https://user-images.githubusercontent.com/82620945/131205965-3ac23a4d-51b1-4e94-8c90-3953535fada8.jpg)
+![byd_4pic_2](https://user-images.githubusercontent.com/82620945/131205967-5dd60db5-45cd-4a12-8f5e-a19eeda5f547.jpg)
 
 # 3. What we used
 
-![JavaScript](http://img.shields.io/badge/-JavaScript-black?style=round-square&logo=javascript)
-![Nodejs](http://img.shields.io/badge/-Nodejs-black?style=round-square&logo=Node.js)
-![Express.js](http://img.shields.io/badge/-Express-black?style=round-square&logo=expressjs)
+![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=round-square&logo=javascript)
+![Nodejs](https://img.shields.io/badge/-Nodejs-black?style=round-square&logo=Node.js)
+![Express.js](https://img.shields.io/badge/-Express-black?style=round-square&logo=expressjs)
 <br/>
-![React](http://img.shields.io/badge/-React-black?style=round-square&logo=react)
-![ReactNative](http://img.shields.io/badge/-ReactNative-black?style=round-square&logo=react)
-![ReactNativeExpo](http://img.shields.io/badge/-ReactNativeExpo-black?style=round-square&logo=expo)
+![React](https://img.shields.io/badge/-React-black?style=round-square&logo=react)
+![ReactNative](https://img.shields.io/badge/-ReactNative-black?style=round-square&logo=react)
+![ReactNativeExpo](https://img.shields.io/badge/-ReactNativeExpo-black?style=round-square&logo=expo)
 <br/>
-![Mysql](http://img.shields.io/badge/-Mysql-black?style=round-square&logo=Mysql)
-![Git](http://img.shields.io/badge/-Git-black?style=round-square&logo=git)
-![GitHub](http://img.shields.io/badge/-GitHub-black?style=round-square&logo=github)
-![Ubuntu](http://img.shields.io/badge/-Ubuntu-black?style=round-square&logo=ubuntu)
+![Mysql](https://img.shields.io/badge/-Mysql-black?style=round-square&logo=Mysql)
+![Git](https://img.shields.io/badge/-Git-black?style=round-square&logo=git)
+![GitHub](https://img.shields.io/badge/-GitHub-black?style=round-square&logo=github)
+![Ubuntu](https://img.shields.io/badge/-Ubuntu-black?style=round-square&logo=ubuntu)
 
 # 4. Dependency Module
 
@@ -90,20 +90,23 @@ FrontEnd
 # 5. Main Function
 
 <<<<<<< HEAD
+
 - 회원가입 / 로그인
 - 나의 기본 정보 / 프로필 사진 변경
 - 나의 이야기 남기기
 - 누군가의 이야기 랜덤으로 읽기
 - 고해성사 서비스
 - 익명 채팅방 개설 및 채팅 기능
-- "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
-=======
-# 6. App development Timeline
-<BYD>앱 성장 기록 
-https://blckchainetc.tistory.com/300
->>>>>>> 97deccf918a72cf481a375738769a68cb7f57241
+- # "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
 
 # 6. App development Timeline
+
+https>앱 성장 기록
+https://blckchainetc.tistory.com/300
+
+> > > > > > > 97deccf918a72cf481a375738769a68cb7f57241
+
+# 6. App development httpsline
 
 http://blckchainetc.tistory.com/300
 
@@ -111,12 +114,16 @@ http://blckchainetc.tistory.com/300
 
 #### 🥑 오세연(<a href="http://github.com/ohse-emily">SeyeonGithub</a>)
 
+https
+
 - Front-end & Back-end
 - 채팅 기능 / 이메일 인증 기능 구현
 - 나의 이야기 보내기, 너의 이야기 듣기 기능 구현
 - 어플 기획 / 작업 스케쥴 관리
 
 #### 🥝 엄신우(<a href="http://github.com/dfassf">SinwooGithub</a>)
+
+https
 
 - Front-end & Back-end
 - 회원가입 / 로그인

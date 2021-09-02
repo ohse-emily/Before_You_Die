@@ -16,7 +16,7 @@ const ChatScreen = ({ navigation, route }) => {
     useEffect(() => {
         console.log('나야나')
         const fetchchats = async () => {
-            let getchat = await axios.get(`http://${myIp}/chat/getchat`)
+            let getchat = await axios.get(`${myIp}/chat/getchat`)
             if (getchat.data.result) {
                 console.log('axios getchat result = true')
                 setChats(getchat.data.gotchats)

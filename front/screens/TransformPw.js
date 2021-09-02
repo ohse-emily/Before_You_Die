@@ -23,7 +23,7 @@ const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
 
         AsyncStorage.getItem('@email_key', async (err, result) => {
           let data = { email: result, beforePw: values.beforePw, afterPw: values.afterPw }
-          let url = `http://${myIp}/user/transformPw`
+          let url = `${myIp}/user/transformPw`
           let options = {
             method: 'POST',
             body: JSON.stringify(data),

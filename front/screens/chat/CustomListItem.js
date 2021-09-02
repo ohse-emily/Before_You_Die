@@ -12,7 +12,7 @@ const CustomListItem = ({ id, chatName, enterChat }) => {
     // PENDING by 세연 
     // useEffect(()=>{
     //     const getChatMsg= async()=>{
-    //         let result = await axios.get(`http://${myIp}/chat/chat_athome`) 
+    //         let result = await axios.get(`${myIp}/chat/chat_athome`) 
     //         console.log(result)
 
     //         // let sendingResult = await axios(options)

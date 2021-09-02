@@ -62,7 +62,7 @@ const Signup = ({ navigation }) => {
     // back end 
 
     // async function uploadImageAsync(uri){
-    //     let apiUrl = 'http://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
+    //     let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
 
     //     let uriParts = uri.split('.');
     //     let fileType = uriParts[uriParts.length-1];
@@ -168,7 +168,7 @@ const Signup = ({ navigation }) => {
 
                             let res_data;
                             try {
-                                let url = `http://${myIp}/user/join`
+                                let url = `${myIp}/user/join`
                                 let options = {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
@@ -192,7 +192,7 @@ const Signup = ({ navigation }) => {
                                     console.log(23423525)
                                     //      console.log('asdfsdf:', ConvertToBase64(image))
 
-                                    let apiUrl = `http://${myIp}/user/pic_upload`
+                                    let apiUrl = `${myIp}/user/pic_upload`
                                     let uriParts = image.split('.');
                                     let fileType = uriParts[uriParts.length - 1];
                                     let formData = new FormData();
