@@ -89,6 +89,7 @@ FrontEnd
 
 # 5. Main Function
 
+<<<<<<< HEAD
 - 회원가입 / 로그인
 - 나의 기본 정보 / 프로필 사진 변경
 - 나의 이야기 남기기
@@ -96,6 +97,11 @@ FrontEnd
 - 고해성사 서비스
 - 익명 채팅방 개설 및 채팅 기능
 - "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
+=======
+# 6. App development Timeline
+<BYD>앱 성장 기록 
+https://blckchainetc.tistory.com/300
+>>>>>>> 97deccf918a72cf481a375738769a68cb7f57241
 
 # 6. App development Timeline
 
