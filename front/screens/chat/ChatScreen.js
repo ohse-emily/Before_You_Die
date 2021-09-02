@@ -11,8 +11,7 @@ import myIp from '../../indivisual_ip';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-elements'
 // import Text from '../DefaultText';
-import { Dimensions} from 'react-native';
-import Constants from 'expo-constants';
+import { Dimensions } from 'react-native';
 
 // 채팅을 주고 받는 Chat screen 전체 by 세연 
 const ChatScreen = ({ navigation, route }) => {
@@ -35,14 +34,14 @@ const ChatScreen = ({ navigation, route }) => {
         let chatProfile;
         if (messages[0]) {
             chatProfile = messages[0].user_profile ?
-                { uri: `https://${myIp}/${messages[messages.length - 1].user_profile}` }
+                { uri: `http://${myIp}/${messages[messages.length - 1].user_profile}` }
                 : require('../../assets/user_.png')
         }
 
         // const windowWidth = Dimensions.get('window').width;
         const screen = Dimensions.get('screen');
         const windowHeight = Dimensions.get('window').height;
-        console.log('aaaaaaa',screen.height, windowHeight)
+        console.log('aaaaaaa', screen.height, windowHeight)
 
         const settings = async () => {
             navigation.setOptions({
@@ -99,7 +98,7 @@ const ChatScreen = ({ navigation, route }) => {
 
         let options = {
             method: 'POST',
-            url: `https://${myIp}/chat/sendmsg`,
+            url: `http://${myIp}/chat/sendmsg`,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -112,7 +111,7 @@ const ChatScreen = ({ navigation, route }) => {
         }
         let sendingResult = await axios(options)
         // 메세지가 local back db에 잘 입력되면 
-       // console.log('sendingResult', sendingResult)
+        // console.log('sendingResult', sendingResult)
 
         if (sendingResult && sendingResult.status === 200) {
             setMessages(sendingResult.data.data)
@@ -127,7 +126,7 @@ const ChatScreen = ({ navigation, route }) => {
 
             let options = {
                 method: 'POST',
-                url: `https://${myIp}/chat/chat_history`,
+                url: `http://${myIp}/chat/chat_history`,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -155,11 +154,11 @@ const ChatScreen = ({ navigation, route }) => {
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
                     <>
-                        <ScrollView 
-                            contentContainerStyle={{ paddingTop: 15, paddingBottom:10, }} 
-                            ref={scrollViewRef} 
-                            onContentSizeChange={()=>scrollViewRef.current.scrollToEnd({animated:true})}>
-                        
+                        <ScrollView
+                            contentContainerStyle={{ paddingTop: 15, paddingBottom: 10, }}
+                            ref={scrollViewRef}
+                            onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>
+
                             {/* 채팅들이 기록되는 곳 by 세연 */}
                             {messages.map((data, i) =>
                                 data.user_email === user_email ?
@@ -173,7 +172,7 @@ const ChatScreen = ({ navigation, route }) => {
                                                     right={-13}
                                                     size={30}
                                                     source={data.user_profile ?
-                                                        { uri: `https://${myIp}/${data.user_profile}` }
+                                                        { uri: `http://${myIp}/${data.user_profile}` }
                                                         : require('../../assets/user_.png')}
                                                 />
                                                 <Text style={styles.recieverText}>{data.chatting_msg}</Text>
@@ -192,7 +191,7 @@ const ChatScreen = ({ navigation, route }) => {
                                                     rounded
                                                     size={30}
                                                     source={data.user_profile ?
-                                                        { uri: `https://${myIp}/${data.user_profile}` }
+                                                        { uri: `http://${myIp}/${data.user_profile}` }
                                                         : require('../../assets/user_.png')}
                                                 />
                                                 <Text style={styles.senderText}>{data.chatting_msg}</Text>

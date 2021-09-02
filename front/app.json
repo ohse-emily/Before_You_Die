@@ -2,7 +2,7 @@
   "expo": {
     "name": "BYD",
     "slug": "BYD",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/byd_icon.png",
     "splash": {
@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/byd_final_icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "package.BYD"
+      "package": "package.BYD", 
+      "versionCode":2
     },
     "web": {
       "favicon": "./assets/byd_final_icon.png"

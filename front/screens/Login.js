@@ -40,7 +40,7 @@ const Login = ({ navigation }) => {
                         initialValues={{ user_email: '', user_password: '' }}
                         onSubmit={async (values, { resetForm }) => {
                             console.log(values, '----------------------------------------------------')
-                            let url = `https://${myIp}/user/login/`
+                            let url = `http://${myIp}/user/login/`
                             let response = await fetch(url, {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify(values), // data can be `string` or {object}!

@@ -26,7 +26,7 @@ const Mywords = ({ navigation }) => {
             try {
                 let user_email = await AsyncStorage.getItem('@email_key')
                 let mywordsData = { lastword_subject: sub, lastword_content: con, lastword_sender: sen, user_email }
-                let url = `https://${myIp}/msg/mywords/`
+                let url = `http://${myIp}/msg/mywords/`
 
                 try {
                     await fetch(url, {

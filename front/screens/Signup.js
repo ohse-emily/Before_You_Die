@@ -62,7 +62,7 @@ const Signup = ({ navigation }) => {
     // back end 
 
     // async function uploadImageAsync(uri){
-    //     let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
+    //     let apiUrl = 'http://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
 
     //     let uriParts = uri.split('.');
     //     let fileType = uriParts[uriParts.length-1];
@@ -168,7 +168,7 @@ const Signup = ({ navigation }) => {
 
                             let res_data;
                             try {
-                                let url = `https://${myIp}/user/join`
+                                let url = `http://${myIp}/user/join`
                                 let options = {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
@@ -190,9 +190,9 @@ const Signup = ({ navigation }) => {
                                 console.log(1231232)
                                 if (image) {
                                     console.log(23423525)
-                                    console.log('asdfsdf:', ConvertToBase64(image))
+                                    //      console.log('asdfsdf:', ConvertToBase64(image))
 
-                                    let apiUrl = `https://${myIp}/user/pic_upload`
+                                    let apiUrl = `http://${myIp}/user/pic_upload`
                                     let uriParts = image.split('.');
                                     let fileType = uriParts[uriParts.length - 1];
                                     let formData = new FormData();
@@ -203,38 +203,37 @@ const Signup = ({ navigation }) => {
                                     });
                                     // 추가함 
 
-                                    let object = {
-                                        uri: image,
-                                        name: `${email}photo.${fileType}`,
-                                        type: `image/${fileType}`,
-                                    };
-                                    //formData.forEach(function(v,k){
-                                    //                 object[JSON.stringify(formData._parts[0][0])]=JSON.stringify(formData._parts[0][1]);
-                                    //})
-                                    //let json = JSON.stringify(object)
+                                    // let object = {
+                                    //     uri: image,
+                                    //     name: `${email}photo.${fileType}`,
+                                    //     type: `image/${fileType}`,
+                                    // };
+                                    console.log('44444444444444')
 
-                                    //     console.log('[0][0]',JSON.stringify(formData._parts[0][0]))
-                                    //      console.log('[0][1]',JSON.stringify(formData._parts[0][1]))
-                                    console.log('json(object_', JSON.stringify(object))
                                     let imgOptions = {
                                         method: 'POST',
-                                        body: JSON.stringify(object),
+                                        body: formData,
                                         headers: {
-                                            //'Accept': 'application/json',
+                                            // 'Accept': 'application/json',
                                             //'Content-Disposition': 'form-data',
-                                            'Content-Type': 'application/json',
-                                            //'Content-Type': 'multipart/form-data',
+                                            // 'Content-Type': 'application/json',
+                                            'Content-Type': 'multipart/form-data',
                                         }
                                     }
+
+                                    console.log('5555555555555555')
                                     try {
+                                        console.log('fetching..?')
                                         let sendImage = await fetch(apiUrl, imgOptions)
                                         console.log('sendImage=', sendImage)
-                                        let imgResult = await sendImage.json();
+                                        // let imgResult = await sendImage.json();
                                     } catch (e) {
                                         console.log('inserting image DB ERROR=', e)
                                         alert('이미지 업로드에 실패하였습니다.', e)
                                         return;
                                     }
+
+                                    console.log('666666666666666')
                                 }
                             }
 
@@ -250,7 +249,7 @@ const Signup = ({ navigation }) => {
                                     <TouchableOpacity
                                         style={styles.avatar}
                                         // multipart 오류로 일단 여기 막음 !!!! 3번째 업데이트 시 꼭 주석 풀기 ** by 세연 
-                                        //onPress={pickImage}
+                                        onPress={pickImage}
                                     >
                                         {/* {image ? <Image source ={{uri:image}} style={styles.profile_img}/> : <Ionicons name="person-add" size={99} color="gray" />}*/}
                                         {image ? <Image rounded source={{ uri: image }} style={styles.profile_img} /> : <Image source={require('../assets/user_.png')} style={styles.profile_img} />}

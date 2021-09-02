@@ -21,7 +21,7 @@ const ChatScreen = ({ navigation, route }) => {
     // 채팅방 개설하면 DB에 추가하기 by 세연 
     const createChat = async () => {
         try {
-            let url = `https://${myIp}/chat/addchat/`
+            let url = `http://${myIp}/chat/addchat/`
             let user_email = await AsyncStorage.getItem('@email_key')
             let data = { user_email, chat_name: input }
             let response = await fetch(url, {
