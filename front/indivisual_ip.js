@@ -1,3 +1,4 @@
-const myIp = process.env.NODE_ENV == 'production' ? `https://byddothis.com` : 'http://192.168.0.35:3000'
+// const myIp = process.env.NODE_ENV == 'production' ? `https://byddothis.com` : 'http://192.168.0.35:3000'
+const myIp = `https://byddothis.com`
 export default myIp
 
