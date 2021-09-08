@@ -128,7 +128,7 @@ http://blckchainetc.tistory.com/300
 
 #### 공동 작업
 
-- 각자의 Components(screen) CSS
+- 각자의 Components(screens) CSS
 - aws & 도메인 연결
 - 개인정보보호 및 서비스이용약관
 - 테스트 및 배포
