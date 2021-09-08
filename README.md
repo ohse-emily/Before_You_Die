@@ -87,7 +87,7 @@ FrontEnd
   },
 ```
 
-# 5. Main Function
+# 5. Main Functions
 - 회원가입 / 로그인
 - 나의 기본 정보 / 프로필 사진 변경
 - 나의 이야기 남기기
