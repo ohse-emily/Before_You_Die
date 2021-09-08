@@ -6,12 +6,10 @@ const nodemailer = require('nodemailer');
 
 let join = async (req, res) => {
     let { fullName, email, password, user_image } = req.body
-    // console.log(fullName, email, password, user_image)
-    console.log(req)
-
+    console.log(`join하는 user의 정보 :`,fullName, email, password, user_image)
 
     // 이메일 & 닉네임 중복 검사 by 세연 
-    let join_result = { result: true, msg: '입력해주신 이메일로 인증 url을 보내드렸습니다. 인증을 진행해주세요! :)' };
+    let join_result = { result: true, msg: `${fullName}님 환영합니다 ♪ `};
     let emailCheck = await Users.findAll({ where: { user_email: email } })
     let nickNameCheck = await Users.findAll({ where: { user_nickname: fullName } })
     console.log('emailCheck = ', emailCheck, 'nickName=', nickNameCheck)
@@ -43,36 +41,37 @@ let join = async (req, res) => {
     // sequelize config 에서 date +09:00 timezone 설정완료 - 아래 코드 나중에 삭제예정 ! by 세연 
     // await sequelize.query(`update users set join_date = CONVERT_TZ(now(), "+0:00", "+9:00") where user_email = '${email}'`)
 
-    // email 인증 메일 보내기 by 세연 
-    let transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        host: 'smtp.gmail.com',
-        post: 465,
-        secure: true,
-        auth: {
-            user: process.env.GoogleID,
-            pass: process.env.GooglePW
-        }
-    })
-    let url = `https://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
-    let options = {
-        from: '<BYD> byddothis@gmail.com',
-        to: email,
-        subject: ' BYD 회원가입을 완성해 주세요 :) !  ',
-        html: `<span>username 님 안녕하세요,  이메일인증을 위해 url을 클릭해주세요</span> <a href=${url}>${url}<a>`
-    }
+    // email 인증 메일 보내기 by 세연 ---> 인증 복잡하다는 피드백으로 잠시 철회 by세연 
+    // let transporter = nodemailer.createTransport({
+    //     service: 'Gmail',
+    //     host: 'smtp.gmail.com',
+    //     post: 465,
+    //     secure: true,
+    //     auth: {
+    //         user: process.env.GoogleID,
+    //         pass: process.env.GooglePW
+    //     }
+    // })
+    // let url = `https://` + req.get('host') + `/user/confirmEmail?key=${email_key}`;
+    // let options = {
+    //     from: '<BYD> byddothis@gmail.com',
+    //     to: email,
+    //     subject: ' BYD 회원가입을 완성해 주세요 :) !  ',
+    //     html: `<span> ${fullName} 님 안녕하세요,  이메일인증을 위해 url을 클릭해주세요</span> <a href=${url}>${url}<a>`
+    // }
 
-    transporter.sendMail(options, function (err, res) {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('email has been successfully sent.')
-        }
-        transporter.close();
-    })
+    // transporter.sendMail(options, function (err, res) {
+    //     if (err) {
+    //         console.log(err)
+    //     } else {
+    //         console.log('email has been successfully sent.')
+    //     }
+    //     transporter.close();
+    // })
     res.json(join_result)
 }
 
+// 잠시 이메일 인증 철회 (사용자 피드백)
 // 고객이 email url 클릭 시 email_verify 0 -> 1로 변경 by세연 
 let confirmEmail = async (req, res) => {
     console.log(req.query)
@@ -125,11 +124,12 @@ let picUpload = async (req, res) => {
 
 
 let login = async (req, res) => {
-    let { user_email, user_password } = req.body
+    let { user_email, user_password } = req.body;
     let pwJWT = createPW(user_password)
     let token = createToken(user_email)
     // result default value
     let result = { proceed: false, type: 'nouser' }
+   
     let getUser = await Users.findOne({
         where: {
             user_email,
@@ -137,7 +137,8 @@ let login = async (req, res) => {
         } // 나중에 pwJWT로 바꾸기
     })
     console.log('getUser=', getUser)
-    if (getUser != null && getUser.email_verify == 1) {
+
+    if (getUser != null) {
         // 로그인 정보와 DB가 일치할 경우 
         result.proceed = true;
         result.type = 'verifieduser'
@@ -146,13 +147,29 @@ let login = async (req, res) => {
         console.log(loggedInAt, '로긴시간')
         console.log(user_email, '유저이메일')
         await sequelize.query(`update users set login_date = now() where user_email = '${user_email}'`)
-
-    } else if (getUser != null && getUser.email_verify == 0) {
+    } else{
         //이메일 인증을 못받은 경우 
-        console.log('못받음')
+        console.log('login 실패')
         result.type = 'noverified'
     }
-    console.log(result)
+
+    // 사용자들의 피드백으로 이메일 인증 철회 & 위의 코드로 대체 by 세연
+    // if (getUser != null && getUser.email_verify == 1) {
+    //     // 로그인 정보와 DB가 일치할 경우 
+    //     result.proceed = true;
+    //     result.type = 'verifieduser'
+    //     result.token = token
+    //     let loggedInAt = new Date().toLocaleDateString()
+    //     console.log(loggedInAt, '로긴시간')
+    //     console.log(user_email, '유저이메일')
+    //     await sequelize.query(`update users set login_date = now() where user_email = '${user_email}'`)
+
+    // } else if (getUser != null && getUser.email_verify == 0) {
+    //     //이메일 인증을 못받은 경우 
+    //     console.log('못받음')
+    //     result.type = 'noverified'
+    // }
+    console.log(`login result=`,result)
     res.json(result)
 }
 
