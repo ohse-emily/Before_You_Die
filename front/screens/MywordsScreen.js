@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useLayoutEffect } from 'react'
 import {
     StyleSheet, View, ScrollView, SafeAreaView, TouchableOpacity,
     KeyboardAvoidingView, TextInput, TouchableWithoutFeedback, Keyboard, Dimensions
@@ -12,6 +12,14 @@ const Mywords = ({ navigation }) => {
     const [mywordsSubject, setMywordsSubject] = useState('')
     const [mywordsContent, setMywordsContent] = useState('')
     const [mywordsSender, setMywordsSender] = useState('')
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: '나의 이야기 전하기',
+            headerTitleAlign: 'center',
+        })
+    }, [navigation])
+
 
     // mywords 를 백앤드로 보내기 -> db 추가! by 세연 
     // AsyncStorage에서 user_email 가져오기 

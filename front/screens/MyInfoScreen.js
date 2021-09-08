@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Image, StyleSheet, Alert, ScrollView, Button, TouchableOpacity, Touchable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from './DefaultText';
@@ -24,6 +24,13 @@ const MyInfoScreen = ({ navigation }) => {
     sendToken()
 
   }, [])
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+        title: '나의 정보',
+        headerTitleAlign: 'center',
+    })
+}, [navigation])
 
   let userIMAGE;
   if (userImg) {

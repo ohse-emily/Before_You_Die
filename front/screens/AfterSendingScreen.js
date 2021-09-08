@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect} from 'react'
 import {
     StyleSheet,  View, ScrollView, SafeAreaView,
     KeyboardAvoidingView, TextInput,
@@ -9,6 +9,13 @@ import Text from './DefaultText';
 const AfterSending = ( {navigation} ) => {
 
 //      console.log(navigation.getState())
+useLayoutEffect(() => {
+    navigation.setOptions({
+        title: '보내기 완료',
+        headerTitleAlign: 'center',
+    })
+}, [navigation])
+
 
     return (
         <SafeAreaView style={styles.afterSendingContainer}>

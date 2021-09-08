@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useLayoutEffect} from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,6 +6,14 @@ import Text from './DefaultText';
 import myIp from '../indivisual_ip'
 
 const TransformPw = ({ navigation }) => { // 비밀번호 변경 by 성민
+  
+  useLayoutEffect(() => {
+    navigation.setOptions({
+        title: '비밀번호 변경',
+        headerTitleAlign: 'center',
+    })
+}, [navigation])
+
   return (
     <Formik
       initialValues={{ beforePw: '', afterPw: '', afterPwCheck: '' }}

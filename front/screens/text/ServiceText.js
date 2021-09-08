@@ -1,8 +1,15 @@
-import React from 'react';
+import React,{useLayoutEffect} from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import Text from './../DefaultText';
 
-const ServiceText = () => {
+const ServiceText = ({navigation}) => {
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: 'BYD 서비스 이용약관',
+            headerTitleAlign: 'center',
+        })
+    }, [navigation])
 
     PrivacyText = `서비스 이용약관
 

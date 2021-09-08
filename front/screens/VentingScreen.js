@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useLayoutEffect } from 'react'
 import {
     StyleSheet, ScrollView, SafeAreaView,
     KeyboardAvoidingView, TextInput, View,
@@ -9,15 +9,22 @@ import Text from './DefaultText';
 import { Dimensions } from 'react-native';
 
 const Venting = ({ navigation }) => {
-    console.log(navigation.getState())
+    console.log(navigation.getState())   
     const [ventingContent, setVentingContent] = useState('')
-
     const [popupVenting, setPopupVenting] = useState(true)
     const popupVent = () => {
         console.log('asdf')
         setPopupVenting(!popupVenting)
     }
     console.log(popupVenting)
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: '임금님귀는 당나귀 귀',
+            headerTitleAlign: 'center',
+        })
+    }, [navigation])
+
     return (
         <SafeAreaView style={styles.ventingContainer}>
             {popupVenting ?
