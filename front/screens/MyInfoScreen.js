@@ -8,22 +8,25 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import myIp from '../indivisual_ip'
 import { Dimensions } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 const MyInfoScreen = ({ navigation }) => {
   // 메시지를 담아놓는 state - 신우
   const [messagesList, setMessagesList] = useState([])
   const [wordsList, setWordsList] = useState([])
   const [userId, setUserId] = useState('')
+  const [userNickname, setUserNickname] = useState('')
   // 위 messagesList 값을 받아왔는지 알려주는 state - 신우
   const [gotData, setGotData] = useState(false)
   const [userImg, setUserImg] = useState(null)// userImg = user가 원래 가지고 있는 프로필 사진 (from DB)
   const [changeImg, setChangeImg] = useState(null) // changeImg = user가 사진첩에서 가져온 사진 by  세연 
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
     sendToken()
 
-  }, [])
+  }, [isFocused])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -178,8 +181,8 @@ const MyInfoScreen = ({ navigation }) => {
           // 만약에 대비하여 만들어놓은 장치로, - 신우
           // 토큰이 존재하지 않는데 회원정보 페이지를 보면 안되기 때문에 
           // 설정해놓음. 맨 처음 페이지로 가도록 해놔야 하는데 네비 수정 후 주석 해제하기. 
-          alert('토큰이 만료되었습니다. 다시 로그인을 해주세요 :) ')
-          navigation.navigate('Login')
+          alert('로그아웃 되었습니다. 다시 로그인을 진행해주세요 :) ')
+          navigation.navigate('Main')
         }
       })
       .catch((e) => {
@@ -203,6 +206,7 @@ const MyInfoScreen = ({ navigation }) => {
       setGotData(true)
       setUserImg(getData[0].user_image)
       setUserId(getData[0].user_email)
+      setUserNickname(getData[0].user_nickname)
 
     }
   }
@@ -248,7 +252,8 @@ const MyInfoScreen = ({ navigation }) => {
             {userImg || changeImg ? <Image rounded source={userIMAGE} style={{ width: 100, height: 100 }} />
               : <Image rounded source={require('../assets/user_.png')} style={{ width: 100, height: 100 }} />}
 
-            <Text>{userId}</Text>
+            <Text style={styles.nameAreaA}>{userId}</Text>
+            <Text style={styles.nameAreaB}>{userNickname}</Text>
           </TouchableOpacity>
           <View style={styles.mypage_container}>
             <TouchableOpacity
@@ -368,6 +373,14 @@ const styles = StyleSheet.create({
     padding: 5,
     zIndex: 0,
     alignSelf: 'flex-end',
+  },
+  nameAreaA: {
+    marginTop:10,
+    marginBottom:0,
+  },
+  nameAreaB: {
+    marginTop:5,
+    marginBottom:10,
   },
 });
 
