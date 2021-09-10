@@ -87,14 +87,14 @@ FrontEnd
   },
 ```
 
-# 5. Main Function
+# 5. Main Functions
 - 회원가입 / 로그인
 - 나의 기본 정보 / 프로필 사진 변경
 - 나의 이야기 남기기
 - 누군가의 이야기 랜덤으로 읽기
 - 고해성사 서비스
 - 익명 채팅방 개설 및 채팅 기능
-- "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
+- weekly "따봉" 가장 많이 받은 이야기 피드 (4차 업데이트 때 서비스 제공 예정)
 
 # 6. App development Timeline
 
@@ -128,7 +128,7 @@ http://blckchainetc.tistory.com/300
 
 #### 공동 작업
 
-- 각자의 Components(screen) CSS
+- 각자의 Components(screens) CSS
 - aws & 도메인 연결
 - 개인정보보호 및 서비스이용약관
 - 테스트 및 배포
