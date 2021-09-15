@@ -87,24 +87,20 @@ FrontEnd
   },
 ```
 
-# 5. Main Function
-
-<<<<<<< HEAD
-
+# 5. Main Functions
 - 회원가입 / 로그인
 - 나의 기본 정보 / 프로필 사진 변경
 - 나의 이야기 남기기
 - 누군가의 이야기 랜덤으로 읽기
 - 고해성사 서비스
 - 익명 채팅방 개설 및 채팅 기능
-- # "따봉" 가장 많이 받은 이야기 피드 서비스 (weekly)
+- weekly "따봉" 가장 많이 받은 이야기 피드 (4차 업데이트 때 서비스 제공 예정)
 
 # 6. App development Timeline
 
 https>앱 성장 기록
 https://blckchainetc.tistory.com/300
 
-> > > > > > > 97deccf918a72cf481a375738769a68cb7f57241
 
 # 6. App development httpsline
 
@@ -113,25 +109,18 @@ http://blckchainetc.tistory.com/300
 # 7. Team Role
 
 #### 🥑 오세연(<a href="http://github.com/ohse-emily">SeyeonGithub</a>)
-
-https
-
 - Front-end & Back-end
 - 채팅 기능 / 이메일 인증 기능 구현
 - 나의 이야기 보내기, 너의 이야기 듣기 기능 구현
 - 어플 기획 / 작업 스케쥴 관리
 
 #### 🥝 엄신우(<a href="http://github.com/dfassf">SinwooGithub</a>)
-
-https
-
 - Front-end & Back-end
 - 회원가입 / 로그인
 - 인기 게시글 피드 구현
 - 좋아요 기능 구현
 
 #### 🍏 나성민(<a href="http://github.com/Naseongmin07">SungminGithub</a>)
-
 - Front-end & Back-end
 - 회원가입 / 정보수정
 - Popup 기능 구현 및 담당
@@ -139,7 +128,7 @@ https
 
 #### 공동 작업
 
-- 각자의 Components(screen) CSS
+- 각자의 Components(screens) CSS
 - aws & 도메인 연결
 - 개인정보보호 및 서비스이용약관
 - 테스트 및 배포

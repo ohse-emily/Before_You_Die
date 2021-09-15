@@ -65,7 +65,7 @@ const Login = ({ navigation }) => {
                                         }
                                     })
                                 } else if (getData.proceed === false && getData.type === 'noverified') {
-                                    alert('이메일 인증을 완료해주세요.')
+                                    alert('로그인에 실패하였습니다.')
                                 } else if (getData.proceed === false && getData.type === 'nouser') {
                                     alert('아이디와 비밀번호를 확인해주세요')
                                 } else {  // 예외처리 추가 by 세연 

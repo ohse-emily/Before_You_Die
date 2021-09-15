@@ -214,9 +214,10 @@ const Signup = ({ navigation }) => {
                                         method: 'POST',
                                         body: formData,
                                         headers: {
-                                            // 'Accept': 'application/json',
+                                            'Accept': 'application/json',
                                             //'Content-Disposition': 'form-data',
                                             // 'Content-Type': 'application/json',
+                                            'Access-Control-Allow-Origin': '*',
                                             'Content-Type': 'multipart/form-data',
                                         }
                                     }
@@ -230,9 +231,9 @@ const Signup = ({ navigation }) => {
                                     } catch (e) {
                                         console.log('inserting image DB ERROR=', e)
                                         alert('이미지 업로드에 실패하였습니다.', e)
+
                                         return;
                                     }
-
                                     console.log('666666666666666')
                                 }
                             }

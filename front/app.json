@@ -4,7 +4,7 @@
     "slug": "BYD",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/byd_icon.png",
+    "icon": "./assets/byd_final_icon.png",
     "splash": {
       "image": "./assets/byd_splash_modified.png",
       "resizeMode": "cover",
@@ -26,7 +26,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "package.BYD", 
-      "versionCode":2
+      "versionCode":3
     },
     "web": {
       "favicon": "./assets/byd_final_icon.png"

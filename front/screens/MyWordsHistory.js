@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { TouchableOpacity } from 'react-native';
 import {
     StyleSheet, View, ScrollView, SafeAreaView,
@@ -11,6 +11,13 @@ const MyWordsHistory = ({ route, navigation }) => {
     // 파라미터로 MyInfoScreen에서 리스트를 넘겨받는다. - 신우
     const { list, deleteWordHandler } = route.params
     let returnWords
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: '내가 보낸 이야기',
+            headerTitleAlign: 'center',
+        })
+    }, [navigation])
 
     const deleteCard = (id, word_user_email) => {
 

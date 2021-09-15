@@ -2,3 +2,10 @@
 const myIp = `https://byddothis.com`
 export default myIp
 
+/*
+*18 client sent plain HTTP request to HTTPS port while reading client request headers,
+ client: 172.31.9.59, server: byddothis.com, request: "GET / HTTP/1.1", host: "172.31.14.42:443"
+*/
+
+
+

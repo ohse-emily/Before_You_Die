@@ -9,7 +9,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import axios from 'axios';
 import myIp from '../../indivisual_ip';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Avatar } from 'react-native-elements'
+import { Avatar } from 'react-native-elements';
 // import Text from '../DefaultText';
 import { Dimensions } from 'react-native';
 

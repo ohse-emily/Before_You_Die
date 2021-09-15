@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useLayoutEffect } from 'react'
 import {
     StyleSheet, View, ScrollView, SafeAreaView,
     KeyboardAvoidingView, Button,
@@ -10,6 +10,13 @@ const MyMessages = ({ route, navigation } ) => {
     // 파라미터로 MyInfoScreen에서 리스트를 넘겨받는다. - 신우
     const {list, deleteMsgHandler} = route.params
     let returnMessages
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: '나의 예약 메세지',
+            headerTitleAlign: 'center',
+        })
+    }, [navigation])
 
     const deleteCard = (id,msg_user_email) => {
 

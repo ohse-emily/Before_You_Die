@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect,useState ,useLayoutEffect} from 'react'
 import { StyleSheet, SafeAreaView, TouchableOpacity, Animated } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import Text from './DefaultText';
@@ -9,11 +9,19 @@ const YourwordsScreen = ({ navigation }) => {
     const [flag, setFlag] = useState(false)
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity)
 
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: '너의 이야기 듣기',
+            headerTitleAlign: 'center',
+        })
+    }, [navigation])
+
     const handlePress = () => {
         Animated.timing(fadeAnim,
             {
                 toValue:0,
                 duration:2000,
+                useNativeDriver:true,
             }
         ).start();
         setTimeout(()=>{

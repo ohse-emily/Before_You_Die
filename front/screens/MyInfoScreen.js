@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Image, StyleSheet, Alert, ScrollView, Button, TouchableOpacity, Touchable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from './DefaultText';
@@ -27,6 +27,13 @@ const MyInfoScreen = ({ navigation }) => {
     sendToken()
 
   }, [isFocused])
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: '나의 정보',
+      headerTitleAlign: 'center',
+    })
+  }, [navigation])
 
   let userIMAGE;
   if (userImg) {
@@ -244,10 +251,16 @@ const MyInfoScreen = ({ navigation }) => {
 
             {userImg || changeImg ? <Image rounded source={userIMAGE} style={{ width: 100, height: 100 }} />
               : <Image rounded source={require('../assets/user_.png')} style={{ width: 100, height: 100 }} />}
+          </TouchableOpacity>
 
+          {/* 해당 userid, nickname을 클릭해서 수정 가능하게 TouchableOpacity에서 빼서 css 완료 by세연  */}
+          <TouchableOpacity style={{flexDirection:'row', flex:1,justifyContent:'center'}}>
             <Text style={styles.nameAreaA}>{userId}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{flexDirection:'row', flex:1,justifyContent:'center'}}>
             <Text style={styles.nameAreaB}>{userNickname}</Text>
           </TouchableOpacity>
+
           <View style={styles.mypage_container}>
             <TouchableOpacity
               style={styles.mypage_menu}
@@ -368,12 +381,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   nameAreaA: {
-    marginTop:10,
-    marginBottom:0,
+    marginTop: 10,
+    marginBottom: 0,
   },
   nameAreaB: {
-    marginTop:5,
-    marginBottom:10,
+    marginTop: 5,
+    marginBottom: 10,
   },
 });
 

@@ -42,8 +42,8 @@ const HomeScreen = ({ navigation }) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: 'Before you die',
-            textAlign: 'center',
+            title: 'Before You Die',
+            headerTitleAlign: 'center',
         })
     }, [navigation])
 
