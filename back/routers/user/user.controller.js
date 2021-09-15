@@ -126,6 +126,7 @@ let picUpload = async (req, res) => {
 
 let login = async (req, res) => {
     let { user_email, user_password } = req.body
+    console.log(req.body)
     let pwJWT = createPW(user_password)
     let token = createToken(user_email)
     // result default value

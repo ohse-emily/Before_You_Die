@@ -4,10 +4,10 @@ const { Users, Lastwords, Messages, Reports } = require('../../models');
 const mysql = require('mysql')
 
 const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
+    host: "localhost",//process.env.DB_HOST,
+    user: "root",//process.env.DB_USER,
+    password: "1234", //process.env.DB_PASSWORD,
+    database: "byd",//process.env.DB_DATABASE
 })
 connection.connect();
 
@@ -113,8 +113,6 @@ const yourwords = async (req, res) => {
                 ifReported.length == 0 ? reportCheck = false : reportCheck = true
                 // 결과가 없음을 프론트 쪽에서 식별하기 위함
                 results.push('noResult')
-
-
                 // 좋아요 갯수와 좋아요 여부를 results에 그냥 push 해서 한 번에 보내버린다.
                 results.push({numLikes, likedCheck, reportCheck})
 
@@ -155,17 +153,20 @@ const lastwordLikes = async (req, res) => {
             res.json({msg: 'rejected'})
         }
     } else if(type==1){
-        let {user_email2} = req.query
+        let {user_email2} = req.query //신고당하는 사람
+        console.log(user_email2,'user_email2')
         let result = await Reports.findAll({where:{user_email, post_id: id, type:1}})
-    
+        console.log(result,'result')
         if (result.length===0){
+            console.log()
             await Reports.create({user_email: user_email, type: type, post_id: id})
             
             let Userdata = await Users.findOne({where:{user_email:user_email2}})
-
-            user_score = parseInt(Userdata.dataValues.user_score)+1
-
-            await Users.update({user_score: user_score},{where : {user_email: user_email2}})
+            console.log(Userdata)
+            if(Userdata!==null){
+                user_score = parseInt(Userdata.dataValues.user_score)+1
+                await Users.update({user_score: user_score},{where : {user_email: user_email2}})
+            }
             res.json({msg: '신고가 완료되었습니다', flag: false})
         }else{
             res.json({msg: '이미 신고하셨습니다', flag: true})
@@ -179,31 +180,57 @@ const loadFeed = async (req, res) => {
     //라이크에서 DB를 가져오는데 좋아요 순서대로 가져온다
     let result = await sequelize.query( 
 
-        //각 게시물마다 좋아요 게시물을 가져온다
+        //각 게시물마다 눌린 좋아요 정보를 가져온다
         `SELECT 
-            A.post_id, A.type, B.id, B.user_email as writer, B.lastword_subject, 
+            A.post_id, A.type, B.id, B.user_email, B.lastword_subject, 
             B.lastword_content, B.lastword_sender, B.lastword_date, 
             count(*) AS howMany 
             FROM reports AS A 
             LEFT JOIN lastwords AS B 
             ON A.post_id = B.id 
             WHERE B.id IS NOT NULL 
+            and A.type=0
             group BY post_id
             ORDER BY howMany DESC LIMIT 20
         ;`
     )
-    let newResult = result[0]
 
-    // for(let i=0; i<newResult.length; i++){
-    //     let ifLiked = await 
-    // }
-    //     // console.log(result[0])
-    // res.json(result[0])
-
-
+    //해당 유저가 좋아요 및 리포트를 한 게시물 가져오기
+    let result2 = await Reports.findAll({
+        where:{
+            user_email
+        }
+    })
+    let values = []
+    let reportData = []
+    result2.forEach(ele=>{
+        reportData.push(ele.dataValues)
+    })
+    console.log(reportData)
+    values.push(result[0],reportData)
+    // console.log(values)
+        res.json(values)
 }
 
 module.exports = {
     mywords, mymessages, yourwords, lastwordLikes,
     loadFeed, 
 }
+
+
+// SELECT 
+
+//             A.post_id, A.type, B.id, B.user_email, B.lastword_subject, 
+//             B.lastword_content, B.lastword_sender, B.lastword_date, 
+//             SELECT 
+//             A.post_id, A.type, B.id, B.user_email, B.lastword_subject, 
+//             B.lastword_content, B.lastword_sender, B.lastword_date, 
+//             count(*) AS howMany 
+//             FROM reports AS A 
+//             LEFT JOIN lastwords AS B 
+//             ON A.post_id = B.id 
+//             WHERE B.id IS NOT NULL 
+//             and A.type=0
+//             group BY post_id
+//             ORDER BY howMany DESC LIMIT 20
+//         ;
