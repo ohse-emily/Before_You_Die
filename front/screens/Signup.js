@@ -9,7 +9,7 @@ import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper'
 // for image upload
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import MainPopup from './Popup';
+import {MainPopup} from './Popup';
 import Text from './DefaultText';
 import myIp from '../indivisual_ip'
 

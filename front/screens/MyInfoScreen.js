@@ -9,6 +9,7 @@ import * as ImagePicker from 'expo-image-picker';
 import myIp from '../indivisual_ip'
 import { Dimensions } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import { SubPopup} from './Popup'
 
 const MyInfoScreen = ({ navigation }) => {
   // 메시지를 담아놓는 state - 신우
@@ -21,6 +22,7 @@ const MyInfoScreen = ({ navigation }) => {
   const [userImg, setUserImg] = useState(null)// userImg = user가 원래 가지고 있는 프로필 사진 (from DB)
   const [changeImg, setChangeImg] = useState(null) // changeImg = user가 사진첩에서 가져온 사진 by  세연 
   const isFocused = useIsFocused();
+  const [changeNickname, setChangeNickname] = useState(false)
 
   useEffect(() => {
     // sendToken만 쓰면 무한정 받아오기 때문에 gotData 조건을 추가하여 화면 접속 시 한 번만 받아오도록 함 - 신우
@@ -82,6 +84,12 @@ const MyInfoScreen = ({ navigation }) => {
       setChangeImg(pickerResult.uri)
     }
 
+  }
+
+
+  const changeNicknameFn = async ()=>{
+    setChangeNickname(true)
+    
   }
 
   const deleteAcc = () => // 탈퇴 여부 확인하는 부분
@@ -246,6 +254,7 @@ const MyInfoScreen = ({ navigation }) => {
   return (
     <View style={styles.mypage_wrap}>
       <ScrollView>
+      {changeNickname && <SubPopup which={"ChangeNickname"} setChangeOk = {setChangeNickname} beforeUserNickname={userNickname} setUserNickname={setUserNickname}/>}
         <View style={styles.myinfoVertical}>
           <TouchableOpacity style={styles.profile_image_container} onPress={changeImage}>
 
@@ -257,7 +266,7 @@ const MyInfoScreen = ({ navigation }) => {
           <TouchableOpacity style={{flexDirection:'row', flex:1,justifyContent:'center'}}>
             <Text style={styles.nameAreaA}>{userId}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flexDirection:'row', flex:1,justifyContent:'center'}}>
+          <TouchableOpacity style={{flexDirection:'row', flex:1,justifyContent:'center'}} onPress={changeNicknameFn}>
             <Text style={styles.nameAreaB}>{userNickname}</Text>
           </TouchableOpacity>
 
@@ -381,12 +390,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   nameAreaA: {
-    marginTop: 10,
-    marginBottom: 0,
+    marginTop:10,
+    marginBottom:0,
   },
-  nameAreaB: {
-    marginTop: 5,
-    marginBottom: 10,
+  nicknameAreA: {
+    marginTop:5,
+    marginBottom:10,
+    alignItems:'center'
   },
 });
+
 

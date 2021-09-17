@@ -50,7 +50,7 @@ router.post('/email_check', controller.email_check)
 router.post('/deleteacc', controller.deleteAcc)
 router.post('/transformPw', controller.transformPw)
 router.post('/pic_upload', upload.single('file'), controller.picUpload)
-
+router.post('/nickname_check', controller.nickNameCheckFn)
 
 module.exports = router;
 

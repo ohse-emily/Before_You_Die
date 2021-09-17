@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
   View, Modal, TouchableOpacity, StyleSheet,
-  Dimensions
+  Dimensions, TextInput, Alert
 } from "react-native";
 import { CheckBox } from 'react-native-elements'
 import { ScrollView } from "react-native-gesture-handler";
 import Text from './DefaultText';
 import PrivacyText from './text/PrivacyText'
-
+import myIp from '../indivisual_ip'
 
 const MainPopup = ({ handlePopup, value, which }) => {
   const [itemChecked, setItemChecked] = useState(false)
@@ -68,9 +68,73 @@ const MainPopup = ({ handlePopup, value, which }) => {
     </Modal>
   );
 };
-export default MainPopup;
+
+
+
+const SubPopup = ({ which, setChangeOk, beforeUserNickname , setUserNickname})=>{
+
+  const [text, onChangeText] = React.useState("");
+  let popupContent
+  if(which == "ChangeNickname"){
+    popupContent = "바꿀 닉네임을 입력하세요"
+  }
+
+
+  const changeNicOk = async ()=>{
+    
+    
+    let url = `${myIp}/user/nickname_check`
+    let options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({user_nickname:text, before_nickname: beforeUserNickname}),
+    }
+    let response = await fetch(url,options)
+    let data = await response.json()
+    if(data.result===false){
+      Alert.alert("","이미 존재하는 아이디입니다",
+    )
+    return;
+    }else{
+      setChangeOk(false)
+      setUserNickname(text)
+    }
+  }
+  
+
+  const changeNickcancle = ()=>{
+    setChangeOk(false)
+  }
+
+  return(
+    <Modal animationType="slide" transparent={true}
+    // visible={props.visible}
+    >
+      <View style={styles.SubBackground}>
+        <View style={styles.SubContainer}>
+            <Text style = {styles.SubText}>
+              {popupContent}
+            </Text>
+            <TextInput placeholder = "nickname" 
+            style = {styles.SubTextInput} 
+            onChangeText = {onChangeText}
+            >
+            </TextInput>
+            <TouchableOpacity onPress = {changeNicOk}>
+              <Text>확인</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress = {changeNickcancle}>
+              <Text>취소</Text>
+            </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  )
+}
 
 const styles = StyleSheet.create({
+
+  // main 팝업
   modalBackground: {
     flex: 1,
     justifyContent: 'center',
@@ -102,6 +166,35 @@ const styles = StyleSheet.create({
   },
   scrolltext:{
     fontSize:18,
+  },
+
+  // sub 팝업
+  SubBackground:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height
+  },
+  SubContainer:{
+    width: '70%',
+    margin: 'auto',
+    alignItems: 'center',
+    padding: '5%',
+    backgroundColor: 'white',
+  },
+  SubTextInput:{
+    marginTop: '5%',
+    width: '70%',
+    borderWidth:1
   }
+  // SubText:{
+  //   fontSize: 18,
+  // }
 });
 
+module.exports = {
+  MainPopup,
+  SubPopup,
+};

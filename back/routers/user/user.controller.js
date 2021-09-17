@@ -4,6 +4,27 @@ const { createPW, email_verify_key, createToken, getUserid } = require('../../JW
 const nodemailer = require('nodemailer');
 // const sequelize = require('sequelize')
 
+
+let nickNameCheckFn = async (req,res)=>{
+    let {user_nickname, before_nickname} = req.body
+    let nickNameCheck = await Users.findAll({ where: {user_nickname}})
+    let nickname_result = {}
+    console.log(nickNameCheck.length)
+    if(nickNameCheck.length>0){
+        nickname_result.result = false
+    }else{
+        nickname_result.result = true
+        await Users.update({user_nickname}, {
+            where:{
+                user_nickname : before_nickname
+            }
+        })
+    }
+    res.json(nickname_result)
+}
+
+
+
 let join = async (req, res) => {
     let { fullName, email, password, user_image } = req.body
     console.log(`join하는 user의 정보 :`,fullName, email, password, user_image)
@@ -331,4 +352,5 @@ module.exports = {
     join, login, confirmEmail, picUpload,
     getUserInfo, deletePost, deleteWord,
     email_check, deleteAcc, transformPw,
+    nickNameCheckFn,
 }
